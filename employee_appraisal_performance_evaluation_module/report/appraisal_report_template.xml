@@ -4,8 +4,8 @@
         <field name="name">Appraisal Report</field>
         <field name="model">employee.appraisal</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">employee_appraisal_performance_evaluation.appraisal_report_template</field>
-        <field name="report_file">employee_appraisal_performance_evaluation.appraisal_report_template</field>
+        <field name="report_name">employee_appraisal_performance_evaluation_module.appraisal_report_template</field>
+        <field name="report_file">employee_appraisal_performance_evaluation_module.appraisal_report_template</field>
         <field name="binding_model_id" ref="model_employee_appraisal"/>
         <field name="binding_type">report</field>
     </record>
