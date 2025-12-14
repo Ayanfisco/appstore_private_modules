@@ -3,7 +3,7 @@
     <menuitem id="menu_appraisal_root"
               name="Appraisals"
               sequence="60"
-              web_icon="employee_appraisal,static/description/icon.png"/>
+              web_icon="employee_appraisal_performance_evaluation,static/description/icon.png"/>
 
     <menuitem id="menu_appraisal_main"
               name="Appraisals"
