@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_appraisal_root"
+              name="Appraisals"
+              sequence="60"
+              web_icon="employee_appraisal,static/description/icon.png"/>
+
+    <menuitem id="menu_appraisal_main"
+              name="Appraisals"
+              parent="menu_appraisal_root"
+              sequence="1"/>
+
+    <menuitem id="menu_employee_appraisal"
+              name="Employee Appraisals"
+              parent="menu_appraisal_main"
+              sequence="1"
+              action="action_employee_appraisal"/>
+
+    <menuitem id="menu_appraisal_config"
+              name="Configuration"
+              parent="menu_appraisal_root"
+              sequence="100"/>
+
+    <menuitem id="menu_appraisal_template"
+              name="Appraisal Templates"
+              parent="menu_appraisal_config"
+              sequence="1"
+              action="action_appraisal_template"/>
+
+    <menuitem id="menu_appraisal_competency"
+              name="Competencies"
+              parent="menu_appraisal_config"
+              sequence="2"
+              action="action_appraisal_competency"/>
+</odoo>

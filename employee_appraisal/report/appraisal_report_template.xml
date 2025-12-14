@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_appraisal_report" model="ir.actions.report">
+        <field name="name">Appraisal Report</field>
+        <field name="model">employee.appraisal</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">employee_appraisal.appraisal_report_template</field>
+        <field name="report_file">employee_appraisal.appraisal_report_template</field>
+        <field name="binding_model_id" ref="model_employee_appraisal"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="appraisal_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Employee Appraisal Report</h2>
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Reference:</strong>
+                                <span t-field="o.name"/>
+                                <br/>
+                                <strong>Employee:</strong>
+                                <span t-field="o.employee_id"/>
+                                <br/>
+                                <strong>Department:</strong>
+                                <span t-field="o.department_id"/>
+                                <br/>
+                                <strong>Job Position:</strong>
+                                <span t-field="o.job_id"/>
+                                <br/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Period:</strong>
+                                <span t-field="o.date_start"/>
+                                to
+                                <span t-field="o.date_end"/>
+                                <br/>
+                                <strong>Final Rating:</strong>
+                                <span t-field="o.final_rating"/>/5
+                                <br/>
+                                <strong>Status:</strong>
+                                <span t-field="o.state"/>
+                                <br/>
+                            </div>
+                        </div>
+
+                        <h3 class="mt-4">Competency Ratings</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Competency</th>
+                                    <th>Self Rating</th>
+                                    <th>Manager Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.competency_ids" t-as="comp">
+                                    <td>
+                                        <span t-field="comp.competency_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="comp.self_rating"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="comp.manager_rating"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3 class="mt-4">Goals</h3>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Goal</th>
+                                    <th>Achievement</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.goal_ids" t-as="goal">
+                                    <td>
+                                        <span t-field="goal.name"/>
+                                    </td>
+                                    <td><span t-field="goal.achievement_percentage"/>%
+                                    </td>
+                                    <td>
+                                        <span t-field="goal.status"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="mt-4" t-if="o.manager_comments">
+                            <h3>Manager Comments</h3>
+                            <div t-field="o.manager_comments"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

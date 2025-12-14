@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Appraisal Management</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+
+<!-- Hero Section -->
+<section
+        style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center;">
+    <h1 style="font-size: 48px; margin: 0 0 20px 0; font-weight: 700;">Employee Appraisal Management</h1>
+    <p style="font-size: 24px; margin: 0 0 30px 0; opacity: 0.95;">Complete Performance Review System for Odoo 18</p>
+    <p style="font-size: 18px; margin: 0; opacity: 0.9;">Streamline your employee evaluations with structured
+        appraisals, competency tracking, and goal management</p>
+</section>
+
+<!-- Key Features -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Key Features</h2>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+            <!-- Feature 1 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #667eea; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    📊
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Competency-Based Evaluation</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Define custom competencies with weighted
+                    scoring. Evaluate employees on technical skills, leadership, communication, and more.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #764ba2; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    🎯
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Goal Tracking</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Set individual goals, track achievement
+                    percentages, and monitor progress throughout the review period.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #f093fb; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    ✅
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Multi-Stage Workflow</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Complete workflow from draft →
+                    self-assessment → manager review → completion with email notifications at each stage.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #4facfe; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    📝
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Appraisal Templates</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Create reusable templates for different job
+                    roles with pre-configured competencies and weightages.</p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #43e97b; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    🔒
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Role-Based Security</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Secure access control with user and manager
+                    roles. Employees see only their appraisals, managers see their team.</p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #fa709a; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    📄
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Professional Reports</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Generate comprehensive PDF reports with
+                    ratings, goals, comments, and recommendations for documentation.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">How It Works</h2>
+
+        <div style="display: flex; flex-direction: column; gap: 40px;">
+            <!-- Step 1 -->
+            <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+                <div style="flex: 0 0 80px; width: 80px; height: 80px; background: #667eea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold;">
+                    1
+                </div>
+                <div style="flex: 1 1 300px;">
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0; color: #2c3e50;">Create Appraisal</h3>
+                    <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Manager creates an appraisal
+                        for an employee, selects a template, and competencies are auto-populated with weightages.</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+                <div style="flex: 0 0 80px; width: 80px; height: 80px; background: #764ba2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold;">
+                    2
+                </div>
+                <div style="flex: 1 1 300px;">
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0; color: #2c3e50;">Employee Self-Assessment</h3>
+                    <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Employee rates themselves on
+                        each competency (0-5 scale), adds goals with achievement percentages, and provides detailed
+                        comments.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+                <div style="flex: 0 0 80px; width: 80px; height: 80px; background: #f093fb; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold;">
+                    3
+                </div>
+                <div style="flex: 1 1 300px;">
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0; color: #2c3e50;">Manager Review</h3>
+                    <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Manager reviews
+                        self-assessment, provides their own ratings, identifies strengths and improvement areas, and
+                        makes recommendations.</p>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div style="display: flex; align-items: center; gap: 30px; flex-wrap: wrap;">
+                <div style="flex: 0 0 80px; width: 80px; height: 80px; background: #4facfe; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold;">
+                    4
+                </div>
+                <div style="flex: 1 1 300px;">
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0; color: #2c3e50;">Final Report</h3>
+                    <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">System calculates weighted
+                        ratings and generates a comprehensive PDF report for records and HR documentation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Screenshots -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Screenshots</h2>
+
+        <div style="display: flex; flex-direction: column; gap: 50px;">
+            <!-- Screenshot 1 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Appraisal
+                    Dashboard</h3>
+                <img src="screenshot_1.png" alt="Appraisal Dashboard"
+                     style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">View all appraisals with
+                    status, ratings, and filters</p>
+            </div>
+
+            <!-- Screenshot 2 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Competency
+                    Evaluation</h3>
+                <img src="screenshot_2.png" alt="Competency Evaluation"
+                     style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Rate employees on
+                    multiple competencies with weightages</p>
+            </div>
+
+            <!-- Screenshot 3 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Goal Tracking</h3>
+                <img src="screenshot_3.png" alt="Goal Tracking"
+                     style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Set and track individual
+                    goals with achievement metrics</p>
+            </div>
+
+            <!-- Screenshot 4 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Assessment
+                    Summary</h3>
+                <img src="screenshot_4.png" alt="Assessment Summary"
+                     style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Visual rating comparison
+                    with progress bars and recommendations</p>
+            </div>
+
+            <!-- Screenshot 5 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Appraisal
+                    Templates</h3>
+                <img src="screenshot_5.png" alt="Appraisal Templates"
+                     style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Create reusable templates
+                    for different job roles</p>
+            </div>
+
+            <!-- Screenshot 6 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">PDF Report</h3>
+                <img src="screenshot_6.png" alt="PDF Report"
+                     style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Professional PDF reports
+                    for documentation and records</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Why Choose This
+            Module?</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+            <div style="padding: 25px; border-left: 4px solid #667eea;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Easy to Use</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Intuitive interface that requires
+                    minimal training for both employees and managers</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #764ba2;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Fully Customizable</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Define your own competencies,
+                    categories, and rating scales to match your organization</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #f093fb;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Automated Workflow</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Email notifications keep everyone
+                    informed at each stage of the appraisal process</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #4facfe;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Data-Driven Decisions</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Weighted scoring ensures important
+                    competencies have appropriate impact on final ratings</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #43e97b;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Transparent Process</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Both self and manager ratings are
+                    visible, promoting honest and fair evaluations</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #fa709a;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Odoo 18 Native</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Built specifically for Odoo 18
+                    with modern syntax and full integration with HR module</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Specifications -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Technical
+            Specifications</h2>
+
+        <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="border-bottom: 2px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Version</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">18.0.1.0.0</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Category</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">Human Resources</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">License</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">LGPL-3</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Dependencies</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">hr, mail</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Author</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">Tech Joe</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Website</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">ayanfiscoss@gmail.com</td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Support</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">ayanfiscoss@gmail.com</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Installation -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Installation</h2>
+
+        <div style="background: #f8f9fa; padding: 40px; border-radius: 10px; border-left: 5px solid #667eea;">
+            <ol style="font-size: 18px; line-height: 2; color: #333; margin: 0; padding-left: 30px;">
+                <li>Download the module from Odoo App Store</li>
+                <li>Navigate to Apps menu in Odoo</li>
+                <li>Click "Update Apps List"</li>
+                <li>Search for "Employee Appraisal Management"</li>
+                <li>Click "Install"</li>
+                <li>Configure competencies and templates in Configuration menu</li>
+                <li>Assign user access rights (User/Manager)</li>
+                <li>Start creating appraisals!</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- Support -->
+<section
+        style="padding: 60px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="font-size: 36px; margin: 0 0 20px 0;">Need Help?</h2>
+        <p style="font-size: 20px; margin: 0 0 30px 0; opacity: 0.95;">We're here to support you!</p>
+        <p style="font-size: 18px; margin: 0 0 15px 0;">
+            <strong>Email:</strong> ayanfiscoss@gmail.com
+        </p>
+        <p style="font-size: 18px; margin: 0;">
+            <strong>Company:</strong> Tech Joe
+        </p>
+    </div>
+</section>
+
+<!-- Footer -->
+<section style="padding: 30px 20px; background-color: #2c3e50; color: white; text-align: center;">
+    <p style="margin: 0; font-size: 16px;">© 2024 Tech Joe. All rights reserved.</p>
+    <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.8;">Employee Appraisal Management v18.0.1.0.0</p>
+</section>
+
+</body>
+</html>

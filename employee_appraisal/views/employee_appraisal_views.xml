@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_appraisal_form" model="ir.ui.view">
+        <field name="name">employee.appraisal.form</field>
+        <field name="model">employee.appraisal</field>
+        <field name="arch" type="xml">
+            <form string="Employee Appraisal">
+                <header>
+                    <button name="action_submit" string="Submit"
+                            type="object"
+                            invisible="state != 'draft'"
+                            class="oe_highlight"/>
+                    <button name="action_start_self_assessment"
+                            string="Start Self Assessment"
+                            type="object"
+                            invisible="state != 'pending'"
+                            class="oe_highlight"/>
+                    <button name="action_submit_self_assessment"
+                            string="Submit Self Assessment"
+                            type="object"
+                            invisible="state != 'self'"
+                            class="oe_highlight"/>
+                    <button name="action_manager_review"
+                            string="Complete Review"
+                            type="object"
+                            invisible="state != 'manager'"
+                            class="oe_highlight"/>
+                    <button name="action_cancel" string="Cancel"
+                            type="object"
+                            invisible="state in ('done', 'cancel')"/>
+                    <button name="action_draft" string="Reset to Draft"
+                            type="object"
+                            invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pending,self,manager,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="department_id"/>
+                            <field name="job_id"/>
+                            <field name="manager_id"/>
+                        </group>
+                        <group>
+                            <field name="template_id"
+                                   readonly="state != 'draft'"/>
+                            <field name="date_start"
+                                   readonly="state != 'draft'"/>
+                            <field name="date_end"
+                                   readonly="state != 'draft'"/>
+                            <field name="date_final"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Competencies">
+                            <field name="competency_ids"
+                                   readonly="state in ('done', 'cancel')">
+                                <list editable="bottom">
+                                    <field name="competency_id"/>
+                                    <field name="description"/>
+                                    <field name="weightage"/>
+                                    <field name="self_rating"
+                                           readonly="parent.state not in ('self', 'manager', 'done')"/>
+                                    <field name="manager_rating"
+                                           readonly="parent.state not in ('manager', 'done')"/>
+                                    <field name="comments"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Goals">
+                            <field name="goal_ids"
+                                   readonly="state in ('done', 'cancel')">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                    <field name="target_date"/>
+                                    <field name="achievement_percentage"/>
+                                    <field name="status"/>
+                                    <field name="comments"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Assessment">
+                            <group>
+                                <group string="Average Ratings (0-5 Scale)">
+                                    <label for="self_rating" string="Self Rating"/>
+                                    <div class="o_row">
+                                        <field name="self_rating" class="oe_inline"/>
+                                        <span class="oe_inline">/ 5.0</span>
+                                    </div>
+
+                                    <label for="manager_rating" string="Manager Rating"/>
+                                    <div class="o_row">
+                                        <field name="manager_rating" class="oe_inline"/>
+                                        <span class="oe_inline">/ 5.0</span>
+                                    </div>
+
+                                    <label for="final_rating" string="Final Rating"/>
+                                    <div class="o_row">
+                                        <field name="final_rating" class="oe_inline"/>
+                                        <span class="oe_inline">/ 5.0</span>
+                                    </div>
+
+                                    <field name="weighted_final_rating"
+                                           string="Weighted Rating"
+                                           help="Rating considering competency weightages"/>
+                                </group>
+
+                                <group string="Visual Progress">
+                                    <field name="self_rating_percent"
+                                           string="Self Rating"
+                                           widget="progressbar"/>
+                                    <field name="manager_rating_percent"
+                                           string="Manager Rating"
+                                           widget="progressbar"/>
+                                    <field name="final_rating_percent"
+                                           string="Final Rating"
+                                           widget="progressbar"/>
+                                </group>
+                            </group>
+
+                            <group>
+                                <group string="Recommendation">
+                                    <field name="recommendation"
+                                           readonly="state != 'manager'"
+                                           nolabel="1"/>
+                                </group>
+                            </group>
+
+                            <group string="Self Assessment Comments">
+                                <field name="self_comments"
+                                       readonly="state not in ('self', 'manager', 'done')"
+                                       nolabel="1"
+                                       placeholder="Employee should provide detailed self-assessment comments here..."/>
+                            </group>
+
+                            <group string="Manager Review Comments">
+                                <field name="manager_comments"
+                                       readonly="state not in ('manager', 'done')"
+                                       nolabel="1"
+                                       placeholder="Manager should provide detailed review comments here..."/>
+                            </group>
+
+                            <group>
+                                <group string="Strengths">
+                                    <field name="strength"
+                                           readonly="state not in ('manager', 'done')"
+                                           nolabel="1"
+                                           placeholder="List employee's key strengths..."/>
+                                </group>
+                                <group string="Areas for Improvement">
+                                    <field name="weakness"
+                                           readonly="state not in ('manager', 'done')"
+                                           nolabel="1"
+                                           placeholder="List areas where employee can improve..."/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+    <record id="action_employee_appraisal" model="ir.actions.act_window">
+        <field name="name">Employee Appraisals</field>
+        <field name="res_model">employee.appraisal</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
