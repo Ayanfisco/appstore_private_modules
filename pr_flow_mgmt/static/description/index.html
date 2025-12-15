@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Requisition Flow Management - Odoo 18</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin: 0 0 20px 0;
+            font-weight: 700;
+        }
+
+        .hero .tagline {
+            font-size: 24px;
+            margin: 0 0 30px 0;
+            opacity: 0.95;
+        }
+
+        .hero .badges {
+            margin: 30px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            background: white;
+            margin: 30px 0;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 24px;
+            margin: 25px 0 15px 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-card h4 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+            font-size: 20px;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .workflow {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .workflow-steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .workflow-step {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px;
+            flex: 1;
+            min-width: 150px;
+            backdrop-filter: blur(10px);
+        }
+
+        .workflow-step h4 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+        }
+
+        .workflow-arrow {
+            font-size: 30px;
+            align-self: center;
+            margin: 0 10px;
+        }
+
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .benefits-list li {
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #28a745;
+            border-radius: 5px;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .benefits-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #28a745;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .pricing-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .pricing-box h3 {
+            color: white;
+            font-size: 36px;
+            margin: 0 0 10px 0;
+        }
+
+        .price {
+            font-size: 72px;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+
+        .price-note {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            margin: 20px 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .technical-specs {
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .technical-specs h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .spec-table td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .spec-table td:first-child {
+            font-weight: 600;
+            width: 40%;
+        }
+
+        .screenshot-note {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .screenshot-note h3 {
+            color: #856404;
+            margin-top: 0;
+        }
+
+        .support-box {
+            background: #e3f2fd;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .support-box h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero .tagline {
+                font-size: 18px;
+            }
+
+            .workflow-steps {
+                flex-direction: column;
+            }
+
+            .workflow-arrow {
+                transform: rotate(90deg);
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Hero Section -->
+<div class="hero">
+    <h1>🚀 Purchase Requisition Flow Management</h1>
+    <p class="tagline">Streamline Your Procurement Process with Intelligent Requisition Management</p>
+    <div class="badges">
+        <span class="badge">✓ Odoo 18 Compatible</span>
+        <span class="badge">✓ Multi-Level Approval</span>
+        <span class="badge">✓ Email Notifications</span>
+        <span class="badge">✓ Production Ready</span>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Introduction -->
+    <div class="section">
+        <h2>📋 Transform Your Requisition Process</h2>
+        <p style="font-size: 18px; line-height: 1.8;">
+            Purchase Requisition Flow Management is a comprehensive solution designed to streamline your organization's
+            material and service request process. With an intuitive interface, powerful workflow automation, and
+            seamless integration with Odoo's purchase module, managing requisitions has never been easier.
+        </p>
+        <p style="font-size: 18px; line-height: 1.8; margin-top: 15px;">
+            Built specifically for Odoo 18, this module leverages the latest features and best practices to deliver a
+            robust, scalable, and user-friendly requisition management system that grows with your business.
+        </p>
+    </div>
+
+    <!-- Key Features -->
+    <div class="section">
+        <h2>✨ Powerful Features</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="icon">🔄</span>
+                <h4>Multi-Level Approval Workflow</h4>
+                <p>Configurable approval stages ensure proper authorization at every level. From department managers to
+                    directors, maintain complete control over spending.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">🏢</span>
+                <h4>Department-Based Management</h4>
+                <p>Organize requisitions by department with automatic routing to appropriate managers. Perfect for
+                    multi-department organizations.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">📧</span>
+                <h4>Smart Email Notifications</h4>
+                <p>Automated email alerts keep everyone informed. Approvers receive instant notifications, ensuring
+                    quick turnaround times.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">🛒</span>
+                <h4>Automatic PO Creation</h4>
+                <p>Convert approved requisitions to purchase orders with one click. Orders are intelligently grouped by
+                    vendor for efficiency.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">📊</span>
+                <h4>Comprehensive Analytics</h4>
+                <p>Built-in reports, pivot tables, and graphs provide insights into spending patterns, approval times,
+                    and requisition volumes.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">🔒</span>
+                <h4>Robust Security</h4>
+                <p>Four-tier security model with granular permissions. Users only see what they're authorized to
+                    access.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">📦</span>
+                <h4>Stock Integration</h4>
+                <p>Check product availability before ordering. See current stock levels directly in requisition
+                    lines.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">💰</span>
+                <h4>Budget Tracking</h4>
+                <p>Monitor estimated costs in real-time. Set auto-approval thresholds based on requisition amounts.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">⚡</span>
+                <h4>Priority Management</h4>
+                <p>Flag urgent requisitions to expedite processing. Three priority levels ensure critical needs are met
+                    quickly.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">📱</span>
+                <h4>Mobile Responsive</h4>
+                <p>Manage requisitions on-the-go. Optimized Kanban view works perfectly on mobile devices.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">🌐</span>
+                <h4>Multi-Company Support</h4>
+                <p>Perfect for organizations with multiple entities. Company-specific requisitions with proper data
+                    isolation.</p>
+            </div>
+
+            <div class="feature-card">
+                <span class="icon">📝</span>
+                <h4>Complete Audit Trail</h4>
+                <p>Track every action with integrated chatter. Know who did what and when for complete
+                    accountability.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Workflow -->
+    <div class="section">
+        <h2>🔄 Intuitive Workflow</h2>
+
+        <div class="workflow">
+            <h3 style="color: white; margin-top: 0;">From Request to Purchase Order in 5 Simple Steps</h3>
+            <div class="workflow-steps">
+                <div class="workflow-step">
+                    <h4>1. Create</h4>
+                    <p>Employee creates requisition with needed items</p>
+                </div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">
+                    <h4>2. Submit</h4>
+                    <p>Submit for department approval</p>
+                </div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">
+                    <h4>3. Approve</h4>
+                    <p>Multi-level approval process</p>
+                </div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">
+                    <h4>4. Convert</h4>
+                    <p>Automatic PO generation</p>
+                </div>
+                <span class="workflow-arrow">→</span>
+                <div class="workflow-step">
+                    <h4>5. Done</h4>
+                    <p>Ready for procurement</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits -->
+    <div class="section">
+        <h2>🎯 Business Benefits</h2>
+
+        <ul class="benefits-list">
+            <li><strong>Reduce Processing Time:</strong> Cut requisition approval time by up to 70% with automated
+                workflows and instant notifications.
+            </li>
+
+            <li><strong>Improve Compliance:</strong> Ensure all purchases follow company policies with mandatory
+                approval stages and audit trails.
+            </li>
+
+            <li><strong>Increase Visibility:</strong> Gain real-time insights into pending requisitions, spending
+                patterns, and approval bottlenecks.
+            </li>
+
+            <li><strong>Eliminate Paper:</strong> Go completely digital with electronic requisitions, approvals, and
+                documentation.
+            </li>
+
+            <li><strong>Better Budget Control:</strong> Track estimated costs before orders are placed and set automatic
+                approval limits.
+            </li>
+
+            <li><strong>Enhance Accountability:</strong> Complete audit trails show who requested, approved, and
+                processed every requisition.
+            </li>
+
+            <li><strong>Streamline Communication:</strong> Automated emails keep stakeholders informed without manual
+                follow-ups.
+            </li>
+
+            <li><strong>Improve Vendor Management:</strong> Select preferred vendors at the line level for better
+                pricing and reliability.
+            </li>
+
+            <li><strong>Reduce Errors:</strong> Standardized forms and validation rules minimize mistakes and rework.
+            </li>
+
+            <li><strong>Boost Efficiency:</strong> Employees spend less time on paperwork and more time on productive
+                tasks.
+            </li>
+        </ul>
+    </div>
+    <!-- Screenshots -->
+    <section style="padding: 60px 20px; background-color: #f8f9fa;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Screenshots</h2>
+
+            <div>
+                <!-- Screenshot 1 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Main
+                        Requisition List View</h3>
+                    <img src="screenshot_1.png" alt="Appraisal Dashboard"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">VList view with
+                        multiple requisitions in different states
+                        Colorful status badges (Draft=blue, Submitted=yellow, Approved=green)</p>
+                </div>
+
+                <!-- Screenshot 2 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">CRequisition
+                        Form View (Draft)</h3>
+                    <img src="screenshot_2.png" alt="Competency Evaluation"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Full requisition form
+                        in Draft state</p>
+                </div>
+
+                <!-- Screenshot 3 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Approval
+                        Workflow in Action</h3>
+                    <img src="screenshot_3.png" alt="Goal Tracking"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Requisition form in
+                        "Submitted" state
+                        Status bar showing progress: Draft → Submitted → Dept Approved → Approved → Done</p>
+                </div>
+
+                <!-- Screenshot 4 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Kanban
+                        View</h3>
+                    <img src="screenshot_4.png" alt="Assessment Summary"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Colorful and visually
+                        appealing layout
+                        Drag-and-drop indicators </p>
+                </div>
+
+                <!-- Screenshot 5 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Purchase Order
+                        Creation</h3>
+                    <img src="screenshot_5.png" alt="Appraisal Templates"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Approved requisition
+                        with "Create Purchase Order" button
+                        Product lines with vendors assigned</p>
+                </div>
+
+                <!-- Screenshot 6 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Analytics
+                        Dashboard - Pivot View</h3>
+                    <img src="screenshot_6.png" alt="PDF Report"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Pivot table view
+                        showing requisition analysis</p>
+                </div>
+                <!-- Screenshot 7 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Analytics
+                        Dashboard - Graph View</h3>
+                    <img src="screenshot_7.png" alt="PDF Report"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Bar chart or pie
+                        chart showing requisition data</p>
+                </div>
+                <!-- Screenshot 8 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">PDF Report
+                        Sample</h3>
+                    <img src="screenshot_8.png" alt="PDF Report"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <img src="purchase_requisition.png" alt="PDF Report"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Professional PDF
+                        reports
+                        for documentation and records</p>
+                </div>
+                <!-- Screenshot 9 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Settings
+                        Configuration</h3>
+                    <img src="screenshot_9.png" alt="PDF Report"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Settings page with
+                        Purchase Requisition section</p>
+                </div>
+                <!-- Screenshot 10 -->
+                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                    <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Security Groups
+                        Configuration</h3>
+                    <img src="screenshot_10.png" alt="PDF Report"
+                         style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd;">
+                    <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Settings > Users &
+                        Companies > Groups
+                        Purchase Requisition category expanded</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Use Cases -->
+    <div class="section">
+        <h2>💼 Perfect For</h2>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <h4>🏭 Manufacturing Companies</h4>
+                <p>Manage raw material requests, maintenance supplies, and equipment purchases with department-based
+                    approvals.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>🏥 Healthcare Organizations</h4>
+                <p>Handle medical supplies, equipment, and service requisitions with priority management for urgent
+                    needs.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>🏫 Educational Institutions</h4>
+                <p>Process department requests for supplies, equipment, and services with budget tracking and
+                    compliance.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>🏢 Corporate Offices</h4>
+                <p>Streamline office supplies, IT equipment, and service requests across multiple departments and
+                    locations.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>🏗️ Construction Companies</h4>
+                <p>Manage material requests for multiple projects with project-specific tracking and vendor
+                    management.</p>
+            </div>
+
+            <div class="feature-card">
+                <h4>🛍️ Retail Chains</h4>
+                <p>Handle store-level requisitions with centralized approval and automatic purchase order
+                    generation.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technical Specifications -->
+    <div class="technical-specs">
+        <h3>🔧 Technical Specifications</h3>
+
+        <table class="spec-table">
+            <tr>
+                <td>Odoo Version</td>
+                <td>18.0</td>
+            </tr>
+            <tr>
+                <td>Module Type</td>
+                <td>Application</td>
+            </tr>
+            <tr>
+                <td>Technical Name</td>
+                <td>pr_flow_mgmt</td>
+            </tr>
+            <tr>
+                <td>License</td>
+                <td>LGPL-3</td>
+            </tr>
+            <tr>
+                <td>Dependencies</td>
+                <td>purchase, stock, hr, product</td>
+            </tr>
+            <tr>
+                <td>Languages Supported</td>
+                <td>All (Translation Ready)</td>
+            </tr>
+            <tr>
+                <td>Installation</td>
+                <td>Apps Menu → Install</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Security Groups -->
+    <div class="section">
+        <h2>🔐 Security Groups</h2>
+
+        <h3>Four-Tier Access Control</h3>
+
+        <div class="features-grid">
+            <div class="feature-card" style="border-left-color: #28a745;">
+                <h4>👤 Requisition User</h4>
+                <p><strong>Permissions:</strong></p>
+                <ul style="margin: 10px 0 0 20px; color: #666;">
+                    <li>Create requisitions</li>
+                    <li>View own requisitions</li>
+                    <li>View department requisitions</li>
+                    <li>Submit for approval</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" style="border-left-color: #ffc107;">
+                <h4>👔 Requisition Manager</h4>
+                <p><strong>Permissions:</strong></p>
+                <ul style="margin: 10px 0 0 20px; color: #666;">
+                    <li>All User permissions</li>
+                    <li>Approve department level</li>
+                    <li>View all requisitions</li>
+                    <li>Access approval queue</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" style="border-left-color: #ff5722;">
+                <h4>🎓 Requisition Director</h4>
+                <p><strong>Permissions:</strong></p>
+                <ul style="margin: 10px 0 0 20px; color: #666;">
+                    <li>All Manager permissions</li>
+                    <li>Give final approval</li>
+                    <li>Override approvals</li>
+                    <li>Full visibility</li>
+                </ul>
+            </div>
+
+            <div class="feature-card" style="border-left-color: #9c27b0;">
+                <h4>⚙️ Requisition Administrator</h4>
+                <p><strong>Permissions:</strong></p>
+                <ul style="margin: 10px 0 0 20px; color: #666;">
+                    <li>All Director permissions</li>
+                    <li>Configure settings</li>
+                    <li>Delete requisitions</li>
+                    <li>Full system access</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Installation -->
+    <div class="section">
+        <h2>⚙️ Easy Installation</h2>
+
+        <h3>Get Started in 3 Simple Steps:</h3>
+
+        <ol style="font-size: 18px; line-height: 2;">
+            <li><strong>Install:</strong> Go to Apps → Search "Purchase Requisition Flow" → Click Install</li>
+            <li><strong>Configure:</strong> Assign users to security groups in Settings</li>
+            <li><strong>Use:</strong> Start creating requisitions immediately!</li>
+        </ol>
+
+        <p style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 8px;">
+            <strong>📖 Documentation Included:</strong> Comprehensive user guide, administrator manual, and video
+            tutorials to get your team up and running quickly.
+        </p>
+    </div>
+
+    <!-- Pricing -->
+    <div class="pricing-box">
+        <h3>💎 Pricing</h3>
+        <div class="price">199.00</div>
+        <p class="price-note">Community Edition - No Hidden Costs</p>
+        <p style="margin-top: 20px; font-size: 18px;">
+            Full-featured version with requisitions, and approvals.<br>
+            Professional support available separately.
+        </p>
+    </div>
+
+    <!-- Support -->
+    <div class="support-box">
+        <h3>🤝 Support & Services</h3>
+
+        <div class="features-grid">
+            <div style="background: white; padding: 20px; border-radius: 8px;">
+                <h4 style="color: #1976d2; margin-top: 0;">📚 Free Resources</h4>
+                <ul style="color: #666;">
+                    <li>Complete documentation</li>
+                    <li>Video tutorials</li>
+                    <li>Community forum support</li>
+                    <li>Email support</li>
+                </ul>
+            </div>
+
+            <div style="background: white; padding: 20px; border-radius: 8px;">
+                <h4 style="color: #1976d2; margin-top: 0;">🎯 Professional Services</h4>
+                <ul style="color: #666;">
+                    <li>Custom development</li>
+                    <li>Integration services</li>
+                    <li>Training sessions</li>
+                    <li>Priority support</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="section"
+         style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <h2 style="color: white; border-bottom: none;">🚀 Ready to Transform Your Requisition Process?</h2>
+        <p style="font-size: 20px; margin: 20px 0;">
+            Join hundreds of organizations streamlining their procurement with<br>
+            Purchase Requisition Flow Management
+        </p>
+        <a href="#" class="cta-button">Install Now</a>
+        <p style="margin-top: 30px; opacity: 0.9;">
+            ⭐ Rated 5/5 by users | 💬 Excellent support | 🔄 Regular updates
+        </p>
+    </div>
+
+    <!-- Footer Info -->
+    <div class="section">
+        <h3>📞 Contact Information</h3>
+        <p><strong>Developer:</strong> Tech Joe</p>
+        <p><strong>Website:</strong>ayanfiscoss@gmail.com</p>
+        <p><strong>Email:</strong>ayanfiscoss@gmail.com</p>
+
+        <p style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #ddd; color: #666; text-align: center;">
+            <strong>Version:</strong> 18.0.1.0.0 |
+            <strong>Last Updated:</strong> December 2025 |
+            <strong>License:</strong> LGPL-3
+        </p>
+    </div>
+</div>
+</body>
+</html>
