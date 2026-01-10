@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Flutterwave Payment Form Template -->
+    <template id="flutterwave_form" name="Flutterwave Payment Form">
+        <div class="flutterwave_payment_form">
+            <input type="hidden" name="data_set" t-att-data-public-key="public_key"/>
+            <input type="hidden" name="data_set" t-att-data-tx-ref="tx_ref"/>
+            <input type="hidden" name="data_set" t-att-data-amount="amount"/>
+            <input type="hidden" name="data_set" t-att-data-currency="currency"/>
+            <input type="hidden" name="data_set" t-att-data-payment-options="payment_options"/>
+            <input type="hidden" name="data_set" t-att-data-redirect-url="redirect_url"/>
+            <input type="hidden" name="data_set" t-att-data-customer="customer"/>
+            <input type="hidden" name="data_set" t-att-data-customizations="customizations"/>
+            <input type="hidden" name="data_set" t-att-data-meta="meta"/>
+        </div>
+    </template>
+
+    <!-- Payment Icon (for frontend selection) -->
+    <template id="flutterwave_icon" name="Flutterwave Icon">
+        <span class="payment_icon_flutterwave">
+            <i class="fa fa-credit-card"/> Flutterwave
+        </span>
+    </template>
+
+</odoo>

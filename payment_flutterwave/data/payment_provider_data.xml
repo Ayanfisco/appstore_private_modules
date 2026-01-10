@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Flutterwave Payment Provider -->
+    <record id="payment_provider_flutterwave" model="payment.provider">
+        <field name="name">Flutterwave</field>
+        <field name="code">flutterwave</field>
+        <field name="state">disabled</field>
+        <field name="is_published">false</field>
+        <field name="sequence">20</field>
+        <field name="flutterwave_payment_methods">all</field>
+        <field name="image_128" type="base64" file="payment_flutterwave/static/description/icon.png"/>
+        <field name="support_refund">full_only</field>
+        <field name="support_tokenization">false</field>
+        <field name="support_manual_capture">false</field>
+        <field name="support_express_checkout">false</field>
+        <field name="payment_flow">redirect</field>
+        <field name="redirect_form_view_id" ref="flutterwave_form"/>
+    </record>
+</odoo>
