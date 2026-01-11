@@ -1,6 +1,6 @@
 {
     'name': 'Employee Appraisal Management',
-    'version': '18.0.1.0.0',
+    'version': '19.0.1.0.0',
     'category': 'Human Resources',
     'summary': 'Complete Employee Performance Appraisal System',
     'description': """
@@ -29,7 +29,7 @@
         'views/appraisal_menu.xml',
     ],
     'demo': [],
-    'images': ['static/description/icon.png'],
+    'images': ['static/description/banner.png'],
     'installable': True,
     'application': True,
     'auto_install': False,
