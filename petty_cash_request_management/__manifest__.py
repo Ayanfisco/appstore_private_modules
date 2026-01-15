@@ -3,7 +3,7 @@
     'version': '18.0.0.1.0',
     'category': 'Accounting',
     'summary': 'Manage petty cash requests with multi-level approval',
-    'author': 'MOB: Ayanfe',
+    'author': 'Tech Joe',
     'depends': ['account', 'analytic', 'mail', 'base_automation'],
     'data': [
         'security/petty_cash_security.xml',
@@ -15,7 +15,7 @@
         'views/division_float_views.xml',
         'views/account_analytic_account_views.xml',
     ],
-    'images': 'static/description/icon.png',
+    'images': ['static/description/banner.png'],
     'installable': True,
     'application': True,
     'license': 'LGPL-3',
