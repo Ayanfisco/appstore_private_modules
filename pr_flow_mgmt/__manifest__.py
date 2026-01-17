@@ -76,6 +76,6 @@ This module is designed for Odoo 18 with modern syntax and best practices.
     'installable': True,
     'application': True,
     'auto_install': False,
-    'price': 199.00,
+    'price': 122.00,
     'currency': 'USD',
 }
