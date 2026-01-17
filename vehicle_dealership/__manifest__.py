@@ -25,8 +25,7 @@
         * Trade-In Management
         * Finance & Loan Integration Ready
     """,
-    'author': 'Your Company Name',
-    'website': 'https://www.yourcompany.com',
+    'author': 'Tech Joe',
     'license': 'OPL-1',
     'price': 299.00,
     'currency': 'USD',
