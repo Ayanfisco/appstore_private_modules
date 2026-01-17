@@ -1,0 +1,70 @@
+<odoo>
+    <data noupdate="1">
+        <!-- Vehicle Sale Confirmation Email -->
+        <record id="email_template_vehicle_sale" model="mail.template">
+            <field name="name">Vehicle Sale: Confirmation</field>
+            <field name="model_id" ref="model_vehicle_sale"/>
+            <field name="subject">Vehicle Purchase Confirmation - {{ object.name }}</field>
+            <field name="email_from">{{ (object.salesperson_id.email_formatted or user.email_formatted) }}</field>
+            <field name="email_to">{{ object.customer_id.email }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear <t t-out="object.customer_id.name"/>,
+                        <br/><br/>
+                        Thank you for your purchase! We are pleased to confirm your vehicle order.
+                        <br/><br/>
+                        <strong>Order Details:</strong><br/>
+                        Order Number: <t t-out="object.name"/><br/>
+                        Vehicle: <t t-out="object.vehicle_id.brand_id.name"/> <t t-out="object.vehicle_id.model_id.name"/> (<t t-out="object.vehicle_id.year"/>)<br/>
+                        VIN: <t t-out="object.vehicle_id.vin"/><br/>
+                        Sale Price: <t t-out="object.final_price" t-options="{'widget': 'monetary', 'display_currency': object.currency_id}"/><br/>
+                        Payment Method: <t t-out="object.payment_method"/><br/>
+                        <br/>
+                        <t t-if="object.delivery_date">
+                            Expected Delivery: <t t-out="object.delivery_date" t-options="{'widget': 'date'}"/><br/>
+                        </t>
+                        <br/>
+                        If you have any questions, please don't hesitate to contact us.
+                        <br/><br/>
+                        Best regards,<br/>
+                        <t t-out="object.salesperson_id.name"/><br/>
+                        <t t-out="object.salesperson_id.company_id.name"/>
+                    </p>
+                </div>
+            </field>
+        </record>
+
+        <!-- Service Appointment Email -->
+        <record id="email_template_vehicle_service" model="mail.template">
+            <field name="name">Vehicle Service: Appointment</field>
+            <field name="model_id" ref="model_vehicle_service"/>
+            <field name="subject">Service Appointment - {{ object.name }}</field>
+            <field name="email_to">{{ object.vehicle_id.sale_id.customer_id.email }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear Customer,
+                        <br/><br/>
+                        Your service appointment has been scheduled.
+                        <br/><br/>
+                        <strong>Service Details:</strong><br/>
+                        Service Number: <t t-out="object.name"/><br/>
+                        Vehicle: <t t-out="object.vehicle_id.name"/><br/>
+                        Service Date: <t t-out="object.service_date" t-options="{'widget': 'date'}"/><br/>
+                        Service Type: <t t-out="object.service_type"/><br/>
+                        <t t-if="object.workshop">
+                            Workshop: <t t-out="object.workshop"/><br/>
+                        </t>
+                        <br/>
+                        Please ensure the vehicle is available on the scheduled date.
+                        <br/><br/>
+                        Best regards,<br/>
+                        Service Department
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+
+</odoo>
