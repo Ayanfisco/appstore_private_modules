@@ -2,7 +2,7 @@
     'name': 'Vehicle Dealership Management',
     'version': '18.0.1.0.0',
     'category': 'Sales/Sales',
-    'summary': 'Complete Vehicle Dealership Management System - Sales, Inventory, Service & CRM',
+    'summary': 'Complete standalone vehicle dealership management - no additional modules required',
     'description': """
         Vehicle Dealership Management
         ===============================
