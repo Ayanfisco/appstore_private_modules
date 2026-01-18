@@ -103,5 +103,76 @@
             </calendar>
         </field>
     </record>
+    <record id="view_vehicle_service_list" model="ir.ui.view">
+        <field name="name">vehicle.service.list</field>
+        <field name="model">vehicle.service</field>
+        <field name="arch" type="xml">
+            <list string="Service Records" sample="1">
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="service_date"/>
+                <field name="service_type"/>
+                <field name="technician_id" widget="many2one_avatar_user"/>
+                <field name="total_cost" widget="monetary" sum="Total"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'scheduled'"
+                       decoration-warning="state == 'in_progress'"
+                       decoration-success="state == 'completed'"
+                       decoration-muted="state == 'cancelled'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vehicle Service Form View -->
+    <record id="view_vehicle_service_form" model="ir.ui.view">
+        <field name="name">vehicle.service.form</field>
+        <field name="model">vehicle.service</field>
+        <field name="arch" type="xml">
+            <form string="Service Record">
+                <header>
+                    <button name="action_start" type="object" string="Start Service"
+                            invisible="state != 'scheduled'" class="btn-primary"/>
+                    <button name="action_complete" type="object" string="Complete"
+                            invisible="state != 'in_progress'" class="btn-success"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ['scheduled', 'in_progress']" class="btn-secondary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="scheduled,in_progress,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Service Information">
+                            <field name="vehicle_id"/>
+                            <field name="service_date"/>
+                            <field name="next_service_date"/>
+                            <field name="service_type"/>
+                            <field name="technician_id" widget="many2one_avatar_user"/>
+                            <field name="workshop"/>
+                        </group>
+                        <group string="Costs">
+                            <field name="labor_cost" widget="monetary"/>
+                            <field name="parts_cost" widget="monetary"/>
+                            <field name="total_cost" widget="monetary" class="oe_subtotal_footer_separator"/>
+                            <field name="warranty_covered" widget="boolean_toggle"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="current_mileage"/>
+                        <field name="description" placeholder="Describe the service performed..."/>
+                        <field name="parts_replaced" placeholder="List parts that were replaced..."/>
+                        <field name="notes" placeholder="Additional notes..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
 
 </odoo>
