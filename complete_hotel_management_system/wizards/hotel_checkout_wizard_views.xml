@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hotel_checkout_wizard_form" model="ir.ui.view">
+        <field name="name">hotel.checkout.wizard.form</field>
+        <field name="model">hotel.checkout.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Check-out">
+                <group>
+                    <group string="Reservation Details">
+                        <field name="reservation_id" invisible="1"/>
+                        <field name="guest_id"/>
+                        <field name="room_id"/>
+                        <field name="actual_checkout_date"/>
+                    </group>
+                    <group string="Charges Summary">
+                        <field name="room_charges" widget="monetary"/>
+                        <field name="service_charges" widget="monetary"/>
+                        <field name="total_amount" widget="monetary" class="oe_subtotal_footer_separator"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Payment">
+                        <field name="create_invoice"/>
+                        <field name="payment_received"/>
+                    </group>
+                    <group string="Room Inspection">
+                        <field name="room_condition"/>
+                    </group>
+                </group>
+                <group string="Damage Notes" invisible="room_condition != 'damaged'">
+                    <field name="damage_notes" nolabel="1" placeholder="Describe any damages..."/>
+                </group>
+                <group string="Notes">
+                    <field name="notes" nolabel="1" placeholder="Any special notes about check-out..."/>
+                </group>
+                <footer>
+                    <button string="Confirm Check-out" name="action_confirm_checkout" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
