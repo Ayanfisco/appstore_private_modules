@@ -50,6 +50,7 @@
         'wizards/vehicle_mass_update_wizard.xml',
     ],
     'demo': [],
+    'live_test_url': 'https://ayanfisco-appstore-private-modules.odoo.com/helpdesk/customer-care-1',
     'images': ['static/description/banner.png'],
     'installable': True,
     'application': True,
