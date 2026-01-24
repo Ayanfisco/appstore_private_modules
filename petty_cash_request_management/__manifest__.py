@@ -16,7 +16,7 @@
         'views/account_analytic_account_views.xml',
     ],
     'images': ['static/description/banner.png'],
-    'live_test_url': 'https://ayanfisco-appstore-private-modules.odoo.com/helpdesk/customer-care-1',
+    'live_test_url': 'http://tech-joe.tech-joe.infinityfreeapp.com/helpdesk/customer-care-1',
     'installable': True,
     'application': True,
     'license': 'LGPL-3',
