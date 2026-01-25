@@ -19,3 +19,5 @@ access_hotel_housekeeping_user,hotel.housekeeping.user,model_hotel_housekeeping,
 access_hotel_housekeeping_manager,hotel.housekeeping.manager,model_hotel_housekeeping,group_hotel_manager,1,1,1,1
 access_hotel_reservation_portal,hotel.reservation.portal,model_hotel_reservation,base.group_portal,1,0,0,0
 access_hotel_guest_portal,hotel.guest.portal,model_hotel_guest,base.group_portal,1,0,0,0
+access_hotel_checkout_wizard_user,hotel.checkout.wizard.user,model_hotel_checkout_wizard,group_hotel_user,1,0,0,0
+access_hotel_checkout_wizard_manager,hotel.checkout.wizard.manager,model_hotel_checkout_wizard,group_hotel_manager,1,1,1,1
