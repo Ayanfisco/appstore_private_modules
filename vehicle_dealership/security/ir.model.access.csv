@@ -1,0 +1,17 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vehicle_brand_user,vehicle.brand.user,model_vehicle_brand,group_vehicle_user,1,1,1,0
+access_vehicle_brand_manager,vehicle.brand.manager,model_vehicle_brand,group_vehicle_manager,1,1,1,1
+access_vehicle_model_user,vehicle.model.user,model_vehicle_model,group_vehicle_user,1,1,1,0
+access_vehicle_model_manager,vehicle.model.manager,model_vehicle_model,group_vehicle_manager,1,1,1,1
+access_vehicle_vehicle_user,vehicle.vehicle.user,model_vehicle_vehicle,group_vehicle_user,1,1,1,0
+access_vehicle_vehicle_manager,vehicle.vehicle.manager,model_vehicle_vehicle,group_vehicle_manager,1,1,1,1
+access_vehicle_sale_user,vehicle.sale.user,model_vehicle_sale,group_vehicle_user,1,1,1,0
+access_vehicle_sale_manager,vehicle.sale.manager,model_vehicle_sale,group_vehicle_manager,1,1,1,1
+access_vehicle_purchase_user,vehicle.purchase.user,model_vehicle_purchase,group_vehicle_user,1,0,0,0
+access_vehicle_purchase_manager,vehicle.purchase.manager,model_vehicle_purchase,group_vehicle_manager,1,1,1,1
+access_vehicle_service_user,vehicle.service.user,model_vehicle_service,group_vehicle_user,1,1,1,0
+access_vehicle_service_manager,vehicle.service.manager,model_vehicle_service,group_vehicle_manager,1,1,1,1
+access_vehicle_inspection_user,vehicle.inspection.user,model_vehicle_inspection,group_vehicle_user,1,1,1,0
+access_vehicle_inspection_manager,vehicle.inspection.manager,model_vehicle_inspection,group_vehicle_manager,1,1,1,1
+access_vehicle_mass_update_wizard_user,vehicle.mass.update.wizard.user,model_vehicle_mass_update_wizard,group_vehicle_user,1,1,1,1
+access_vehicle_mass_update_wizard_manager,vehicle.mass.update.wizard.manager,model_vehicle_mass_update_wizard,group_vehicle_manager,1,1,1,1

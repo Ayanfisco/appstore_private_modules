@@ -1,0 +1,11 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_pr_flow_requisition_user,pr.flow.requisition.user,model_pr_flow_requisition,group_pr_user,1,1,1,0
+access_pr_flow_requisition_manager,pr.flow.requisition.manager,model_pr_flow_requisition,group_pr_manager,1,1,1,0
+access_pr_flow_requisition_director,pr.flow.requisition.director,model_pr_flow_requisition,group_pr_director,1,1,1,1
+access_pr_flow_requisition_admin,pr.flow.requisition.admin,model_pr_flow_requisition,group_pr_admin,1,1,1,1
+access_pr_flow_requisition_line_user,pr.flow.requisition.line.user,model_pr_flow_requisition_line,group_pr_user,1,1,1,1
+access_pr_flow_requisition_line_manager,pr.flow.requisition.line.manager,model_pr_flow_requisition_line,group_pr_manager,1,1,1,1
+access_pr_flow_requisition_line_director,pr.flow.requisition.line.director,model_pr_flow_requisition_line,group_pr_director,1,1,1,1
+access_pr_flow_requisition_line_admin,pr.flow.requisition.line.admin,model_pr_flow_requisition_line,group_pr_admin,1,1,1,1
+access_pr_flow_requisition_public,pr.flow.requisition.public,model_pr_flow_requisition,base.group_user,1,0,0,0
+access_pr_flow_requisition_line_public,pr.flow.requisition.line.public,model_pr_flow_requisition_line,base.group_user,1,0,0,0

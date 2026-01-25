@@ -143,11 +143,12 @@ class EmployeeAppraisal(models.Model):
     )
 
     @api.model
-    def create(self, vals):
-        if vals.get('name', _('New')) == _('New'):
-            vals['name'] = self.env['ir.sequence'].next_by_code(
-                'employee.appraisal') or _('New')
-        return super().create(vals)
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('name', _('New')) == _('New'):
+                vals['name'] = self.env['ir.sequence'].next_by_code(
+                    'employee.appraisal') or _('New')
+        return super().create(vals_list)
 
     @api.depends('competency_ids.self_rating',
                  'competency_ids.manager_rating')

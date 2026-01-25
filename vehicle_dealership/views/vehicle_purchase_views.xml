@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_vehicle_purchase_list" model="ir.ui.view">
+        <field name="name">vehicle.purchase.list</field>
+        <field name="model">vehicle.purchase</field>
+        <field name="arch" type="xml">
+            <list string="Vehicle Purchases" sample="1">
+                <field name="name"/>
+                <field name="purchase_date"/>
+                <field name="supplier_id"/>
+                <field name="brand_id"/>
+                <field name="model_id"/>
+                <field name="year"/>
+                <field name="vin"/>
+                <field name="total_cost" widget="monetary" sum="Total"/>
+                <field name="expected_arrival"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-primary="state == 'ordered'"
+                       decoration-warning="state == 'in_transit'"
+                       decoration-success="state == 'received'"
+                       decoration-muted="state == 'cancelled'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vehicle Purchase Form View -->
+    <record id="view_vehicle_purchase_form" model="ir.ui.view">
+        <field name="name">vehicle.purchase.form</field>
+        <field name="model">vehicle.purchase</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Purchase">
+                <header>
+                    <button name="action_order" type="object" string="Confirm Order"
+                            invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_in_transit" type="object" string="Mark In Transit"
+                            invisible="state != 'ordered'" class="btn-primary"/>
+                    <button name="action_receive" type="object" string="Receive Vehicle"
+                            invisible="state != 'in_transit'" class="btn-success"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ['draft', 'ordered', 'in_transit']"
+                            class="btn-secondary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,ordered,in_transit,received"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Purchase Information">
+                            <field name="supplier_id"/>
+                            <field name="purchase_date"/>
+                            <field name="expected_arrival"/>
+                            <field name="actual_arrival" readonly="1"/>
+                        </group>
+                        <group string="Cost Breakdown">
+                            <field name="purchase_price" widget="monetary"/>
+                            <field name="shipping_cost" widget="monetary"/>
+                            <field name="import_duty" widget="monetary"/>
+                            <field name="other_costs" widget="monetary"/>
+                            <field name="total_cost" widget="monetary" class="oe_subtotal_footer_separator"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Vehicle Details">
+                            <field name="brand_id" options="{'no_create': True}"/>
+                            <field name="model_id" options="{'no_create': True}"/>
+                            <field name="year"/>
+                            <field name="vin"/>
+                        </group>
+                        <group string="Specifications">
+                            <field name="color"/>
+                            <field name="mileage"/>
+                            <field name="vehicle_id" readonly="1" invisible="not vehicle_id"/>
+                            <field name="bill_id" readonly="1" invisible="not bill_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Additional notes..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vehicle Purchase Search View -->
+    <record id="view_vehicle_purchase_search" model="ir.ui.view">
+        <field name="name">vehicle.purchase.search</field>
+        <field name="model">vehicle.purchase</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Purchases">
+                <field name="name"/>
+                <field name="supplier_id"/>
+                <field name="brand_id"/>
+                <field name="model_id"/>
+                <field name="vin"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Ordered" name="ordered" domain="[('state', '=', 'ordered')]"/>
+                <filter string="In Transit" name="in_transit" domain="[('state', '=', 'in_transit')]"/>
+                <filter string="Received" name="received" domain="[('state', '=', 'received')]"/>
+                <separator/>
+                <filter string="This Month" name="this_month"
+                        domain="[('purchase_date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter string="Supplier" name="group_supplier" context="{'group_by': 'supplier_id'}"/>-->
+<!--                    <filter string="Brand" name="group_brand" context="{'group_by': 'brand_id'}"/>-->
+<!--                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>-->
+<!--                    <filter string="Purchase Date" name="group_purchase_date" context="{'group_by': 'purchase_date'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+</odoo>

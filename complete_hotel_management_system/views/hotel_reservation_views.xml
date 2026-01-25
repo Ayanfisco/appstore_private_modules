@@ -220,19 +220,19 @@
                 <field name="property_id"/>
                 <field name="check_in" filter_domain="[('check_in', '&gt;=', self)]"/>
                 <field name="check_out" filter_domain="[('check_out', '&lt;=', self)]"/>
-<!--                <separator/>-->
-<!--                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>-->
-<!--                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>-->
-<!--                <filter string="Checked In" name="checked_in" domain="[('state', '=', 'checked_in')]"/>-->
-<!--                <separator/>-->
-<!--                <filter string="Check-ins Today" name="checkin_today"-->
-<!--                        domain="[('check_in', '=', context_today())]"/>-->
-<!--                <filter string="Check-outs Today" name="checkout_today"-->
-<!--                        domain="[('check_out', '=', context_today())]"/>-->
-<!--                <separator/>-->
-<!--                <filter string="Check-in Date" name="filter_check_in" date="check_in"/>-->
-<!--                <filter string="Check-out Date" name="filter_check_out" date="check_out"/>-->
-<!--                <separator/>-->
+                <separator/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Checked In" name="checked_in" domain="[('state', '=', 'checked_in')]"/>
+                <separator/>
+                <filter string="Check-ins Today" name="checkin_today"
+                        domain="[('check_in', '=', context_today())]"/>
+                <filter string="Check-outs Today" name="checkout_today"
+                        domain="[('check_out', '=', context_today())]"/>
+                <separator/>
+                <filter string="Check-in Date" name="filter_check_in" date="check_in"/>
+                <filter string="Check-out Date" name="filter_check_out" date="check_out"/>
+                <separator/>
 <!--                <group expand="0" string="Group By">-->
 <!--                    <filter string="Property" name="group_property" context="{'group_by': 'property_id'}"/>-->
 <!--                    <filter string="Guest" name="group_guest" context="{'group_by': 'guest_id'}"/>-->

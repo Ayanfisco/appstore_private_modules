@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Requisition Flow Management - Odoo 18</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; color: #333;">
+
+<!-- Hero Section -->
+<div style="background-color: #667eea; color: white; padding: 60px 20px; text-align: center;">
+    <h1 style="font-size: 48px; margin: 0 0 20px 0; font-weight: 700;">🚀 Purchase Requisition Flow Management</h1>
+    <p style="font-size: 24px; margin: 0 0 30px 0;">Streamline Your Procurement Process with Intelligent Requisition
+        Management</p>
+    <div style="margin: 30px 0;">
+        <span style="background-color: rgba(255, 255, 255, 0.2); padding: 8px 16px; margin: 5px; border-radius: 20px; font-size: 14px; font-weight: 600;">✓ Odoo 18 Compatible</span>
+        <span style="background-color: rgba(255, 255, 255, 0.2); padding: 8px 16px; margin: 5px; border-radius: 20px; font-size: 14px; font-weight: 600;">✓ Multi-Level Approval</span>
+        <span style="background-color: rgba(255, 255, 255, 0.2); padding: 8px 16px; margin: 5px; border-radius: 20px; font-size: 14px; font-weight: 600;">✓ Email Notifications</span>
+        <span style="background-color: rgba(255, 255, 255, 0.2); padding: 8px 16px; margin: 5px; border-radius: 20px; font-size: 14px; font-weight: 600;">✓ Production Ready</span>
+    </div>
+</div>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
+    <!-- Introduction -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h2 style="color: #667eea; font-size: 32px; margin: 0 0 20px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            📋 Transform Your Requisition Process</h2>
+        <p style="font-size: 18px; margin: 15px 0; line-height: 1.8;">
+            Purchase Requisition Flow Management is a comprehensive solution designed to streamline your organization's
+            material and service request process. With an intuitive interface, powerful workflow automation, and
+            seamless integration with Odoo's purchase module, managing requisitions has never been easier.
+        </p>
+        <p style="font-size: 18px; margin: 15px 0; line-height: 1.8;">
+            Built specifically for Odoo 18, this module leverages the latest features and best practices to deliver a
+            robust, scalable, and user-friendly requisition management system that grows with your business.
+        </p>
+    </div>
+
+    <!-- Key Features -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h2 style="color: #667eea; font-size: 32px; margin: 0 0 20px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            ✨ Powerful Features</h2>
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">🔄</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Multi-Level Approval
+                            Workflow</h4>
+                        <p style="margin: 0; color: #666;">Configurable approval stages ensure proper authorization at
+                            every level. From department managers to directors, maintain complete control over
+                            spending.</p>
+                    </div>
+                </td>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">🏢</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Department-Based
+                            Management</h4>
+                        <p style="margin: 0; color: #666;">Organize requisitions by department with automatic routing to
+                            appropriate managers. Perfect for multi-department organizations.</p>
+                    </div>
+                </td>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">📧</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Smart Email Notifications</h4>
+                        <p style="margin: 0; color: #666;">Automated email alerts keep everyone informed. Approvers
+                            receive instant notifications, ensuring quick turnaround times.</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">🛒</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Automatic PO Creation</h4>
+                        <p style="margin: 0; color: #666;">Convert approved requisitions to purchase orders with one
+                            click. Orders are intelligently grouped by vendor for efficiency.</p>
+                    </div>
+                </td>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">📊</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Comprehensive Analytics</h4>
+                        <p style="margin: 0; color: #666;">Built-in reports, pivot tables, and graphs provide insights
+                            into spending patterns, approval times, and requisition volumes.</p>
+                    </div>
+                </td>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">🔒</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Robust Security</h4>
+                        <p style="margin: 0; color: #666;">Four-tier security model with granular permissions. Users
+                            only see what they're authorized to access.</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">📦</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Stock Integration</h4>
+                        <p style="margin: 0; color: #666;">Check product availability before ordering. See current stock
+                            levels directly in requisition lines.</p>
+                    </div>
+                </td>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">💰</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Budget Tracking</h4>
+                        <p style="margin: 0; color: #666;">Monitor estimated costs in real-time. Set auto-approval
+                            thresholds based on requisition amounts.</p>
+                    </div>
+                </td>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">⚡</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Priority Management</h4>
+                        <p style="margin: 0; color: #666;">Flag urgent requisitions to expedite processing. Three
+                            priority levels ensure critical needs are met quickly.</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">📱</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Mobile Responsive</h4>
+                        <p style="margin: 0; color: #666;">Manage requisitions on-the-go. Optimized Kanban view works
+                            perfectly on mobile devices.</p>
+                    </div>
+                </td>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">🌐</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Multi-Company Support</h4>
+                        <p style="margin: 0; color: #666;">Perfect for organizations with multiple entities.
+                            Company-specific requisitions with proper data isolation.</p>
+                    </div>
+                </td>
+                <td style="width: 33%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <div style="font-size: 40px; margin-bottom: 15px;">📝</div>
+                        <h4 style="color: #667eea; margin: 0 0 10px 0; font-size: 20px;">Complete Audit Trail</h4>
+                        <p style="margin: 0; color: #666;">Track every action with integrated chatter. Know who did what
+                            and when for complete accountability.</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Workflow -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h2 style="color: #667eea; font-size: 32px; margin: 0 0 20px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            🔄 Intuitive Workflow</h2>
+
+        <div style="background-color: #f093fb; color: white; padding: 30px; border-radius: 10px; text-align: center;">
+            <h3 style="color: white; margin: 0 0 30px 0; font-size: 24px;">From Request to Purchase Order in 5 Simple
+                Steps</h3>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <td style="width: 18%; padding: 10px; text-align: center;">
+                        <div style="background-color: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 18px; color: white;">1. Create</h4>
+                            <p style="margin: 0; color: white; font-size: 14px;">Employee creates requisition with
+                                needed items</p>
+                        </div>
+                    </td>
+                    <td style="width: 5%; text-align: center; font-size: 30px; color: white;">→</td>
+                    <td style="width: 18%; padding: 10px; text-align: center;">
+                        <div style="background-color: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 18px; color: white;">2. Submit</h4>
+                            <p style="margin: 0; color: white; font-size: 14px;">Submit for department approval</p>
+                        </div>
+                    </td>
+                    <td style="width: 5%; text-align: center; font-size: 30px; color: white;">→</td>
+                    <td style="width: 18%; padding: 10px; text-align: center;">
+                        <div style="background-color: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 18px; color: white;">3. Approve</h4>
+                            <p style="margin: 0; color: white; font-size: 14px;">Multi-level approval process</p>
+                        </div>
+                    </td>
+                    <td style="width: 5%; text-align: center; font-size: 30px; color: white;">→</td>
+                    <td style="width: 18%; padding: 10px; text-align: center;">
+                        <div style="background-color: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 18px; color: white;">4. Convert</h4>
+                            <p style="margin: 0; color: white; font-size: 14px;">Automatic PO generation</p>
+                        </div>
+                    </td>
+                    <td style="width: 5%; text-align: center; font-size: 30px; color: white;">→</td>
+                    <td style="width: 18%; padding: 10px; text-align: center;">
+                        <div style="background-color: rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 10px;">
+                            <h4 style="margin: 0 0 10px 0; font-size: 18px; color: white;">5. Done</h4>
+                            <p style="margin: 0; color: white; font-size: 14px;">Ready for procurement</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <!-- Benefits -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h2 style="color: #667eea; font-size: 32px; margin: 0 0 20px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            🎯 Business Benefits</h2>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Reduce Processing Time:</strong> Cut requisition approval time by up to 70% with automated
+            workflows and instant notifications.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Improve Compliance:</strong> Ensure all purchases follow company policies with mandatory approval
+            stages and audit trails.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Increase Visibility:</strong> Gain real-time insights into pending requisitions, spending
+            patterns, and approval bottlenecks.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Eliminate Paper:</strong> Go completely digital with electronic requisitions, approvals, and
+            documentation.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Better Budget Control:</strong> Track estimated costs before orders are placed and set automatic
+            approval limits.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Enhance Accountability:</strong> Complete audit trails show who requested, approved, and processed
+            every requisition.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Streamline Communication:</strong> Automated emails keep stakeholders informed without manual
+            follow-ups.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Improve Vendor Management:</strong> Select preferred vendors at the line level for better pricing
+            and reliability.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Reduce Errors:</strong> Standardized forms and validation rules minimize mistakes and rework.
+        </div>
+
+        <div style="padding: 15px; margin: 10px 0; background: #f8f9fa; border-left: 4px solid #28a745; border-radius: 5px;">
+            <strong>✓ Boost Efficiency:</strong> Employees spend less time on paperwork and more time on productive
+            tasks.
+        </div>
+    </div>
+
+    <!-- Screenshots -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h2 style="color: #667eea; font-size: 32px; margin: 0 0 40px 0; text-align: center;">📸 Screenshots</h2>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Main Requisition List
+                View</h3>
+            <img src="screenshot_1.png" alt="Requisition List"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">List view with multiple
+                requisitions in different states with colorful status badges</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Requisition Form View
+                (Draft)</h3>
+            <img src="screenshot_2.png" alt="Form View"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Full requisition form in
+                Draft state</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Approval Workflow in
+                Action</h3>
+            <img src="screenshot_3.png" alt="Approval Workflow"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Requisition form in Submitted
+                state showing progress through approval stages</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Kanban View</h3>
+            <img src="screenshot_4.png" alt="Kanban View"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Colorful and visually
+                appealing layout with drag-and-drop capability</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Purchase Order
+                Creation</h3>
+            <img src="screenshot_5.png" alt="PO Creation"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Approved requisition with
+                Create Purchase Order button and vendor assignments</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Analytics Dashboard -
+                Pivot View</h3>
+            <img src="screenshot_6.png" alt="Pivot Analysis"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Pivot table view showing
+                comprehensive requisition analysis</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Analytics Dashboard -
+                Graph View</h3>
+            <img src="screenshot_7.png" alt="Graph Analysis"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Visual charts showing
+                requisition data and trends</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">PDF Report Sample</h3>
+            <img src="screenshot_8.png" alt="PDF Report 1"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 15px;">
+            <img src="purchase_requisition.png" alt="PDF Report 2"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Professional PDF reports for
+                documentation and records</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Settings
+                Configuration</h3>
+            <img src="screenshot_9.png" alt="Settings" style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">Settings page with Purchase
+                Requisition configuration options</p>
+        </div>
+
+        <div style="background: white; padding: 30px; margin-bottom: 30px; border-radius: 10px; border: 1px solid #ddd;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Security Groups
+                Configuration</h3>
+            <img src="screenshot_10.png" alt="Security Groups"
+                 style="width: 100%; border-radius: 8px; border: 1px solid #ddd;">
+            <p style="text-align: center; color: #666; margin-top: 15px; font-size: 16px;">User access and permission
+                management interface</p>
+        </div>
+    </div>
+
+    <!-- Use Cases -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h2 style="color: #667eea; font-size: 32px; margin: 0 0 20px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            💼 Perfect For</h2>
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="color: #667eea; margin: 0 0 10px 0;">🏫 Educational Institutions</h4>
+                        <p style="margin: 0; color: #666;">Process department requests for supplies, equipment, and
+                            services with budget tracking and compliance.</p>
+                    </div>
+                </td>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="color: #667eea; margin: 0 0 10px 0;">🏢 Corporate Offices</h4>
+                        <p style="margin: 0; color: #666;">Streamline office supplies, IT equipment, and service
+                            requests across multiple departments and locations.</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="color: #667eea; margin: 0 0 10px 0;">🏗️ Construction Companies</h4>
+                        <p style="margin: 0; color: #666;">Manage material requests for multiple projects with
+                            project-specific tracking and vendor management.</p>
+                    </div>
+                </td>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #667eea;">
+                        <h4 style="color: #667eea; margin: 0 0 10px 0;">🛍️ Retail Chains</h4>
+                        <p style="margin: 0; color: #666;">Handle store-level requisitions with centralized approval and
+                            automatic purchase order generation.</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Technical Specifications -->
+    <div style="background: #2c3e50; color: white; padding: 30px; border-radius: 10px; margin: 30px 0;">
+        <h3 style="color: white; margin: 0 0 20px 0; font-size: 28px;">🔧 Technical Specifications</h3>
+
+        <table style="width: 100%; border-collapse: collapse; color: white;">
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-weight: 600; width: 40%;">
+                    Odoo Version
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">18.0</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-weight: 600;">Module
+                    Type
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">Application</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-weight: 600;">
+                    Technical Name
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">pr_flow_mgmt</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-weight: 600;">
+                    License
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">LGPL-3</td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-weight: 600;">
+                    Dependencies
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">purchase, stock, hr,
+                    product
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); font-weight: 600;">
+                    Languages Supported
+                </td>
+                <td style="padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">All (Translation Ready)
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; font-weight: 600;">Installation</td>
+                <td style="padding: 12px;">Apps Menu → Install</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Security Groups -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h2 style="color: #667eea; font-size: 32px; margin: 0 0 20px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            🔐 Security Groups</h2>
+        <h3 style="color: #764ba2; font-size: 24px; margin: 25px 0 15px 0;">Four-Tier Access Control</h3>
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #28a745;">
+                        <h4 style="color: #28a745; margin: 0 0 10px 0; font-size: 20px;">👤 Requisition User</h4>
+                        <p style="margin: 0 0 10px 0; font-weight: 600;">Permissions:</p>
+                        <ul style="margin: 0; padding-left: 20px; color: #666;">
+                            <li style="margin: 5px 0;">Create requisitions</li>
+                            <li style="margin: 5px 0;">View own requisitions</li>
+                            <li style="margin: 5px 0;">View department requisitions</li>
+                            <li style="margin: 5px 0;">Submit for approval</li>
+                        </ul>
+                    </div>
+                </td>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #ffc107;">
+                        <h4 style="color: #f57c00; margin: 0 0 10px 0; font-size: 20px;">👔 Requisition Manager</h4>
+                        <p style="margin: 0 0 10px 0; font-weight: 600;">Permissions:</p>
+                        <ul style="margin: 0; padding-left: 20px; color: #666;">
+                            <li style="margin: 5px 0;">All User permissions</li>
+                            <li style="margin: 5px 0;">Approve department level</li>
+                            <li style="margin: 5px 0;">View all requisitions</li>
+                            <li style="margin: 5px 0;">Access approval queue</li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #ff5722;">
+                        <h4 style="color: #ff5722; margin: 0 0 10px 0; font-size: 20px;">🎓 Requisition Director</h4>
+                        <p style="margin: 0 0 10px 0; font-weight: 600;">Permissions:</p>
+                        <ul style="margin: 0; padding-left: 20px; color: #666;">
+                            <li style="margin: 5px 0;">All Manager permissions</li>
+                            <li style="margin: 5px 0;">Give final approval</li>
+                            <li style="margin: 5px 0;">Override approvals</li>
+                            <li style="margin: 5px 0;">Full visibility</li>
+                        </ul>
+                    </div>
+                </td>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #9c27b0;">
+                        <h4 style="color: #9c27b0; margin: 0 0 10px 0; font-size: 20px;">⚙️ Requisition
+                            Administrator</h4>
+                        <p style="margin: 0 0 10px 0; font-weight: 600;">Permissions:</p>
+                        <ul style="margin: 0; padding-left: 20px; color: #666;">
+                            <li style="margin: 5px 0;">All Director permissions</li>
+                            <li style="margin: 5px 0;">Configure settings</li>
+                            <li style="margin: 5px 0;">Delete requisitions</li>
+                            <li style="margin: 5px 0;">Full system access</li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Installation -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h2 style="color: #667eea; font-size: 32px; margin: 0 0 20px 0; border-bottom: 3px solid #667eea; padding-bottom: 10px;">
+            ⚙️ Easy Installation</h2>
+        <h3 style="color: #764ba2; font-size: 24px; margin: 25px 0 15px 0;">Get Started in 3 Simple Steps:</h3>
+
+        <ol style="font-size: 18px; line-height: 2; color: #333;">
+            <li style="margin: 10px 0;"><strong>Install:</strong> Go to Apps → Search "Purchase Requisition Flow" →
+                Click Install
+            </li>
+            <li style="margin: 10px 0;"><strong>Configure:</strong> Assign users to security groups in Settings</li>
+            <li style="margin: 10px 0;"><strong>Use:</strong> Start creating requisitions immediately!</li>
+        </ol>
+
+        <p style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 8px; color: #1565c0;">
+            <strong>📖 Documentation Included:</strong> Comprehensive user guide, administrator manual, and video
+            tutorials to get your team up and running quickly.
+        </p>
+    </div>
+
+    <!-- Pricing -->
+    <div style="background-color: #667eea; color: white; padding: 40px; border-radius: 15px; text-align: center; margin: 30px 0;">
+        <h3 style="color: white; font-size: 36px; margin: 0 0 10px 0;">💎 Pricing</h3>
+        <div style="font-size: 72px; font-weight: 700; margin: 20px 0;">$199.00</div>
+        <p style="font-size: 18px; margin: 10px 0;">Community Edition - No Hidden Costs</p>
+        <p style="margin-top: 20px; font-size: 18px;">
+            Full-featured version with requisitions and approvals.<br>
+            Professional support available separately.
+        </p>
+    </div>
+
+    <!-- Support -->
+    <div style="background: #e3f2fd; padding: 30px; border-radius: 10px; margin: 30px 0;">
+        <h3 style="color: #1976d2; margin: 0 0 20px 0; font-size: 28px;">🤝 Support & Services</h3>
+
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: white; padding: 20px; border-radius: 8px;">
+                        <h4 style="color: #1976d2; margin: 0 0 10px 0;">📚 Free Resources</h4>
+                        <ul style="color: #666; margin: 10px 0; padding-left: 20px;">
+                            <li style="margin: 5px 0;">Complete documentation</li>
+                            <li style="margin: 5px 0;">Video tutorials</li>
+                            <li style="margin: 5px 0;">Community forum support</li>
+                            <li style="margin: 5px 0;">Email support</li>
+                        </ul>
+                    </div>
+                </td>
+                <td style="width: 50%; padding: 15px; vertical-align: top;">
+                    <div style="background: white; padding: 20px; border-radius: 8px;">
+                        <h4 style="color: #1976d2; margin: 0 0 10px 0;">🎯 Professional Services</h4>
+                        <ul style="color: #666; margin: 10px 0; padding-left: 20px;">
+                            <li style="margin: 5px 0;">Custom development</li>
+                            <li style="margin: 5px 0;">Integration services</li>
+                            <li style="margin: 5px 0;">Training sessions</li>
+                            <li style="margin: 5px 0;">Priority support</li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Call to Action -->
+    <div style="text-align: center; background-color: #667eea; color: white; padding: 40px; border-radius: 12px; margin: 30px 0;">
+        <h2 style="color: white; margin: 0 0 20px 0; font-size: 32px;">🚀 Ready to Transform Your Requisition
+            Process?</h2>
+        <p style="font-size: 20px; margin: 20px 0;">
+            Join hundreds of organizations streamlining their procurement with<br>
+            Purchase Requisition Flow Management
+        </p>
+        <div style="margin: 30px 0;">
+            <a href="#"
+               style="background: white; color: #667eea; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: 600; font-size: 18px; display: inline-block;">Install
+                Now</a>
+        </div>
+        <p style="margin-top: 30px; font-size: 16px;">
+            ⭐ Rated 5/5 by users | 💬 Excellent support | 🔄 Regular updates
+        </p>
+    </div>
+
+    <!-- Footer Info -->
+    <div style="background: white; margin: 30px 0; padding: 40px; border-radius: 12px; border: 1px solid #e0e0e0;">
+        <h3 style="color: #667eea; font-size: 24px; margin: 0 0 20px 0;">📞 Contact Information</h3>
+        <p style="margin: 10px 0; font-size: 16px;"><strong>Developer:</strong> Tech Joe</p>
+        <p style="margin: 10px 0; font-size: 16px;"><strong>Website:</strong> ayanfiscoss@gmail.com</p>
+        <p style="margin: 10px 0; font-size: 16px;"><strong>Email:</strong> ayanfiscoss@gmail.com</p>
+
+        <p style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #ddd; color: #666; text-align: center; font-size: 14px;">
+            <strong>Version:</strong> 18.0.1.0.0 |
+            <strong>Last Updated:</strong> December 2025 |
+            <strong>License:</strong> LGPL-3
+        </p>
+    </div>
+</div>
+</body>
+</html>

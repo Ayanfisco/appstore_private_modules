@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petty Cash Management</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+
+<!-- Hero Section -->
+<section style="padding: 60px 20px; text-align: center;">
+    <h1 style="font-size: 48px; margin: 0 0 20px 0; font-weight: 700;">Petty Cash Management</h1>
+    <p style="font-size: 24px; margin: 0 0 30px 0; color:grey;">Complete Automated Workflow System for Odoo 18</p>
+    <p style="font-size: 18px; margin: 0; color:grey;">Streamline your petty cash requests with automated approvals,
+        division tracking, and seamless payment processing</p>
+</section>
+
+<!-- Key Features -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Key Features</h2>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+            <!-- Feature 1 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #667eea; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    📝
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Simple Request Submission</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Requesters can easily submit petty cash
+                    requests up to 10,000 with division details, budget codes, and supporting documents.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #764ba2; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    ✅
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Automated Approval Workflow</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Intelligent routing from Division Head to CFO
+                    with automated notifications and approval tracking at each stage.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #f093fb; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    📊
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Division-Based Tracking</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Automatic division float balance management
+                    tied to analytic accounts for precise budget control and reporting.</p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #4facfe; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    🔄
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Automatic Posting</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">CFO-approved requests are automatically
+                    posted to appropriate accounts with batches created by division for seamless processing.</p>
+            </div>
+
+            <!-- Feature 5 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #43e97b; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    💰
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Smart Payment Processing</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Role-based payment handling: Treasury Officer
+                    for amounts below 10,000, Payable Officer for amounts above 10,000.</p>
+            </div>
+
+            <!-- Feature 6 -->
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #fa709a; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    🔔
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Real-Time Notifications</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Automatic notifications for
+                    approval/rejection status and reminder alerts for pending approver actions.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Complete Workflow Process</h2>
+
+        <div style="display: flex; flex-direction: column; gap: 40px;">
+            <!-- Step 1 -->
+            <div style="display: flex; align-items: flex-start; gap: 30px; flex-wrap: wrap;">
+                <div style="flex: 0 0 80px; width: 80px; height: 80px; background: #667eea; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold;">
+                    1
+                </div>
+                <div style="flex: 1 1 300px;">
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0; color: #2c3e50;">Request Submission</h3>
+                    <p style="color: #666; font-size: 16px; margin: 0 0 15px 0; line-height: 1.8;">
+                        Employees submit petty cash requests through a simple form in Odoo. The system ensures all necessary information is captured before submission.
+                    </p>
+                    <div style="background: #e8eaf6; padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color: #5c6bc0;">Who:</strong> Any employee (Requester role)
+                    </div>
+                    <div style="background: #f3e5f5; padding: 12px 16px; border-radius: 8px;">
+                        <strong style="color: #8e24aa;">Actions:</strong>
+                        <ul style="margin: 8px 0 0 20px; padding: 0; color: #666;">
+                            <li>Enter amount (maximum 10,000)</li>
+                            <li>Select division (linked to budget tracking)</li>
+                            <li>Provide expense budget code</li>
+                            <li>Write purpose/narration</li>
+                            <li>Upload supporting documents (receipts, invoices)</li>
+                            <li>Click "Submit" to route to Division Head</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connector -->
+            <div style="width: 2px; height: 40px; background: linear-gradient(to bottom, #667eea, #764ba2); margin: 0 auto; opacity: 0.3;"></div>
+
+            <!-- Step 2 -->
+            <div style="display: flex; align-items: flex-start; gap: 30px; flex-wrap: wrap;">
+                <div style="flex: 0 0 80px; width: 80px; height: 80px; background: #764ba2; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold;">
+                    2
+                </div>
+                <div style="flex: 1 1 300px;">
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0; color: #2c3e50;">Division Head Approval</h3>
+                    <p style="color: #666; font-size: 16px; margin: 0 0 15px 0; line-height: 1.8;">
+                        The system automatically routes the request to the Division Head for first-level approval. Email notifications and in-app alerts ensure timely review.
+                    </p>
+                    <div style="background: #e8eaf6; padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color: #5c6bc0;">Who:</strong> Division Head (assigned per division)
+                    </div>
+                    <div style="background: #f3e5f5; padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color: #8e24aa;">Actions:</strong>
+                        <ul style="margin: 8px 0 0 20px; padding: 0; color: #666;">
+                            <li>Review request details and supporting documents</li>
+                            <li>Verify budget code and division allocation</li>
+                            <li>Click "Approve (Division)" to forward to CFO</li>
+                            <li>OR Click "Reject" with reason (notifies requester)</li>
+                        </ul>
+                    </div>
+                    <div style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 12px 16px; border-radius: 4px;">
+                        <strong style="color: #1976d2;">⏰ Automatic Reminder:</strong> If no action is taken within 24 hours, the Division Head receives a reminder email.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connector -->
+            <div style="width: 2px; height: 40px; background: linear-gradient(to bottom, #764ba2, #f093fb); margin: 0 auto; opacity: 0.3;"></div>
+
+            <!-- Step 3 -->
+            <div style="display: flex; align-items: flex-start; gap: 30px; flex-wrap: wrap;">
+                <div style="flex: 0 0 80px; width: 80px; height: 80px; background: #f093fb; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold;">
+                    3
+                </div>
+                <div style="flex: 1 1 300px;">
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0; color: #2c3e50;">CFO Final Approval</h3>
+                    <p style="color: #666; font-size: 16px; margin: 0 0 15px 0; line-height: 1.8;">
+                        After Division Head approval, the CFO reviews for final authorization. Upon approval, the system automatically creates accounting entries.
+                    </p>
+                    <div style="background: #e8eaf6; padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color: #5c6bc0;">Who:</strong> Chief Financial Officer
+                    </div>
+                    <div style="background: #f3e5f5; padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color: #8e24aa;">Actions:</strong>
+                        <ul style="margin: 8px 0 0 20px; padding: 0; color: #666;">
+                            <li>Review Division Head's approval</li>
+                            <li>Verify overall budget compliance</li>
+                            <li>Click "Approve (CFO)" - System automatically:
+                                <ul style="margin: 5px 0 0 20px;">
+                                    <li>Creates journal entry (Debit: Expense, Credit: Petty Cash)</li>
+                                    <li>Posts entry to General Ledger</li>
+                                    <li>Creates batch by division</li>
+                                    <li>Moves request to "Payment Processing" status</li>
+                                </ul>
+                            </li>
+                            <li>OR Click "Reject" (notifies requester and Division Head)</li>
+                        </ul>
+                    </div>
+                    <div style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 12px 16px; border-radius: 4px;">
+                        <strong style="color: #1976d2;">🔄 Automatic Posting:</strong> No manual journal entry needed! The system handles all accounting automatically.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connector -->
+            <div style="width: 2px; height: 40px; background: linear-gradient(to bottom, #f093fb, #4facfe); margin: 0 auto; opacity: 0.3;"></div>
+
+            <!-- Step 4 -->
+            <div style="display: flex; align-items: flex-start; gap: 30px; flex-wrap: wrap;">
+                <div style="flex: 0 0 80px; width: 80px; height: 80px; background: #4facfe; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: bold;">
+                    4
+                </div>
+                <div style="flex: 1 1 300px;">
+                    <h3 style="font-size: 24px; margin: 0 0 10px 0; color: #2c3e50;">Payment Processing</h3>
+                    <p style="color: #666; font-size: 16px; margin: 0 0 15px 0; line-height: 1.8;">
+                        The Treasury or Payable Officer processes the actual payment to the requester. The system tracks payment status and updates division float balances.
+                    </p>
+                    <div style="background: #e8eaf6; padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color: #5c6bc0;">Who:</strong>
+                        <ul style="margin: 8px 0 0 20px; padding: 0; color: #666;">
+                            <li>Treasury Officer (for amounts &lt; 10,000)</li>
+                            <li>Payable Officer (for amounts ≥ 10,000)</li>
+                        </ul>
+                    </div>
+                    <div style="background: #f3e5f5; padding: 12px 16px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong style="color: #8e24aa;">Actions:</strong>
+                        <ul style="margin: 8px 0 0 20px; padding: 0; color: #666;">
+                            <li>Review approved batches grouped by division</li>
+                            <li>Process payment via bank transfer or cash</li>
+                            <li>Click "Process Payment" - System automatically:
+                                <ul style="margin: 5px 0 0 20px;">
+                                    <li>Updates division float balance</li>
+                                    <li>Marks request as "Paid"</li>
+                                    <li>Records payment in general ledger</li>
+                                    <li>Notifies requester of payment completion</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 12px 16px; border-radius: 4px;">
+                        <strong style="color: #1976d2;">💰 Division Float Tracking:</strong> Each payment automatically updates the division's float balance for budget monitoring.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Setup Guide with Screenshots -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Step-by-Step Setup Guide</h2>
+
+        <div style="margin-bottom: 40px;">
+            <!-- Screenshot 1 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Step 1: Configure User Groups & Approval Flow</h3>
+                <img src="screenshot_1.png" alt="User Groups Setup" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <p style="text-align: center; color: #666; margin: 0 0 20px 0; font-size: 16px; font-style: italic;">Assign users to their respective roles for the approval workflow</p>
+
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <h4 style="color: #e65100; margin: 0 0 10px 0; font-size: 18px;">🔧 How to Set Up:</h4>
+                    <ol style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                        <li>Go to <strong>Settings → Users & Companies → Groups</strong></li>
+                        <li>Find the Petty Cash groups:
+                            <ul style="margin: 8px 0 0 20px;">
+                                <li><strong>Petty Cash User:</strong> Regular employees who submit requests</li>
+                                <li><strong>Petty Cash Division Head:</strong> Department managers who approve first</li>
+                                <li><strong>Petty Cash CFO:</strong> CFO who provides final approval</li>
+                                <li><strong>Petty Cash Treasury:</strong> Officers who process payments</li>
+                            </ul>
+                        </li>
+                        <li>Click each group and add appropriate users to the "Users" tab</li>
+                        <li>Ensure each division has at least one Division Head assigned</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Screenshot 2 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Step 2: Configure Company Accounts (CRITICAL)</h3>
+                <img src="screenshot_2.png" alt="Company Configuration" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <p style="text-align: center; color: #666; margin: 0 0 20px 0; font-size: 16px; font-style: italic;">Set up the accounting accounts that will be used for petty cash transactions</p>
+
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <h4 style="color: #e65100; margin: 0 0 10px 0; font-size: 18px;">🔧 How to Set Up:</h4>
+                    <ol style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                        <li>Go to <strong>Settings → Companies → Companies</strong></li>
+                        <li>Select your company and click on the <strong>Petty Cash</strong> tab</li>
+                        <li>Configure the following accounts:
+                            <ul style="margin: 8px 0 0 20px;">
+                                <li><strong>Petty Cash Account:</strong> Select your cash account (e.g., "1010 - Petty Cash on Hand")</li>
+                                <li><strong>Default Expense Account:</strong> Select default expense account (e.g., "5100 - Office Expenses")</li>
+                                <li><strong>Petty Cash Journal:</strong> Select your cash journal (e.g., "Cash Journal")</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>Save</strong></li>
+                    </ol>
+                    <div style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 12px 16px; border-radius: 4px; margin-top: 15px;">
+                        <strong style="color: #1976d2;">⚠️ Why This Matters:</strong> These accounts ensure journal entries are posted to the correct accounts in your Chart of Accounts. Without this configuration, the system cannot create accounting entries automatically when CFO approves requests.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot 3 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Step 3: Set Up Divisions with Division Heads</h3>
+                <img src="screenshot_3.png" alt="Division Setup" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <p style="text-align: center; color: #666; margin: 0 0 20px 0; font-size: 16px; font-style: italic;">Configure divisions and assign division heads for approval routing</p>
+
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <h4 style="color: #e65100; margin: 0 0 10px 0; font-size: 18px;">🔧 How to Set Up:</h4>
+                    <ol style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                        <li>Go to <strong>Accounting → Configuration → Analytic Accounts</strong></li>
+                        <li>Create or edit your divisions (e.g., "Sales Division", "IT Division", "HR Division")</li>
+                        <li>For each division, set the <strong>Manager</strong> field to the user who will be the Division Head</li>
+                        <li>Ensure the plan is set to "Division" for proper filtering</li>
+                        <li>Save each division</li>
+                    </ol>
+                    <div style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 12px 16px; border-radius: 4px; margin-top: 15px;">
+                        <strong style="color: #1976d2;">💡 Important:</strong> The Manager assigned here will automatically receive approval requests for their division.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot 4 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Step 4: Submit a Petty Cash Request</h3>
+                <img src="screenshot_4.png" alt="Request Form" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <p style="text-align: center; color: #666; margin: 0 0 20px 0; font-size: 16px; font-style: italic;">Simple and intuitive form for submitting petty cash requests</p>
+
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <h4 style="color: #e65100; margin: 0 0 10px 0; font-size: 18px;">🔧 How to Use:</h4>
+                    <ol style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                        <li>Go to <strong>Petty Cash → Requests → Create</strong></li>
+                        <li>Fill in the form:
+                            <ul style="margin: 8px 0 0 20px;">
+                                <li><strong>Amount:</strong> Enter amount (max 10,000)</li>
+                                <li><strong>Division:</strong> Select your division from dropdown</li>
+                                <li><strong>Expense Budget Code:</strong> Enter your budget code</li>
+                                <li><strong>Purpose:</strong> Describe what the money is for</li>
+                                <li><strong>Supporting Documents:</strong> Upload receipts, invoices, etc.</li>
+                            </ul>
+                        </li>
+                        <li>Click <strong>Submit</strong> to send to Division Head</li>
+                        <li>You'll receive email notification when approved/rejected</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Screenshot 5 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Step 5: Approve Requests (Division Head & CFO)</h3>
+                <img src="screenshot_5.png" alt="Approval Workflow" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <p style="text-align: center; color: #666; margin: 0 0 20px 0; font-size: 16px; font-style: italic;">Clear approval buttons and status tracking throughout the workflow</p>
+
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <h4 style="color: #e65100; margin: 0 0 10px 0; font-size: 18px;">🔧 How to Approve:</h4>
+                    <ol style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                        <li><strong>Division Head:</strong>
+                            <ul style="margin: 8px 0 0 20px;">
+                                <li>Open the request from your notifications or Petty Cash menu</li>
+                                <li>Review all details and documents</li>
+                                <li>Click <strong>"Approve (Division)"</strong> to forward to CFO</li>
+                                <li>OR click <strong>"Reject"</strong> if not approved</li>
+                            </ul>
+                        </li>
+                        <li><strong>CFO:</strong>
+                            <ul style="margin: 8px 0 0 20px;">
+                                <li>Review Division Head's approval</li>
+                                <li>Click <strong>"Approve (CFO)"</strong> - This automatically creates the journal entry!</li>
+                                <li>Request moves to "Payment Processing" status</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Screenshot 6 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Step 6: Monitor Division Float Balances</h3>
+                <img src="screenshot_6.png" alt="Division Float" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <p style="text-align: center; color: #666; margin: 0 0 20px 0; font-size: 16px; font-style: italic;">Real-time tracking of petty cash spending by division</p>
+
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <h4 style="color: #e65100; margin: 0 0 10px 0; font-size: 18px;">🔧 How to Use:</h4>
+                    <ol style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                        <li>Go to <strong>Petty Cash → Division Float</strong></li>
+                        <li>View all divisions and their current float balances</li>
+                        <li>Click on any division to see:
+                            <ul style="margin: 8px 0 0 20px;">
+                                <li>All paid petty cash requests</li>
+                                <li>Total amount spent</li>
+                                <li>Monthly statistics</li>
+                                <li>Transaction history</li>
+                            </ul>
+                        </li>
+                        <li>Use filters to analyze spending patterns</li>
+                    </ol>
+                    <div style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 12px 16px; border-radius: 4px; margin-top: 15px;">
+                        <strong style="color: #1976d2;">📊 Budget Control:</strong> Negative balances indicate divisions that need float replenishment.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot 7 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 40px;">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Step 7: View Automatic Journal Entries</h3>
+                <img src="screenshot_7.png" alt="Journal Entry" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <p style="text-align: center; color: #666; margin: 0 0 20px 0; font-size: 16px; font-style: italic;">Automatically created journal entries with complete audit trail</p>
+
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <h4 style="color: #e65100; margin: 0 0 10px 0; font-size: 18px;">🔧 How to View:</h4>
+                    <ol style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                        <li>Open any approved petty cash request</li>
+                        <li>Click the <strong>"Journal Entry"</strong> button in the top-right</li>
+                        <li>View the automatically created entry:
+                            <ul style="margin: 8px 0 0 20px;">
+                                <li><strong>Debit:</strong> Expense Account (from company settings)</li>
+                                <li><strong>Credit:</strong> Petty Cash Account (from company settings)</li>
+                                <li><strong>Analytic Account:</strong> Division (for budget tracking)</li>
+                                <li><strong>Reference:</strong> Petty cash request number</li>
+                            </ul>
+                        </li>
+                        <li>Entry is already posted - no manual posting required!</li>
+                    </ol>
+                    <div style="background: #e3f2fd; border-left: 4px solid #2196f3; padding: 12px 16px; border-radius: 4px; margin-top: 15px;">
+                        <strong style="color: #1976d2;">🔄 Fully Automated:</strong> The system creates and posts journal entries automatically when CFO approves. No accountant intervention needed!
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screenshot 8 -->
+            <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Step 8: Process Payments</h3>
+                <img src="screenshot_8.png" alt="Payment Processing" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 20px;">
+                <p style="text-align: center; color: #666; margin: 0 0 20px 0; font-size: 16px; font-style: italic;">Treasury officers process payments and update division floats</p>
+
+                <div style="background: #fff3e0; padding: 20px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                    <h4 style="color: #e65100; margin: 0 0 10px 0; font-size: 18px;">🔧 How to Process:</h4>
+                    <ol style="margin: 10px 0 0 20px; color: #555; line-height: 1.8;">
+                        <li>Go to <strong>Petty Cash → Requests</strong></li>
+                        <li>Filter by <strong>"Payment Processing"</strong> status</li>
+                        <li>Review approved requests in batches (grouped by division)</li>
+                        <li>Process actual payment (bank transfer, cash, etc.)</li>
+                        <li>Open the request and click <strong>"Process Payment"</strong></li>
+                        <li>System automatically:
+                            <ul style="margin: 8px 0 0 20px;">
+                                <li>Updates division float balance</li>
+                                <li>Marks request as "Paid"</li>
+                                <li>Records payment in GL</li>
+                                <li>Notifies requester</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Why Choose This
+            Module?</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+            <div style="padding: 25px; border-left: 4px solid #667eea;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Fully Automated</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">End-to-end automation from request
+                    submission to payment processing and GL posting</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #764ba2;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Enhanced Control</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Multi-level approval workflow
+                    ensures proper authorization and budget compliance</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #f093fb;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Real-Time Visibility</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Track requests, approvals, and
+                    division float balances in real-time with instant notifications</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #4facfe;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Division Management</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Automatic tracking by division
+                    with analytic account integration for precise budget control</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #43e97b;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Complete Audit Trail</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Full documentation trail from
+                    request to payment with supporting documents and GL entries</p>
+            </div>
+
+            <div style="padding: 25px; border-left: 4px solid #fa709a;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Odoo 18 Native</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Built specifically for Odoo 18
+                    with full integration with Accounting and HR modules</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Specifications -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Technical
+            Specifications</h2>
+
+        <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="border-bottom: 2px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Version</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">18.0.1.0.0</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Category</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">Accounting / Finance</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">License</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">LGPL-3</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Dependencies</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">account, mail, analytic, base_automation</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Author</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">Tech Joe</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Website</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">ayanfiscoss@gmail.com</td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Support</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">ayanfiscoss@gmail.com</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Installation -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Installation & Configuration</h2>
+
+        <div style="background: #f8f9fa; padding: 40px; border-radius: 10px; border-left: 5px solid #667eea; margin-bottom: 30px;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50;">Installation Steps</h3>
+            <ol style="font-size: 18px; line-height: 2; color: #333; margin: 0; padding-left: 30px;">
+                <li>Download the module from Odoo App Store</li>
+                <li>Navigate to Apps menu in Odoo</li>
+                <li>Click "Update Apps List"</li>
+                <li>Search for "Petty Cash Management"</li>
+                <li>Click "Install"</li>
+            </ol>
+        </div>
+
+        <div style="background: #fff3e0; padding: 40px; border-radius: 10px; border-left: 5px solid #ff9800;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #e65100;">Post-Installation Configuration (REQUIRED)</h3>
+            <ol style="font-size: 18px; line-height: 2; color: #333; margin: 0; padding-left: 30px;">
+                <li><strong>Configure Company Accounts</strong> (Settings → Companies → Petty Cash tab):
+                    <ul style="margin: 10px 0 0 20px; font-size: 16px;">
+                        <li>Set Petty Cash Account</li>
+                        <li>Set Default Expense Account</li>
+                        <li>Set Petty Cash Journal</li>
+                    </ul>
+                </li>
+                <li><strong>Set Up Divisions</strong> (Accounting → Configuration → Analytic Accounts):
+                    <ul style="margin: 10px 0 0 20px; font-size: 16px;">
+                        <li>Create divisions</li>
+                        <li>Assign Division Heads to each division</li>
+                    </ul>
+                </li>
+                <li><strong>Assign User Groups</strong> (Settings → Users & Companies → Groups):
+                    <ul style="margin: 10px 0 0 20px; font-size: 16px;">
+                        <li>Add users to Petty Cash User group</li>
+                        <li>Add managers to Petty Cash Division Head group</li>
+                        <li>Add CFO to Petty Cash CFO group</li>
+                        <li>Add finance staff to Petty Cash Treasury group</li>
+                    </ul>
+                </li>
+                <li>Start submitting petty cash requests!</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- Support -->
+<section
+        style="padding: 60px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-align: center;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="font-size: 36px; margin: 0 0 20px 0;">Need Help?</h2>
+        <p style="font-size: 20px; margin: 0 0 30px 0; opacity: 0.95;">We're here to support you!</p>
+        <p style="font-size: 18px; margin: 0 0 15px 0;">
+            <strong>Email:</strong> ayanfiscoss@gmail.com
+        </p>
+        <p style="font-size: 18px; margin: 0;">
+            <strong>Company:</strong> Tech Joe
+        </p>
+    </div>
+</section>
+
+<!-- Footer -->
+<section style="padding: 30px 20px; background-color: #2c3e50; color: white; text-align: center;">
+    <p style="margin: 0; font-size: 16px;">© 2025 Tech Joe. All rights reserved.</p>
+    <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.8;">Petty Cash Management v18.0.1.0.0</p>
+</section>
+
+</body>
+</html>

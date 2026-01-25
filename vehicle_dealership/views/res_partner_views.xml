@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_partner_form_vehicle" model="ir.ui.view">
+        <field name="name">res.partner.form.vehicle</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Vehicles" groups="vehicle_dealership.group_vehicle_user">
+                    <group>
+                        <field name="vehicle_sale_count"/>
+                        <field name="vehicle_purchase_count"/>
+                    </group>
+                    <group string="Vehicle Sales">
+                        <field name="vehicle_sale_ids" mode="list" nolabel="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="sale_date"/>
+                                <field name="vehicle_id"/>
+                                <field name="final_price" widget="monetary"/>
+                                <field name="state" widget="badge"/>
+                            </list>
+                        </field>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>

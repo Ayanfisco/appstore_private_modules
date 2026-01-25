@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Purchase Requisition Line Form View -->
+    <record id="view_pr_flow_requisition_line_form" model="ir.ui.view">
+        <field name="name">pr.flow.requisition.line.form</field>
+        <field name="model">pr.flow.requisition.line</field>
+        <field name="arch" type="xml">
+            <form string="Requisition Line">
+                <sheet>
+                    <group>
+                        <group name="product_info">
+                            <field name="product_id"
+                                   options="{'no_create': True, 'no_open': True}"
+                                   domain="[('purchase_ok', '=', True)]"/>
+                            <field name="product_category_id" readonly="1"/>
+                            <field name="description"/>
+                        </group>
+                        <group name="quantity_info">
+                            <field name="quantity"/>
+                            <field name="uom_id" groups="uom.group_uom"/>
+                            <field name="estimated_price"/>
+                            <field name="subtotal" widget="monetary"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <group name="vendor_info">
+                            <field name="vendor_id"
+                                   options="{'no_create': True}"
+                                   domain="[('is_company', '=', True)]"/>
+                            <field name="date_required" readonly="1"/>
+                        </group>
+                        <group name="stock_info">
+                            <field name="stock_available" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group name="notes">
+                        <field name="notes" placeholder="Additional notes for this line..."/>
+                    </group>
+
+                    <group>
+                        <field name="requisition_id" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="product_uom_category_id" invisible="1"/>
+                        <field name="sequence" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Purchase Requisition Line List View -->
+    <record id="view_pr_flow_requisition_line_list" model="ir.ui.view">
+        <field name="name">pr.flow.requisition.line.list</field>
+        <field name="model">pr.flow.requisition.line</field>
+        <field name="arch" type="xml">
+            <list string="Requisition Lines"
+                  editable="bottom"
+                  decoration-info="state == 'draft'"
+                  decoration-success="state in ['approved', 'done']">
+                <field name="sequence" widget="handle"/>
+                <field name="product_id" required="1"/>
+                <field name="product_category_id" optional="show"/>
+                <field name="description" optional="show"/>
+                <field name="quantity"/>
+                <field name="uom_id" groups="uom.group_uom"/>
+                <field name="estimated_price"/>
+                <field name="subtotal" sum="total" widget="monetary"/>
+                <field name="vendor_id"/>
+                <field name="stock_available" optional="show"/>
+                <field name="date_required" optional="hide"/>
+                <field name="state" optional="hide" widget="badge"/>
+                <field name="currency_id" column_invisible="1"/>
+                <field name="product_uom_category_id" column_invisible="1"/>
+                <field name="requisition_id" column_invisible="1"/>
+                <field name="company_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Purchase Requisition Line Search View -->
+    <record id="view_pr_flow_requisition_line_search" model="ir.ui.view">
+        <field name="name">pr.flow.requisition.line.search</field>
+        <field name="model">pr.flow.requisition.line</field>
+        <field name="arch" type="xml">
+            <search string="Requisition Lines">
+                <field name="product_id" string="Product"/>
+                <field name="requisition_id" string="Requisition"/>
+                <field name="vendor_id" string="Vendor"/>
+                <field name="product_category_id" string="Category"/>
+
+                <filter string="My Requisition Lines" name="my_lines"
+                        domain="[('requisition_id.user_id', '=', uid)]"/>
+                <filter string="My Department Lines" name="my_department_lines"
+                        domain="[('requisition_id.department_id.member_ids', 'in', [uid])]"/>
+
+                <separator/>
+                <filter string="Draft" name="draft"
+                        domain="[('state', '=', 'draft')]"/>
+                <filter string="Approved" name="approved"
+                        domain="[('state', '=', 'approved')]"/>
+                <filter string="Done" name="done"
+                        domain="[('state', '=', 'done')]"/>
+
+                <separator/>
+                <filter string="With Vendor" name="with_vendor"
+                        domain="[('vendor_id', '!=', False)]"/>
+                <filter string="Without Vendor" name="without_vendor"
+                        domain="[('vendor_id', '=', False)]"/>
+
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter string="Product" name="group_product"-->
+<!--                            context="{'group_by': 'product_id'}"/>-->
+<!--                    <filter string="Product Category" name="group_category"-->
+<!--                            context="{'group_by': 'product_category_id'}"/>-->
+<!--                    <filter string="Vendor" name="group_vendor"-->
+<!--                            context="{'group_by': 'vendor_id'}"/>-->
+<!--                    <filter string="Requisition" name="group_requisition"-->
+<!--                            context="{'group_by': 'requisition_id'}"/>-->
+<!--                    <filter string="Status" name="group_state"-->
+<!--                            context="{'group_by': 'state'}"/>-->
+<!--                    <filter string="Required Date" name="group_date"-->
+<!--                            context="{'group_by': 'date_required'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+
+    <!-- Purchase Requisition Line Pivot View -->
+    <record id="view_pr_flow_requisition_line_pivot" model="ir.ui.view">
+        <field name="name">pr.flow.requisition.line.pivot</field>
+        <field name="model">pr.flow.requisition.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Requisition Lines Analysis">
+                <field name="product_category_id" type="row"/>
+                <field name="vendor_id" type="row"/>
+                <field name="quantity" type="measure"/>
+                <field name="subtotal" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Purchase Requisition Line Graph View -->
+    <record id="view_pr_flow_requisition_line_graph" model="ir.ui.view">
+        <field name="name">pr.flow.requisition.line.graph</field>
+        <field name="model">pr.flow.requisition.line</field>
+        <field name="arch" type="xml">
+            <graph string="Requisition Lines Analysis" type="bar">
+                <field name="product_category_id"/>
+                <field name="subtotal" type="measure"/>
+            </graph>
+        </field>
+    </record>
+</odoo>

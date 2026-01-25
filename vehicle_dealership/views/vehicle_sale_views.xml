@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_vehicle_sale_list" model="ir.ui.view">
+        <field name="name">vehicle.sale.list</field>
+        <field name="model">vehicle.sale</field>
+        <field name="arch" type="xml">
+            <list string="Vehicle Sales" sample="1">
+                <field name="name"/>
+                <field name="sale_date"/>
+                <field name="vehicle_id"/>
+                <field name="customer_id"/>
+                <field name="salesperson_id" widget="many2one_avatar_user"/>
+                <field name="final_price" widget="monetary" sum="Total"/>
+                <field name="payment_method"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-primary="state == 'confirmed'"
+                       decoration-success="state == 'delivered'"
+                       decoration-muted="state == 'cancelled'"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vehicle Sale Form View -->
+    <record id="view_vehicle_sale_form" model="ir.ui.view">
+        <field name="name">vehicle.sale.form</field>
+        <field name="model">vehicle.sale</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Sale">
+                <header>
+                    <button name="action_confirm" type="object" string="Confirm Sale"
+                            invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_deliver" type="object" string="Deliver Vehicle"
+                            invisible="state != 'confirmed'" class="btn-success"/>
+                    <button name="action_create_invoice" type="object" string="Create Invoice"
+                            invisible="state not in ['confirmed', 'delivered'] or invoice_id"
+                            class="btn-primary"/>
+                    <button name="action_cancel" type="object" string="Cancel"
+                            invisible="state not in ['draft', 'confirmed']" class="btn-secondary"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirmed,delivered"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Sale Information">
+                            <field name="vehicle_id" options="{'no_create': True}"/>
+                            <field name="customer_id"/>
+                            <field name="salesperson_id" widget="many2one_avatar_user"/>
+                            <field name="sale_date"/>
+                            <field name="delivery_date"/>
+                        </group>
+                        <group string="Pricing">
+                            <field name="list_price" widget="monetary"/>
+                            <field name="discount_amount" widget="monetary"/>
+                            <field name="trade_in_value" widget="monetary"
+                                   invisible="not has_trade_in"/>
+                            <field name="final_price" widget="monetary" class="oe_subtotal_footer_separator"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Payment Details">
+                            <field name="payment_method"/>
+                            <field name="down_payment" widget="monetary"
+                                   invisible="payment_method != 'finance'"/>
+                            <field name="loan_amount" widget="monetary"
+                                   invisible="payment_method != 'finance'"/>
+                            <field name="loan_term"
+                                   invisible="payment_method != 'finance'"/>
+                            <field name="interest_rate"
+                                   invisible="payment_method != 'finance'"/>
+                            <field name="monthly_payment" widget="monetary"
+                                   invisible="payment_method != 'finance'"/>
+                            <field name="finance_company"
+                                   invisible="payment_method != 'finance'"/>
+                        </group>
+                        <group string="Trade-In">
+                            <field name="has_trade_in"/>
+                            <field name="trade_in_vehicle"
+                                   invisible="not has_trade_in"/>
+                            <field name="trade_in_value" widget="monetary"
+                                   invisible="not has_trade_in"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Commission">
+                            <field name="commission_rate"/>
+                            <field name="commission_amount" widget="monetary"/>
+                        </group>
+                        <group string="Documents">
+                            <field name="contract_signed" widget="boolean_toggle"/>
+                            <field name="registration_transferred" widget="boolean_toggle"/>
+                            <field name="invoice_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Additional notes..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vehicle Sale Search View -->
+    <record id="view_vehicle_sale_search" model="ir.ui.view">
+        <field name="name">vehicle.sale.search</field>
+        <field name="model">vehicle.sale</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle Sales">
+                <field name="name"/>
+                <field name="vehicle_id"/>
+                <field name="customer_id"/>
+                <field name="salesperson_id"/>
+                <filter string="Draft" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmed" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Delivered" name="delivered" domain="[('state', '=', 'delivered')]"/>
+                <separator/>
+                <filter string="This Month" name="this_month"
+                        domain="[('sale_date', '&gt;=', (context_today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="This Year" name="this_year"
+                        domain="[('sale_date', '&gt;=', (context_today() - relativedelta(month=1, day=1)).strftime('%Y-%m-%d'))]"/>
+<!--                <group expand="0" string="Group By">-->
+<!--                    <filter string="Salesperson" name="group_salesperson" context="{'group_by': 'salesperson_id'}"/>-->
+<!--                    <filter string="Customer" name="group_customer" context="{'group_by': 'customer_id'}"/>-->
+<!--                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>-->
+<!--                    <filter string="Sale Date" name="group_sale_date" context="{'group_by': 'sale_date'}"/>-->
+<!--                </group>-->
+            </search>
+        </field>
+    </record>
+    <record id="view_vehicle_sale_pivot" model="ir.ui.view">
+        <field name="name">vehicle.sale.pivot</field>
+        <field name="model">vehicle.sale</field>
+        <field name="arch" type="xml">
+            <pivot string="Sales Analysis" sample="1">
+                <field name="salesperson_id" type="row"/>
+                <field name="sale_date" interval="month" type="col"/>
+                <field name="final_price" type="measure"/>
+                <field name="commission_amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Vehicle Sale Graph View -->
+    <record id="view_vehicle_sale_graph" model="ir.ui.view">
+        <field name="name">vehicle.sale.graph</field>
+        <field name="model">vehicle.sale</field>
+        <field name="arch" type="xml">
+            <graph string="Sales Statistics" sample="1">
+                <field name="sale_date" interval="month"/>
+                <field name="final_price" type="measure"/>
+            </graph>
+        </field>
+    </record>
+<!--    <record id="view_vehicle_sale_search_extended" model="ir.ui.view">-->
+<!--        <field name="name">vehicle.sale.search.extended</field>-->
+<!--        <field name="model">vehicle.sale</field>-->
+<!--        <field name="inherit_id" ref="view_vehicle_sale_search"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <filter name="group_sale_date" position="after">-->
+<!--                <filter string="Payment Method" name="group_payment" context="{'group_by': 'payment_method'}"/>-->
+<!--                <filter string="Vehicle Brand" name="group_vehicle_brand"-->
+<!--                        context="{'group_by': 'vehicle_brand_id'}"/>-->
+<!--                <filter string="Vehicle Model" name="group_vehicle_model"-->
+<!--                        context="{'group_by': 'vehicle_model_id'}"/>-->
+<!--            </filter>-->
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

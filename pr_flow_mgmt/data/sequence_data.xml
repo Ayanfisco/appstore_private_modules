@@ -1,0 +1,14 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Sequence for Purchase Requisition -->
+        <record id="sequence_pr_flow_requisition" model="ir.sequence">
+            <field name="name">Purchase Requisition Sequence</field>
+            <field name="code">pr.flow.requisition</field>
+            <field name="prefix">PR</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>
