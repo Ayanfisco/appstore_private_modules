@@ -1,8 +1,8 @@
-# Employee Appraisal Management for Odoo 18
+# Employee Appraisal Management for Odoo 19
 
 ## 📋 Overview
 
-A comprehensive Employee Performance Appraisal System for Odoo 18 that enables organizations to conduct structured performance reviews with self-assessment, manager evaluation, goal tracking, and competency-based appraisals.
+A comprehensive Employee Performance Appraisal System for Odoo 19 that enables organizations to conduct structured performance reviews with self-assessment, manager evaluation, goal tracking, and competency-based appraisals.
 
 ## ✨ Features
 
@@ -43,7 +43,7 @@ A comprehensive Employee Performance Appraisal System for Odoo 18 that enables o
 
 - **Name:** Employee Appraisal Management
 - **Technical Name:** employee_appraisal
-- **Version:** 18.0.1.0.0
+- **Version:** 19.0.1.0.0
 - **Category:** Human Resources
 - **Author:** Tech Joe
 - **Website:** ayanfiscoss@gmail.com
@@ -251,12 +251,12 @@ employee_appraisal/
 - Individual goal tracking
 - Achievement monitoring
 
-### Important Notes for Odoo 18
+### Important Notes for Odoo 19
 
 1. **No `attrs` in views** - Use `invisible`, `readonly`, `required` directly
 2. **No `tree` string in One2many/Many2many** - Use field definition only
 3. **Use `invisible` instead of `attrs={'invisible': ...}`**
-4. **Email templates use proper Odoo 18 syntax**
+4. **Email templates use proper Odoo 19 syntax**
 
 ## 🐛 Troubleshooting
 
@@ -274,14 +274,14 @@ employee_appraisal/
 
 ## 🔄 Upgrade & Migration
 
-This module is built specifically for Odoo 18. It follows Odoo 18 best practices:
+This module is built specifically for Odoo 19. It follows Odoo 19 best practices:
 - No deprecated `attrs` attribute
 - Modern view syntax
-- Compatible with Odoo 18 security model
+- Compatible with Odoo 19 security model
 
 ## 📝 Changelog
 
-### Version 18.0.1.0.0
+### Version 19.0.1.0.0
 - Initial release
 - Complete appraisal workflow
 - Competency management

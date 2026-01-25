@@ -40,7 +40,7 @@ Security:
 * Requisition Director - Can give final approval
 * Requisition Admin - Full access to all features
 
-This module is designed for Odoo 18 with modern syntax and best practices.
+This module is designed for Odoo 19 with modern syntax and best practices.
     """,
     'author': 'Tech Joe',
     'website': 'ayanfiscoss@gmail.com',
