@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_reservation_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>Reservation Voucher</h2>
+
+                        <div class="row mt32">
+                            <div class="col-6">
+                                <strong>Reservation Number:</strong>
+                                <p t-field="o.name"/>
+                            </div>
+                            <div class="col-6">
+                                <strong>Booking Date:</strong>
+                                <p t-field="o.booking_date"/>
+                            </div>
+                        </div>
+
+                        <div class="row mt16">
+                            <div class="col-6">
+                                <strong>Guest Information:</strong>
+                                <p>
+                                    <span t-field="o.guest_id.name"/>
+                                    <br/>
+                                    <span t-field="o.guest_email"/>
+                                    <br/>
+                                    <span t-field="o.guest_phone"/>
+                                </p>
+                            </div>
+                            <div class="col-6">
+                                <strong>Property:</strong>
+                                <p>
+                                    <span t-field="o.property_id.name"/>
+                                    <br/>
+                                    <span t-field="o.property_id.street"/>
+                                    <br/>
+                                    <span t-field="o.property_id.city"/>,
+                                    <span t-field="o.property_id.zip"/>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row mt16">
+                            <div class="col-12">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <th>Room Type</th>
+                                        <th>Room Number</th>
+                                        <th>Check-in</th>
+                                        <th>Check-out</th>
+                                        <th>Nights</th>
+                                        <th>Guests</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span t-field="o.room_type_id.name"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.room_id.room_number"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.check_in"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.check_out"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.nights"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="o.adults"/>
+                                            Adults,
+                                            <span t-field="o.children"/>
+                                            Children
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row mt32">
+                            <div class="col-6 offset-6">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td>Room Charges:</td>
+                                        <td class="text-end">
+                                            <span t-field="o.subtotal"
+                                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Service Charges:</td>
+                                        <td class="text-end">
+                                            <span t-field="o.service_total"
+                                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tax:</td>
+                                        <td class="text-end">
+                                            <span t-field="o.tax_amount"
+                                                  t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-top">
+                                        <td>
+                                            <strong>Total Amount:</strong>
+                                        </td>
+                                        <td class="text-end">
+                                            <strong>
+                                                <span t-field="o.total_amount"
+                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row mt32" t-if="o.special_requests">
+                            <div class="col-12">
+                                <strong>Special Requests:</strong>
+                                <p t-field="o.special_requests"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

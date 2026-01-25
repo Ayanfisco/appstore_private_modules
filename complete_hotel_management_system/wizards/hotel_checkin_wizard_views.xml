@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_hotel_checkin_wizard_form" model="ir.ui.view">
+        <field name="name">hotel.checkin.wizard.form</field>
+        <field name="model">hotel.checkin.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Check-in">
+                <group>
+                    <group string="Reservation Details">
+                        <field name="reservation_id" invisible="1"/>
+                        <field name="guest_id"/>
+                        <field name="room_id"/>
+                        <field name="actual_checkin_date"/>
+                    </group>
+                    <group string="ID Verification">
+                        <field name="id_type"/>
+                        <field name="id_number"/>
+                        <field name="id_verified"/>
+                    </group>
+                </group>
+                <group>
+                    <group string="Payment Information">
+                        <field name="payment_method"/>
+                        <field name="deposit_amount"/>
+                    </group>
+                </group>
+                <group string="Notes">
+                    <field name="notes" nolabel="1" placeholder="Any special notes about check-in..."/>
+                </group>
+                <footer>
+                    <button string="Confirm Check-in" name="action_confirm_checkin" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
