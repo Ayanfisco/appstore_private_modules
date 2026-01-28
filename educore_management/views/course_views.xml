@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Course List View -->
+    <record id="view_educore_course_list" model="ir.ui.view">
+        <field name="name">educore.course.list</field>
+        <field name="model">educore.course</field>
+        <field name="arch" type="xml">
+            <list string="Courses" sample="1">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="teacher_id"/>
+                <field name="credits"/>
+                <field name="duration_hours"/>
+                <field name="state" decoration-success="state == 'active'" decoration-info="state == 'draft'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Course Form View -->
+    <record id="view_educore_course_form" model="ir.ui.view">
+        <field name="name">educore.course.form</field>
+        <field name="model">educore.course</field>
+        <field name="arch" type="xml">
+            <form string="Course">
+                <header>
+                    <button name="action_activate" string="Activate" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_archive" string="Archive" type="object" invisible="state != 'active'" class="btn-warning"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Course Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="teacher_id"/>
+                        </group>
+                        <group>
+                            <field name="credits"/>
+                            <field name="duration_hours"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" placeholder="Course description..."/>
+                    </group>
+                    <notebook>
+                        <page string="Enrollments">
+                            <field name="enrollment_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="student_id"/>
+                                    <field name="class_id"/>
+                                    <field name="enrollment_date"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Exams">
+                            <field name="exam_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="exam_date"/>
+                                    <field name="exam_type"/>
+                                    <field name="total_marks"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Timetable">
+                            <field name="timetable_ids">
+                                <list>
+                                    <field name="class_id"/>
+                                    <field name="teacher_id"/>
+                                    <field name="day_of_week"/>
+                                    <field name="start_time" widget="float_time"/>
+                                    <field name="end_time" widget="float_time"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Course Search View -->
+    <record id="view_educore_course_search" model="ir.ui.view">
+        <field name="name">educore.course.search</field>
+        <field name="model">educore.course</field>
+        <field name="arch" type="xml">
+            <search string="Search Courses">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="teacher_id"/>
+                <filter string="Active" name="active" domain="[('state', '=', 'active')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Teacher" name="group_teacher" context="{'group_by': 'teacher_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Course Action -->
+    <record id="action_educore_course" model="ir.actions.act_window">
+        <field name="name">Courses</field>
+        <field name="res_model">educore.course</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first course!
+            </p>
+        </field>
+    </record>
+
+</odoo>

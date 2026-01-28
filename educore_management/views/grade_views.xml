@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Grade List View -->
+    <record id="view_educore_grade_list" model="ir.ui.view">
+        <field name="name">educore.grade.list</field>
+        <field name="model">educore.grade</field>
+        <field name="arch" type="xml">
+            <list string="Grades" sample="1" editable="bottom">
+                <field name="student_id"/>
+                <field name="exam_id"/>
+                <field name="marks_obtained"/>
+                <field name="total_marks"/>
+                <field name="percentage"/>
+                <field name="grade" decoration-success="grade in ['A+', 'A']" decoration-danger="grade == 'F'"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Grade Form View -->
+    <record id="view_educore_grade_form" model="ir.ui.view">
+        <field name="name">educore.grade.form</field>
+        <field name="model">educore.grade</field>
+        <field name="arch" type="xml">
+            <form string="Grade">
+                <header>
+                    <button name="action_publish" string="Publish" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,published"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="exam_id"/>
+                        </group>
+                        <group>
+                            <field name="marks_obtained"/>
+                            <field name="total_marks"/>
+                            <field name="percentage"/>
+                            <field name="grade"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="remarks" placeholder="Add remarks..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Grade Search View -->
+    <record id="view_educore_grade_search" model="ir.ui.view">
+        <field name="name">educore.grade.search</field>
+        <field name="model">educore.grade</field>
+        <field name="arch" type="xml">
+            <search string="Search Grades">
+                <field name="student_id"/>
+                <field name="exam_id"/>
+                <filter string="Published" name="published" domain="[('state', '=', 'published')]"/>
+                <filter string="Grade A+" name="grade_aplus" domain="[('grade', '=', 'A+')]"/>
+                <filter string="Failed" name="failed" domain="[('grade', '=', 'F')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Student" name="group_student" context="{'group_by': 'student_id'}"/>
+                    <filter string="Exam" name="group_exam" context="{'group_by': 'exam_id'}"/>
+                    <filter string="Grade" name="group_grade" context="{'group_by': 'grade'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Grade Action -->
+    <record id="action_educore_grade" model="ir.actions.act_window">
+        <field name="name">Grades</field>
+        <field name="res_model">educore.grade</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add grades for students!
+            </p>
+        </field>
+    </record>
+
+</odoo>

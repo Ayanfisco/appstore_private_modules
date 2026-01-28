@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Enrollment List View -->
+    <record id="view_educore_enrollment_list" model="ir.ui.view">
+        <field name="name">educore.enrollment.list</field>
+        <field name="model">educore.enrollment</field>
+        <field name="arch" type="xml">
+            <list string="Enrollments" sample="1">
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="course_id"/>
+                <field name="class_id"/>
+                <field name="enrollment_date"/>
+                <field name="state" decoration-success="state == 'enrolled'" decoration-info="state == 'draft'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Enrollment Form View -->
+    <record id="view_educore_enrollment_form" model="ir.ui.view">
+        <field name="name">educore.enrollment.form</field>
+        <field name="model">educore.enrollment</field>
+        <field name="arch" type="xml">
+            <form string="Enrollment">
+                <header>
+                    <button name="action_enroll" string="Enroll" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_complete" string="Complete" type="object" invisible="state != 'enrolled'" class="btn-success"/>
+                    <button name="action_drop" string="Drop" type="object" invisible="state not in ['draft', 'enrolled']" class="btn-danger"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,enrolled,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="student_id"/>
+                            <field name="course_id"/>
+                        </group>
+                        <group>
+                            <field name="class_id"/>
+                            <field name="enrollment_date"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Enrollment Search View -->
+    <record id="view_educore_enrollment_search" model="ir.ui.view">
+        <field name="name">educore.enrollment.search</field>
+        <field name="model">educore.enrollment</field>
+        <field name="arch" type="xml">
+            <search string="Search Enrollments">
+                <field name="name"/>
+                <field name="student_id"/>
+                <field name="course_id"/>
+                <field name="class_id"/>
+                <filter string="Enrolled" name="enrolled" domain="[('state', '=', 'enrolled')]"/>
+                <filter string="Completed" name="completed" domain="[('state', '=', 'completed')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Student" name="group_student" context="{'group_by': 'student_id'}"/>
+                    <filter string="Course" name="group_course" context="{'group_by': 'course_id'}"/>
+                    <filter string="Class" name="group_class" context="{'group_by': 'class_id'}"/>
+                    <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Enrollment Action -->
+    <record id="action_educore_enrollment" model="ir.actions.act_window">
+        <field name="name">Enrollments</field>
+        <field name="res_model">educore.enrollment</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_enrolled': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first enrollment!
+            </p>
+        </field>
+    </record>
+
+</odoo>
