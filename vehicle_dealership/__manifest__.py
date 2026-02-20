@@ -27,7 +27,7 @@
     """,
     'author': 'Tech Joe',
     'license': 'OPL-1',
-    'price': 299.00,
+    'price': 150.00,
     'currency': 'USD',
     'depends': ['base', 'mail', 'sale_management', 'purchase', 'stock', 'account'],
     'data': [
