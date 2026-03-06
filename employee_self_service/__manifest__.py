@@ -67,8 +67,8 @@ Technical features
         ],
     },
     'images': [
-        'static/description/banner.png',
-        'static/description/icon.png',
+        'static/description/banner.svg',
+        'static/description/icon.svg',
     ],
     'installable': True,
     'application': False,
