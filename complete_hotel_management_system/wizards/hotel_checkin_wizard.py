@@ -52,7 +52,7 @@ class HotelCheckinWizard(models.TransientModel):
         if self.deposit_amount and self.deposit_amount > 0 and self.post_deposit:
             partner = (self.reservation_id.guest_id.partner_id
                        or self.env['res.partner'].search(
-                        [('name', '=', self.reservation_id.guest_id.name)], limit=1)
+                           [('name', '=', self.reservation_id.guest_id.name)], limit=1)
                        or self.env.ref('base.public_partner'))
 
             # Find a suitable cash/bank journal based on payment method
@@ -66,8 +66,8 @@ class HotelCheckinWizard(models.TransientModel):
                 'currency_id': self.reservation_id.currency_id.id,
                 'journal_id': journal.id,
                 'date': fields.Date.today(),
-                'memo': _('Deposit — Reservation %s | %s') % (self.reservation_id.name,
-                                                              self.reservation_id.guest_id.name),
+                'ref': _('Deposit — Reservation %s') % self.reservation_id.name,
+                'memo': _('Check-in deposit for %s') % self.reservation_id.guest_id.name,
             }
             payment = self.env['account.payment'].create(payment_vals)
             payment.action_post()

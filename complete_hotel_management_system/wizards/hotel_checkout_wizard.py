@@ -100,7 +100,7 @@ class HotelCheckoutWizard(models.TransientModel):
                 'currency_id': self.reservation_id.currency_id.id,
                 'journal_id': journal.id,
                 'date': fields.Date.today(),
-                'memo': _('Balance payment — %s') % self.reservation_id.name,
+                'ref': _('Balance payment — %s') % self.reservation_id.name,
             }
             payment = self.env['account.payment'].create(payment_vals)
             payment.action_post()
