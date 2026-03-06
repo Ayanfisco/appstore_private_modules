@@ -1,0 +1,369 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Employee Self-Service Portal — Odoo 18
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Root layout ─────────────────────────────────────────────────────────── */
+.ess_layout {
+    min-height: calc(100vh - 60px);
+    background: #f4f6fb;
+}
+
+.ess_body {
+    display: flex;
+    align-items: flex-start;
+    min-height: calc(100vh - 60px);
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+.ess_sidebar {
+    width: 240px;
+    min-width: 240px;
+    background: #1a2035;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    z-index: 10;
+}
+
+.ess_sidebar_header {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ess_avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,.2);
+}
+
+.ess_avatar_placeholder {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,.6);
+    font-size: 18px;
+}
+
+.ess_employee_name strong {
+    color: #fff;
+    font-size: 14px;
+    display: block;
+    line-height: 1.2;
+}
+
+.ess_employee_name small {
+    font-size: 11px;
+    color: rgba(255,255,255,.45);
+}
+
+.ess_nav_links {
+    padding: 12px 0;
+    flex: 1;
+}
+
+.ess_nav_link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 20px;
+    color: rgba(255,255,255,.65);
+    text-decoration: none;
+    font-size: 14px;
+    transition: background .15s, color .15s;
+    border-left: 3px solid transparent;
+}
+
+.ess_nav_link:hover {
+    background: rgba(255,255,255,.06);
+    color: #fff;
+    text-decoration: none;
+}
+
+.ess_nav_link.active {
+    background: rgba(1,126,132,.25);
+    color: #fff;
+    border-left-color: #017e84;
+    font-weight: 600;
+}
+
+.ess_nav_link .fa {
+    width: 18px;
+    text-align: center;
+    font-size: 15px;
+    opacity: .8;
+}
+
+/* ── Main content area ───────────────────────────────────────────────────── */
+.ess_main {
+    flex: 1;
+    padding: 24px 28px;
+    min-width: 0;
+}
+
+/* ── Page header ─────────────────────────────────────────────────────────── */
+.ess_page_header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.ess_page_header h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a2035;
+    margin: 0;
+}
+
+/* ── Welcome banner ──────────────────────────────────────────────────────── */
+.ess_welcome_banner {
+    background: linear-gradient(135deg, #017e84 0%, #0199a1 100%);
+    border-radius: 10px;
+    padding: 18px 24px;
+    color: #fff;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ess_welcome_banner h5 {
+    color: #fff;
+    margin: 0;
+    font-size: 17px;
+}
+
+/* ── Quick actions ───────────────────────────────────────────────────────── */
+.ess_quick_actions_row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.ess_quick_btn {
+    flex: 1;
+    min-width: 110px;
+    background: #fff;
+    border: 1px solid #e4e8f0;
+    border-radius: 10px;
+    padding: 16px 12px;
+    text-align: center;
+    text-decoration: none;
+    color: #3c4257;
+    transition: box-shadow .18s, transform .18s, border-color .18s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.ess_quick_btn:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+    transform: translateY(-2px);
+    text-decoration: none;
+    color: #1a2035;
+}
+
+.ess_quick_btn span {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.ess_btn_leave  .fa { color: #28a745; }
+.ess_btn_expense .fa { color: #17a2b8; }
+.ess_btn_payslip .fa { color: #6c757d; }
+.ess_btn_profile .fa { color: #6f42c1; }
+
+.ess_btn_leave:hover  { border-color: #28a745; }
+.ess_btn_expense:hover { border-color: #17a2b8; }
+.ess_btn_payslip:hover { border-color: #6c757d; }
+.ess_btn_profile:hover { border-color: #6f42c1; }
+
+/* ── Dashboard grid ──────────────────────────────────────────────────────── */
+.ess_dashboard_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+@media (max-width: 900px) {
+    .ess_dashboard_grid { grid-template-columns: 1fr; }
+}
+
+/* ── Card ────────────────────────────────────────────────────────────────── */
+.ess_card {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e4e8f0;
+    overflow: hidden;
+}
+
+.ess_card_header {
+    padding: 14px 18px;
+    border-bottom: 1px solid #f0f3f8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+}
+
+.ess_card_body {
+    padding: 16px 18px;
+}
+
+/* ── Leave balance bars ──────────────────────────────────────────────────── */
+.ess_leave_balance_row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.ess_lb_type {
+    font-size: 13px;
+    min-width: 110px;
+    color: #3c4257;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ess_lb_bar_wrap { flex: 1; }
+
+.ess_lb_bar {
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.ess_lb_bar_fill {
+    height: 100%;
+    background: linear-gradient(90deg, #017e84, #28a745);
+    border-radius: 4px;
+    transition: width .4s;
+}
+
+.ess_lb_count {
+    font-size: 12px;
+    color: #6c757d;
+    white-space: nowrap;
+    min-width: 70px;
+    text-align: right;
+}
+
+/* ── List rows ───────────────────────────────────────────────────────────── */
+.ess_list_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f6fa;
+    gap: 12px;
+}
+
+.ess_list_row:last-child { border-bottom: none; }
+
+.ess_list_row strong {
+    font-size: 13px;
+    color: #1a2035;
+}
+
+/* ── Status badges ───────────────────────────────────────────────────────── */
+.ess_status_badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    white-space: nowrap;
+}
+
+.ess_state_draft     { background: #e9ecef; color: #495057; }
+.ess_state_confirm   { background: #fff3cd; color: #856404; }
+.ess_state_validate1 { background: #cff4fc; color: #0c5460; }
+.ess_state_validate  { background: #d1e7dd; color: #155724; }
+.ess_state_refuse    { background: #f8d7da; color: #842029; }
+.ess_state_submit    { background: #cff4fc; color: #0c5460; }
+.ess_state_approve   { background: #d1e7dd; color: #155724; }
+.ess_state_post      { background: #d1e7dd; color: #155724; }
+.ess_state_done      { background: #d1e7dd; color: #155724; }
+.ess_state_paid      { background: #d1e7dd; color: #155724; }
+
+/* ── Table ───────────────────────────────────────────────────────────────── */
+.ess_table thead th {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #8590a2;
+    border-bottom: 1px solid #eee;
+    padding: 10px 16px;
+    white-space: nowrap;
+    background: #fafbfc;
+}
+
+.ess_table tbody td {
+    font-size: 13px;
+    padding: 11px 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid #f5f6fa;
+    color: #3c4257;
+}
+
+.ess_table tbody tr:last-child td { border-bottom: none; }
+.ess_table tbody tr:hover td { background: #f8f9ff; }
+
+/* ── Profile fields ──────────────────────────────────────────────────────── */
+.ess_field_label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: #8590a2;
+    display: block;
+    margin-bottom: 3px;
+}
+
+.ess_field_value {
+    font-size: 14px;
+    color: #1a2035;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f3f8;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+    .ess_sidebar {
+        width: 60px;
+        min-width: 60px;
+    }
+    .ess_sidebar_header { padding: 16px 8px; justify-content: center; }
+    .ess_employee_name  { display: none; }
+    .ess_nav_link       { padding: 12px 0; justify-content: center; gap: 0; }
+    .ess_nav_link span  { display: none; }
+    .ess_nav_link .fa   { width: auto; font-size: 17px; margin: 0; }
+    .ess_main           { padding: 16px 14px; }
+    .ess_quick_actions_row { gap: 8px; }
+    .ess_quick_btn      { min-width: 70px; padding: 12px 8px; }
+}

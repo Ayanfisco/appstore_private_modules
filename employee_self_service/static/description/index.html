@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Self-Service Portal for Odoo 18</title>
+</head>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+
+<!-- Hero Section -->
+<section style="padding: 60px 20px; text-align: center; background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); color: white;">
+    <h1 style="font-size: 48px; margin: 0 0 20px 0; font-weight: 700;">Employee Self-Service Portal</h1>
+    <p style="font-size: 24px; margin: 0 0 15px 0; opacity: 0.95;">HR Self-Service for Every Employee — No Extra Licence Needed</p>
+    <p style="font-size: 18px; margin: 0; opacity: 0.9;">Leave requests, expense claims, payslip downloads, profile updates, and personal documents — all from any browser or phone</p>
+</section>
+
+<!-- Quick Stats -->
+<section style="padding: 40px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; text-align: center;">
+        <div style="flex: 1 1 200px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <div style="font-size: 36px; font-weight: bold; color: #1a73e8;">6</div>
+            <div style="color: #666; margin-top: 5px;">Self-Service Features</div>
+        </div>
+        <div style="flex: 1 1 200px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <div style="font-size: 36px; font-weight: bold; color: #0d47a1;">0</div>
+            <div style="color: #666; margin-top: 5px;">Extra Licences Required</div>
+        </div>
+        <div style="flex: 1 1 200px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <div style="font-size: 36px; font-weight: bold; color: #1565c0;">100%</div>
+            <div style="color: #666; margin-top: 5px;">Mobile Friendly</div>
+        </div>
+        <div style="flex: 1 1 200px; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <div style="font-size: 36px; font-weight: bold; color: #1976d2;">CE + EE</div>
+            <div style="color: #666; margin-top: 5px;">Community & Enterprise</div>
+        </div>
+    </div>
+</section>
+
+<!-- Key Value Proposition -->
+<section style="padding: 50px 20px; background: white;">
+    <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+        <h2 style="font-size: 32px; color: #2c3e50; margin-bottom: 20px;">Give Your Staff HR Access Without the Per-Seat Cost</h2>
+        <p style="font-size: 18px; color: #666; line-height: 1.8;">
+            Every employee deserves access to their own HR data — but not every SME can afford full Odoo internal user licences for every staff member.
+            The Employee Self-Service Portal solves this by giving employees a clean, secure portal where they manage their own HR activities
+            as a <strong>portal user</strong>, completely free of additional licence costs.
+        </p>
+    </div>
+</section>
+
+<!-- What Employees Can Do -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 15px; color: #2c3e50;">What Employees Can Do</h2>
+        <p style="text-align: center; font-size: 18px; margin-bottom: 50px; color: #666;">Everything an employee needs, right from their browser</p>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: center;">
+
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #1a73e8; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    📋
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Personal Dashboard</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">A quick-glance overview of leave balance, pending requests, and upcoming payslips — all in one place the moment they log in.</p>
+            </div>
+
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #43a047; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    🏖️
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Time Off Requests</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Request annual leave, sick days, or any custom leave type. Check remaining balances and track the approval status of each request in real time.</p>
+            </div>
+
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #fb8c00; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    💰
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Expense Claims</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Submit expense claims with description, amount, and category directly from the portal. Track approval and reimbursement status without chasing HR.</p>
+            </div>
+
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #8e24aa; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    🧾
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Payslip Downloads</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">View and download the last 12 months of payslips as PDF at any time — no more emailing HR every month for a copy.</p>
+            </div>
+
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #00acc1; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    👤
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Profile Updates</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Employees keep their own records current — phone number, address, emergency contact, and profile photo — reducing HR admin burden significantly.</p>
+            </div>
+
+            <div style="flex: 1 1 300px; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
+                <div style="width: 80px; height: 80px; background: #e53935; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
+                    📄
+                </div>
+                <h3 style="font-size: 22px; margin-bottom: 15px; color: #2c3e50;">Personal Documents</h3>
+                <p style="color: #666; font-size: 16px; line-height: 1.8;">Employees can view personal HR documents shared by the HR team — contracts, policies, certificates — securely isolated to their own records only.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- What HR Can Do -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 15px; color: #2c3e50;">What HR & Admins Get</h2>
+        <p style="text-align: center; font-size: 18px; margin-bottom: 50px; color: #666;">Full control with minimal extra effort</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px;">
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; border-top: 4px solid #1a73e8;">
+                <h4 style="font-size: 20px; margin: 0 0 15px 0; color: #2c3e50;">🔑 One-Click Portal Activation</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">A single "Create Portal User" button on the employee form instantly creates the portal account and sends the invitation email. No manual user creation needed.</p>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; border-top: 4px solid #43a047;">
+                <h4 style="font-size: 20px; margin: 0 0 15px 0; color: #2c3e50;">📧 Automatic Invitation Email</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">New portal employees automatically receive a branded invitation email with their login link. HR never has to manually communicate credentials.</p>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; border-top: 4px solid #fb8c00;">
+                <h4 style="font-size: 20px; margin: 0 0 15px 0; color: #2c3e50;">✅ Familiar Approval Workflow</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Leave and expense requests submitted through the portal appear in the normal Odoo backend. HR approves and rejects through the same workflow they already know.</p>
+            </div>
+
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 10px; border-top: 4px solid #8e24aa;">
+                <h4 style="font-size: 20px; margin: 0 0 15px 0; color: #2c3e50;">🔒 Strict Data Isolation</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Record-level security rules ensure every employee can only ever see their own data. No employee can access a colleague's payslips, leave records, or documents.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Workflow -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 20px; color: #2c3e50;">How It Works</h2>
+        <p style="text-align: center; font-size: 18px; margin-bottom: 50px; color: #666;">Up and running in three simple steps</p>
+
+        <!-- Step 1 -->
+        <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;">
+            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                <div style="width: 60px; height: 60px; background: #1a73e8; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; flex-shrink: 0;">1</div>
+                <div>
+                    <h3 style="font-size: 26px; margin: 0 0 5px 0; color: #2c3e50;">Install & Configure</h3>
+                    <p style="margin: 0; color: #666;">Install the module — no complex setup required</p>
+                </div>
+            </div>
+            <div style="margin-left: 80px;">
+                <div style="border-left: 3px solid #1a73e8; padding-left: 20px;">
+                    <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Install from the Odoo App Store. The module automatically depends on <code style="background:#f8f9fa; padding:2px 6px; border-radius:4px;">hr</code>, <code style="background:#f8f9fa; padding:2px 6px; border-radius:4px;">hr_holidays</code>, <code style="background:#f8f9fa; padding:2px 6px; border-radius:4px;">hr_expense</code>, and <code style="background:#f8f9fa; padding:2px 6px; border-radius:4px;">portal</code> — all standard Odoo modules. No third-party dependencies.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px;">
+            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                <div style="width: 60px; height: 60px; background: #43a047; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; flex-shrink: 0;">2</div>
+                <div>
+                    <h3 style="font-size: 26px; margin: 0 0 5px 0; color: #2c3e50;">Activate Employees</h3>
+                    <p style="margin: 0; color: #666;">One click per employee — that's it</p>
+                </div>
+            </div>
+            <div style="margin-left: 80px;">
+                <div style="border-left: 3px solid #43a047; padding-left: 20px;">
+                    <p style="color: #666; font-size: 16px; margin: 0 0 15px 0; line-height: 1.8;">Open any employee record and click the <strong>"Create Portal User"</strong> button. The system creates their portal account, links it to the employee record, and automatically sends a welcome email with their login details.</p>
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; font-size: 14px; color: #555;">
+                        <strong>Tip:</strong> You can activate all your employees in bulk from the employee list view using the Action menu.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 25px;">
+                <div style="width: 60px; height: 60px; background: #fb8c00; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; flex-shrink: 0;">3</div>
+                <div>
+                    <h3 style="font-size: 26px; margin: 0 0 5px 0; color: #2c3e50;">Employees Are Live</h3>
+                    <p style="margin: 0; color: #666;">Staff log in and manage their own HR immediately</p>
+                </div>
+            </div>
+            <div style="margin-left: 80px;">
+                <div style="border-left: 3px solid #fb8c00; padding-left: 20px;">
+                    <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Employees follow the link in their invitation email, set their password, and land on their personal HR dashboard. From here they can submit leave requests, upload expenses, download payslips, and keep their profile current — all without HR involvement.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Perfect For -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Perfect For</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px;">
+            <div style="background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 40px; margin-bottom: 15px;">🏢</div>
+                <h4 style="font-size: 20px; margin: 0 0 10px 0;">SMEs on Community</h4>
+                <p style="margin: 0; opacity: 0.9; line-height: 1.6;">Get enterprise-grade HR self-service without upgrading to Enterprise or paying per-seat</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #43a047 0%, #1b5e20 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 40px; margin-bottom: 15px;">📈</div>
+                <h4 style="font-size: 20px; margin: 0 0 10px 0;">Growing Teams</h4>
+                <p style="margin: 0; opacity: 0.9; line-height: 1.6;">Scale your workforce without scaling your Odoo licence bill — add unlimited portal employees</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #fb8c00 0%, #e65100 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 40px; margin-bottom: 15px;">🏭</div>
+                <h4 style="font-size: 20px; margin: 0 0 10px 0;">Deskless Workers</h4>
+                <p style="margin: 0; opacity: 0.9; line-height: 1.6;">Factories, warehouses, retail — give floor staff portal access from their personal devices</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #8e24aa 0%, #4a148c 100%); color: white; padding: 30px; border-radius: 10px; text-align: center;">
+                <div style="font-size: 40px; margin-bottom: 15px;">🌍</div>
+                <h4 style="font-size: 20px; margin: 0 0 10px 0;">Remote & Hybrid Teams</h4>
+                <p style="margin: 0; opacity: 0.9; line-height: 1.6;">Let distributed employees self-serve from anywhere — no VPN or Odoo backend access needed</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Benefits -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Why Choose This Module?</h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+            <div style="padding: 25px; background: white; border-radius: 10px; border-left: 4px solid #1a73e8;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Zero Licence Cost for Employees</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Portal users are free in Odoo. Give every employee HR self-service access without adding to your internal user count.</p>
+            </div>
+
+            <div style="padding: 25px; background: white; border-radius: 10px; border-left: 4px solid #43a047;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Reduces HR Admin Work</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">When employees manage their own data and requests, HR spends less time on routine queries and paperwork — and more time on strategic work.</p>
+            </div>
+
+            <div style="padding: 25px; background: white; border-radius: 10px; border-left: 4px solid #fb8c00;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Odoo 18 Compliant</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Built to Odoo 18 standards — no deprecated <code style="background:#f8f9fa; padding:2px 4px; border-radius:3px;">attrs</code>, uses <code style="background:#f8f9fa; padding:2px 4px; border-radius:3px;">list</code> not <code style="background:#f8f9fa; padding:2px 4px; border-radius:3px;">tree</code>, correct config settings structure.</p>
+            </div>
+
+            <div style="padding: 25px; background: white; border-radius: 10px; border-left: 4px solid #8e24aa;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Secure by Design</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Every portal route uses <code style="background:#f8f9fa; padding:2px 4px; border-radius:3px;">auth='user'</code> plus employee-ownership guards. Data isolation is enforced at the ORM level, not just the UI.</p>
+            </div>
+
+            <div style="padding: 25px; background: white; border-radius: 10px; border-left: 4px solid #00acc1;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Works on Community & Enterprise</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">No Enterprise-only features used. Depends only on standard modules: hr, hr_holidays, hr_expense, portal, and mail.</p>
+            </div>
+
+            <div style="padding: 25px; background: white; border-radius: 10px; border-left: 4px solid #e53935;">
+                <h4 style="font-size: 20px; margin: 0 0 10px 0; color: #2c3e50;">✓ Responsive & Mobile-Ready</h4>
+                <p style="color: #666; font-size: 16px; margin: 0; line-height: 1.8;">Built with Bootstrap 5 (already bundled in Odoo 18). Works perfectly on phones and tablets — ideal for staff without desktop access.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Specifications -->
+<section style="padding: 60px 20px; background-color: white;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Technical Specifications</h2>
+
+        <div style="background: #f8f9fa; padding: 40px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr style="border-bottom: 2px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px; width: 200px;">Version</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">18.0.1.0.0</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Category</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">Human Resources / Employees</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">License</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">OPL-1</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Dependencies</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">hr, hr_holidays, hr_expense, portal, mail, base_setup</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Odoo Version</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">18.0 (Community &amp; Enterprise)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Author</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">Tech Joe</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Website</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">ayanfiscoss@gmail.com</td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; font-weight: bold; color: #2c3e50; font-size: 16px;">Support</td>
+                    <td style="padding: 15px; color: #666; font-size: 16px;">ayanfiscoss@gmail.com</td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="margin-top: 40px; background: white; padding: 30px; border-radius: 10px; border: 2px solid #1a73e8;">
+            <h3 style="font-size: 24px; margin: 0 0 20px 0; color: #2c3e50; text-align: center;">Module Includes</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px;">
+                <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; text-align: center;">
+                    <strong style="color: #1a73e8;">6</strong> Portal Features
+                </div>
+                <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; text-align: center;">
+                    <strong style="color: #43a047;">QWeb</strong> Templates
+                </div>
+                <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; text-align: center;">
+                    <strong style="color: #fb8c00;">Record</strong> Level Security
+                </div>
+                <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; text-align: center;">
+                    <strong style="color: #8e24aa;">Email</strong> Templates
+                </div>
+                <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; text-align: center;">
+                    <strong style="color: #00acc1;">Bootstrap 5</strong> UI
+                </div>
+                <div style="padding: 10px; background: #f8f9fa; border-radius: 5px; text-align: center;">
+                    <strong style="color: #e53935;">Portal</strong> Controllers
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Installation -->
+<section style="padding: 60px 20px; background-color: #f8f9fa;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px; color: #2c3e50;">Installation & Setup</h2>
+
+        <div style="background: white; padding: 40px; border-radius: 10px; border-left: 5px solid #1a73e8; margin-bottom: 30px;">
+            <h3 style="font-size: 24px; margin: 0 0 25px 0; color: #2c3e50;">Quick Installation</h3>
+            <ol style="font-size: 18px; line-height: 2; color: #333; margin: 0; padding-left: 30px;">
+                <li>Download the module from Odoo App Store</li>
+                <li>Navigate to the Apps menu in Odoo 18</li>
+                <li>Click "Update Apps List"</li>
+                <li>Search for "Employee Self-Service Portal"</li>
+                <li>Click "Install" — all dependencies install automatically</li>
+            </ol>
+        </div>
+
+        <div style="background: white; padding: 40px; border-radius: 10px; border-left: 5px solid #43a047;">
+            <h3 style="font-size: 24px; margin: 0 0 25px 0; color: #2c3e50;">Activating Employees</h3>
+            <ol style="font-size: 18px; line-height: 2; color: #333; margin: 0; padding-left: 30px;">
+                <li>Go to Employees → select the employee record</li>
+                <li>Click the "Create Portal User" button</li>
+                <li>Employee receives an automatic invitation email</li>
+                <li>They set their password and start using the portal immediately</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<!-- Support Section -->
+<section style="padding: 60px 20px; background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%); color: white; text-align: center;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h2 style="font-size: 36px; margin: 0 0 20px 0;">Professional Support Available</h2>
+        <p style="font-size: 20px; margin: 0 0 40px 0; opacity: 0.95;">We're here to help you get the most out of the module</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-bottom: 40px;">
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                <div style="font-size: 40px; margin-bottom: 15px;">📧</div>
+                <h4 style="font-size: 20px; margin: 0 0 10px 0;">Email Support</h4>
+                <p style="margin: 0; opacity: 0.9; font-size: 16px;">ayanfiscoss@gmail.com</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                <div style="font-size: 40px; margin-bottom: 15px;">📚</div>
+                <h4 style="font-size: 20px; margin: 0 0 10px 0;">Documentation</h4>
+                <p style="margin: 0; opacity: 0.9; font-size: 16px;">Complete setup and user guide included</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                <div style="font-size: 40px; margin-bottom: 15px;">🔧</div>
+                <h4 style="font-size: 20px; margin: 0 0 10px 0;">Customisation</h4>
+                <p style="margin: 0; opacity: 0.9; font-size: 16px;">Custom features available on request</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; backdrop-filter: blur(10px);">
+                <div style="font-size: 40px; margin-bottom: 15px;">🚀</div>
+                <h4 style="font-size: 20px; margin: 0 0 10px 0;">Free Updates</h4>
+                <p style="margin: 0; opacity: 0.9; font-size: 16px;">Regular updates for every Odoo release</p>
+            </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.15); padding: 30px; border-radius: 10px; backdrop-filter: blur(10px);">
+            <h3 style="font-size: 24px; margin: 0 0 15px 0;">Ready to Empower Your Employees?</h3>
+            <p style="font-size: 18px; margin: 0; opacity: 0.95;">Install now and give your team the self-service HR portal they deserve — at no extra licence cost.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<section style="padding: 30px 20px; background-color: #2c3e50; color: white; text-align: center;">
+    <p style="margin: 0; font-size: 16px;">© 2025 Tech Joe. All rights reserved.</p>
+    <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.8;">Employee Self-Service Portal v18.0.1.0.0</p>
+    <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.8;">Built with ❤️ for Odoo 18</p>
+</section>
+
+</body>
+</html>

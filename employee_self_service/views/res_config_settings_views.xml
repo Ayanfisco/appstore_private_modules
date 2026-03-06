@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ess" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.ess</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- ✅ CORRECT XPath for Odoo 18 when adding a brand new app block -->
+            <xpath expr="//form" position="inside">
+
+                <app string="Employee Self-Service"
+                     name="employee_self_service"
+                     data-string="Employee Self-Service Portal"
+                     groups="hr.group_hr_manager">
+
+                    <block title="Portal Features"
+                           help="Control which self-service features employees can access.">
+
+                        <setting string="Allow Leave Requests"
+                                 help="Employees can submit time-off requests from the portal.">
+                            <field name="ess_allow_leave_request"/>
+                        </setting>
+
+                        <setting string="Allow Expense Submission"
+                                 help="Employees can submit expense claims from the portal.">
+                            <field name="ess_allow_expense_submission"/>
+                        </setting>
+
+                        <setting string="Allow Profile Editing"
+                                 help="Employees can update their contact and emergency details.">
+                            <field name="ess_allow_profile_edit"/>
+                        </setting>
+
+                    </block>
+
+                    <block title="Notifications">
+                        <setting string="Auto-Send Portal Invitation Email"
+                                 help="Automatically email employees when their portal account is created.">
+                            <field name="ess_auto_invite_email"/>
+                        </setting>
+                    </block>
+
+                </app>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>
