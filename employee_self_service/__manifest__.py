@@ -41,8 +41,8 @@ Technical features
 * Clean QWeb portal templates extending portal.portal_layout
 * Responsive design with Bootstrap 5 (already in Odoo 18)
     """,
-    'author': 'Weststar Associates',
-    'website': 'https://www.weststarassociates.com',
+    'author': 'Tech Joe',
+    'website': '',
     'license': 'OPL-1',
     'depends': [
         'hr',
@@ -67,13 +67,13 @@ Technical features
         ],
     },
     'images': [
-        'static/description/banner.svg',
-        'static/description/icon.svg',
+        'static/description/banner.gif',
+        'static/description/icon.png',
     ],
     'installable': True,
     'application': False,
     'auto_install': False,
     'price': 119.99,
     'currency': 'EUR',
-    'support': 'support@weststarassociates.com',
+    'support': 'ayanfiscoss@gmail.com',
 }
