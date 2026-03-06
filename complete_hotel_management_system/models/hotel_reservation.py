@@ -55,6 +55,10 @@ class HotelReservation(models.Model):
         ('paid', 'Paid'),
     ], string='Invoice Status', default='not_invoiced', compute='_compute_invoice_status', store=True)
 
+    # Deposit tracking
+    deposit_amount = fields.Monetary(string='Deposit Received', default=0.0, currency_field='currency_id')
+    deposit_payment_id = fields.Many2one('account.payment', string='Deposit Payment', readonly=True, copy=False)
+
     # State Management
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -199,33 +203,101 @@ class HotelReservation(models.Model):
         if self.invoice_id:
             raise UserError(_('Invoice already created for this reservation!'))
 
-        invoice_lines = [(0, 0, {
-            'name': _('Room %s (%s nights)') % (self.room_id.name, self.nights),
+        # Determine journal: use property journal if set, else Odoo default
+        journal = self.property_id.journal_id or self.env['account.journal'].search(
+            [('type', '=', 'sale'), ('company_id', '=', self.company_id.id)], limit=1)
+
+        invoice_lines = []
+
+        # ── Room charge line ─────────────────────────────────────────────────
+        room_type = self.room_type_id
+        room_line_vals = {
+            'name': _('Room %s — %s (%s nights @ %s)') % (
+                self.room_id.name, room_type.name, self.nights, self.room_rate),
             'quantity': self.nights,
             'price_unit': self.room_rate,
-        })]
+        }
+        # Link product so Odoo resolves income account automatically
+        if room_type.product_id:
+            room_line_vals['product_id'] = room_type.product_id.id
+        # Taxes: prefer room type taxes, fall back to product taxes
+        if room_type.tax_ids:
+            room_line_vals['tax_ids'] = [(6, 0, room_type.tax_ids.ids)]
+        elif room_type.product_id and room_type.product_id.taxes_id:
+            room_line_vals['tax_ids'] = [(6, 0, room_type.product_id.taxes_id.ids)]
+        # Analytic distribution
+        if room_type.analytic_account_id:
+            room_line_vals['analytic_distribution'] = {
+                str(room_type.analytic_account_id.id): 100
+            }
+        invoice_lines.append((0, 0, room_line_vals))
 
-        for service_line in self.service_line_ids:
-            invoice_lines.append((0, 0, {
-                'name': service_line.service_id.name,
-                'quantity': service_line.quantity,
-                'price_unit': service_line.price_unit,
-            }))
+        # ── Service charge lines ─────────────────────────────────────────────
+        for sl in self.service_line_ids:
+            svc = sl.service_id
+            svc_line_vals = {
+                'name': sl.description or svc.name,
+                'quantity': sl.quantity,
+                'price_unit': sl.price_unit,
+            }
+            if svc.product_id:
+                svc_line_vals['product_id'] = svc.product_id.id
+            if svc.tax_ids:
+                svc_line_vals['tax_ids'] = [(6, 0, svc.tax_ids.ids)]
+            elif svc.product_id and svc.product_id.taxes_id:
+                svc_line_vals['tax_ids'] = [(6, 0, svc.product_id.taxes_id.ids)]
+            if svc.analytic_account_id:
+                svc_line_vals['analytic_distribution'] = {
+                    str(svc.analytic_account_id.id): 100
+                }
+            invoice_lines.append((0, 0, svc_line_vals))
 
-        invoice = self.env['account.move'].create({
+        # ── Resolve partner ───────────────────────────────────────────────────
+        partner = (self.guest_id.partner_id
+                   or self.env['res.partner'].search([('name', '=', self.guest_id.name)], limit=1)
+                   or self.env.ref('base.public_partner'))
+
+        invoice_vals = {
             'move_type': 'out_invoice',
-            'partner_id': self.guest_id.partner_id.id if self.guest_id.partner_id else self.env.ref(
-                'base.public_partner').id,
+            'partner_id': partner.id,
             'invoice_date': fields.Date.today(),
             'invoice_line_ids': invoice_lines,
-        })
+            'narration': _('Reservation: %s | Check-in: %s | Check-out: %s') % (
+                self.name, self.check_in, self.check_out),
+        }
+        if journal:
+            invoice_vals['journal_id'] = journal.id
 
+        invoice = self.env['account.move'].create(invoice_vals)
         self.invoice_id = invoice.id
+
+        # ── Apply deposit as outstanding credit if deposit was paid ──────────
+        if self.deposit_payment_id and self.deposit_payment_id.state == 'posted':
+            invoice.action_post()
+            credit_lines = self.deposit_payment_id.move_id.line_ids.filtered(
+                lambda l: l.account_id.account_type == 'asset_receivable' and not l.reconciled
+            )
+            debit_lines = invoice.line_ids.filtered(
+                lambda l: l.account_id.account_type == 'asset_receivable' and not l.reconciled
+            )
+            if credit_lines and debit_lines:
+                (credit_lines | debit_lines).reconcile()
+
         return {
             'name': 'Invoice',
             'type': 'ir.actions.act_window',
             'res_model': 'account.move',
             'res_id': invoice.id,
+            'view_mode': 'form',
+        }
+
+    def action_view_invoice(self):
+        self.ensure_one()
+        return {
+            'name': 'Invoice',
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.move',
+            'res_id': self.invoice_id.id,
             'view_mode': 'form',
         }
 

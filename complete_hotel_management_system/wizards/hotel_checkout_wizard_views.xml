@@ -15,14 +15,17 @@
                     <group string="Charges Summary">
                         <field name="room_charges" widget="monetary"/>
                         <field name="service_charges" widget="monetary"/>
+                        <field name="deposit_amount" widget="monetary"/>
                         <field name="total_amount" widget="monetary" class="oe_subtotal_footer_separator"/>
+                        <field name="balance_due" widget="monetary" class="oe_subtotal_footer_separator"/>
                         <field name="currency_id" invisible="1"/>
                     </group>
                 </group>
                 <group>
                     <group string="Payment">
                         <field name="create_invoice"/>
-                        <field name="payment_received"/>
+                        <field name="register_payment"/>
+                        <field name="payment_method" invisible="not register_payment"/>
                     </group>
                     <group string="Room Inspection">
                         <field name="room_condition"/>

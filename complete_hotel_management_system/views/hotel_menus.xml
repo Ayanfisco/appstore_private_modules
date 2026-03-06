@@ -84,4 +84,16 @@
               name="Reporting"
               parent="menu_hotel_root"
               sequence="80"/>
+
+    <menuitem id="menu_hotel_revenue_report"
+              name="Revenue Report"
+              parent="menu_hotel_reporting"
+              action="action_hotel_revenue_report"
+              sequence="10"/>
+
+    <menuitem id="menu_hotel_occupancy_report"
+              name="Occupancy &amp; ADR"
+              parent="menu_hotel_reporting"
+              action="action_hotel_occupancy_report"
+              sequence="20"/>
 </odoo>

@@ -1,6 +1,6 @@
 {
     'name': 'Complete Hotel Management System',
-    'version': '18.0.1.0.0',
+    'version': '18.0.2.0.0',
     'category': 'Services/Hotel',
     'summary': 'Complete Hotel Management - Rooms, Reservations, Guests, Housekeeping & PMS',
     'description': """
@@ -67,6 +67,7 @@
         'views/hotel_service_views.xml',
         'views/hotel_service_line_views.xml',
         'views/hotel_housekeeping_views.xml',
+        'views/hotel_report_views.xml',
 
         # Reports
         'reports/hotel_reports.xml',
@@ -87,7 +88,6 @@
         'static/description/screenshot2.png',
         'static/description/screenshot3.png',
     ],
-    'live_test_url': 'https://ayanfisco-appstore-private-modules.odoo.com/helpdesk/customer-care-1',
     'installable': True,
     'application': True,
     'auto_install': False,

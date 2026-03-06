@@ -25,6 +25,12 @@ class HotelProperty(models.Model):
     email = fields.Char(string='Email')
     website = fields.Char(string='Website')
 
+    # Accounting
+    journal_id = fields.Many2one(
+        'account.journal', string='Sales Journal',
+        domain=[('type', '=', 'sale')],
+        help='Sales journal used when creating invoices for this property. Defaults to the company sales journal if not set.')
+
     # Property Details
     star_rating = fields.Selection([
         ('1', '1 Star'),

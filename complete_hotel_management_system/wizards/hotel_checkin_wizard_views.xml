@@ -22,6 +22,7 @@
                     <group string="Payment Information">
                         <field name="payment_method"/>
                         <field name="deposit_amount"/>
+                        <field name="post_deposit" invisible="deposit_amount == 0"/>
                     </group>
                 </group>
                 <group string="Notes">

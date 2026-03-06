@@ -25,6 +25,18 @@ class HotelRoomType(models.Model):
     amenity_ids = fields.Many2many('hotel.amenity', string='Amenities')
     description = fields.Text(string='Description')
 
+    # Accounting Integration
+    product_id = fields.Many2one(
+        'product.product', string='Room Product',
+        help='Odoo product used on invoices. Its income account and taxes will be applied to room charge lines.',
+        domain=[('type', 'in', ['service', 'consu'])])
+    tax_ids = fields.Many2many(
+        'account.tax', string='Customer Taxes',
+        help='Taxes applied to room charges on invoices. Overrides the product taxes if set.')
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account', string='Analytic Account',
+        help='Analytic account for room revenue. Used in Odoo Analytic Reports.')
+
     # Relations
     room_ids = fields.One2many('hotel.room', 'room_type_id', string='Rooms')
     room_count = fields.Integer(string='Number of Rooms', compute='_compute_room_count', store=True)

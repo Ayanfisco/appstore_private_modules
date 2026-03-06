@@ -24,8 +24,17 @@ class HotelService(models.Model):
     description = fields.Text(string='Description')
     active = fields.Boolean(string='Active', default=True)
 
-    # Product integration (optional)
-    product_id = fields.Many2one('product.product', string='Related Product')
+    # Accounting Integration
+    product_id = fields.Many2one(
+        'product.product', string='Related Product',
+        domain=[('type', 'in', ['service', 'consu'])],
+        help='Odoo product used when this service is invoiced. Its income account and taxes will be applied.')
+    tax_ids = fields.Many2many(
+        'account.tax', string='Customer Taxes',
+        help='Taxes for this service. Overrides product taxes if set.')
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account', string='Analytic Account',
+        help='Analytic account for this service revenue category.')
 
 
 class HotelServiceLine(models.Model):

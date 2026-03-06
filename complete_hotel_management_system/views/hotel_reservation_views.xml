@@ -102,7 +102,7 @@
                                 </list>
                             </field>
                         </page>
-                        <page string="Pricing">
+                        <page string="Pricing &amp; Invoicing">
                             <group>
                                 <group string="Amount Breakdown">
                                     <field name="subtotal" widget="monetary"/>
@@ -110,6 +110,12 @@
                                     <field name="tax_amount" widget="monetary"/>
                                     <field name="total_amount" widget="monetary" class="oe_subtotal_footer_separator"/>
                                     <field name="currency_id" invisible="1"/>
+                                </group>
+                                <group string="Deposit &amp; Invoice">
+                                    <field name="deposit_amount" widget="monetary"/>
+                                    <field name="deposit_payment_id" readonly="1"/>
+                                    <field name="invoice_id" readonly="1"/>
+                                    <field name="invoice_status" readonly="1"/>
                                 </group>
                             </group>
                         </page>
