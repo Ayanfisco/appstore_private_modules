@@ -1,7 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_petty_cash_request_user,petty.cash.request.user,model_petty_cash_request,group_petty_cash_user,1,1,1,0
-access_petty_cash_request_division,petty.cash.request.division,model_petty_cash_request,group_petty_cash_division_head,1,1,0,0
-access_petty_cash_request_cfo,petty.cash.request.cfo,model_petty_cash_request,group_petty_cash_cfo,1,1,1,1
-access_petty_cash_request_treasury,petty.cash.request.treasury,model_petty_cash_request,group_petty_cash_treasury,1,1,0,0
-access_division_float_user,division.float.user,model_division_float,group_petty_cash_user,1,0,0,0
-access_division_float_cfo,division.float.cfo,model_division_float,group_petty_cash_cfo,1,1,1,1

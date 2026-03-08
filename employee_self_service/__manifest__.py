@@ -1,6 +1,6 @@
 {
     'name': 'Employee Self-Service Portal',
-    'version': '18.0.1.0.0',
+    'version': '17.0.1.0.0',
     'category': 'Human Resources/Employees',
     'summary': 'Give every employee a self-service portal — leave requests, '
                'expense submissions, payslip downloads, profile updates, and '
@@ -34,12 +34,12 @@ What HR / Admins can do
 
 Technical features
 ------------------
-* Odoo 18 v18 compliant (no attrs, list not tree, app/block/setting in config)
+* Odoo 17 compliant (no attrs, tree not list, app/block/setting in config)
 * All portal routes use auth='user' with employee-ownership guard
 * Works with Odoo Community AND Enterprise
 * Depends only on: hr, hr_holidays, hr_expense, portal, mail
 * Clean QWeb portal templates extending portal.portal_layout
-* Responsive design with Bootstrap 5 (already in Odoo 18)
+* Responsive design with Bootstrap 5 (already in Odoo 17)
     """,
     'author': 'Tech Joe',
     'website': '',

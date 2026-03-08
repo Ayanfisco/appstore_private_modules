@@ -62,7 +62,7 @@
                         <page string="Competencies">
                             <field name="competency_ids"
                                    readonly="state in ('done', 'cancel')">
-                                <list editable="bottom">
+                                <tree editable="bottom">
                                     <field name="competency_id"/>
                                     <field name="description"/>
                                     <field name="weightage"/>
@@ -71,20 +71,20 @@
                                     <field name="manager_rating"
                                            readonly="parent.state not in ('manager', 'done')"/>
                                     <field name="comments"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Goals">
                             <field name="goal_ids"
                                    readonly="state in ('done', 'cancel')">
-                                <list editable="bottom">
+                                <tree editable="bottom">
                                     <field name="name"/>
                                     <field name="description"/>
                                     <field name="target_date"/>
                                     <field name="achievement_percentage"/>
                                     <field name="status"/>
                                     <field name="comments"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                         <page string="Assessment">
@@ -130,21 +130,19 @@
                                 <group string="Recommendation">
                                     <field name="recommendation"
                                            readonly="state != 'manager'"
-                                           nolabel="1"/>
+                                    />
                                 </group>
                             </group>
 
                             <group string="Self Assessment Comments">
                                 <field name="self_comments"
                                        readonly="state not in ('self', 'manager', 'done')"
-                                       nolabel="1"
                                        placeholder="Employee should provide detailed self-assessment comments here..."/>
                             </group>
 
                             <group string="Manager Review Comments">
                                 <field name="manager_comments"
                                        readonly="state not in ('manager', 'done')"
-                                       nolabel="1"
                                        placeholder="Manager should provide detailed review comments here..."/>
                             </group>
 
@@ -152,26 +150,27 @@
                                 <group string="Strengths">
                                     <field name="strength"
                                            readonly="state not in ('manager', 'done')"
-                                           nolabel="1"
                                            placeholder="List employee's key strengths..."/>
                                 </group>
                                 <group string="Areas for Improvement">
                                     <field name="weakness"
                                            readonly="state not in ('manager', 'done')"
-                                           nolabel="1"
                                            placeholder="List areas where employee can improve..."/>
                                 </group>
                             </group>
                         </page>
                     </notebook>
                 </sheet>
-                <chatter />
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>
     <record id="action_employee_appraisal" model="ir.actions.act_window">
         <field name="name">Employee Appraisals</field>
         <field name="res_model">employee.appraisal</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
     </record>
 </odoo>

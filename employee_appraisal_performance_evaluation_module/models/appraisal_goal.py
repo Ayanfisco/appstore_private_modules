@@ -4,6 +4,7 @@ from odoo import models, fields
 
 class AppraisalGoalLine(models.Model):
     _name = 'appraisal.goal.line'
+    _inherit = ["mail.thread"]
     _description = 'Appraisal Goal Line'
 
     appraisal_id = fields.Many2one(

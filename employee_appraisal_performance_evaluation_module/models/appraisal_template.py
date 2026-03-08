@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 
 class AppraisalTemplate(models.Model):
     _name = 'appraisal.template'
+    _inherit = ["mail.thread"]
     _description = 'Appraisal Template'
 
     name = fields.Char(string='Template Name', required=True)

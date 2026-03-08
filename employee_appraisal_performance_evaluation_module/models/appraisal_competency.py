@@ -4,6 +4,7 @@ from odoo import models, fields
 
 class AppraisalCompetency(models.Model):
     _name = 'appraisal.competency'
+    _inherit = ["mail.thread"]
     _description = 'Appraisal Competency'
 
     name = fields.Char(string='Competency Name', required=True)

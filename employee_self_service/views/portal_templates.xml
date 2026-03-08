@@ -137,8 +137,10 @@
                                                 </span>
                                                 <div class="ess_lb_bar_wrap">
                                                     <div class="ess_lb_bar">
+                                                        <t t-set="lb_pct"
+                                                           t-value="min(100, int((lb['remaining'] / (lb['allocated'] or 1)) * 100))"/>
                                                         <div class="ess_lb_bar_fill"
-                                                             t-attf-style="width: {{ [100, int((lb['remaining'] / (lb['allocated'] or 1)) * 100)] | min }}%"/>
+                                                             t-attf-style="width: {{lb_pct}}%;"/>
                                                     </div>
                                                 </div>
                                                 <span class="ess_lb_count">

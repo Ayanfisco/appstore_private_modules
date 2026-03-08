@@ -52,7 +52,7 @@ def _parse_date(date_str):
 
 def _is_overlap_error(msg):
     """
-    Detect Odoo 18 overlap error messages. Odoo 18 uses two different messages:
+    Detect Odoo 17 overlap error messages. Odoo 17 uses two different messages:
     - "An employee already booked time off which overlaps with this period"
     - "You've already booked time off which overlaps with this period"
     - "Attempting to double-book your time off..."
@@ -294,7 +294,7 @@ class EmployeeSelfServicePortal(http.Controller):
                     # errors in Odoo 18 without the transaction being left in
                     # an aborted state that causes the "Oops" error page.
                     with request.env.cr.savepoint():
-                        # Odoo 18 hr.leave uses request_date_from / request_date_to
+                        # Odoo 17 hr.leave uses request_date_from / request_date_to
                         # (pure Date fields) as the user-facing input.
                         # The ORM then computes date_from/date_to (Datetime fields)
                         # automatically based on the employee's work schedule and
@@ -310,12 +310,13 @@ class EmployeeSelfServicePortal(http.Controller):
                             'request_date_from': date_from_norm,   # yyyy-mm-dd string
                             'request_date_to':   date_to_norm,     # yyyy-mm-dd string
                             'name': name or _('Leave Request'),
+                            'state' : 'draft',
                         })
                         # Defensive check — ensure employee wasn't overridden
                         if new_leave.employee_id.id != employee.id:
                             new_leave.sudo().write({'employee_id': employee.id})
-                        # Odoo 18: submit for manager approval
-                        new_leave.sudo().write({'state': 'confirm'})
+                        # Odoo 17: submit for manager approval
+                        new_leave.sudo().action_confirm()
                     return request.redirect('/my/ess/leaves?success=1')
 
             except (ValidationError, UserError) as e:
@@ -408,7 +409,7 @@ class EmployeeSelfServicePortal(http.Controller):
                     'name': name,
                     'employee_id': employee.id,
                     'product_id': expense_product.id if expense_product else False,
-                    'total_amount_currency': total_amount,
+                    'total_amount': total_amount,
                     'date': parsed_expense_date,
                     'description': description or '',
                 })
