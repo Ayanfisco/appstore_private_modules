@@ -72,7 +72,6 @@ This module is designed for Odoo 18 with modern syntax and best practices.
         'report/purchase_requisition_report_template.xml',
     ],
     'demo': [],
-    'live_test_url': 'https://ayanfisco-appstore-private-modules.odoo.com/helpdesk/customer-care-1',
     'images': ['static/description/banner.png'],
     'installable': True,
     'application': True,
