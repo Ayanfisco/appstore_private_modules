@@ -87,7 +87,6 @@
         'static/description/screenshot2.png',
         'static/description/screenshot3.png',
     ],
-    'live_test_url': 'https://ayanfisco-appstore-private-modules.odoo.com/helpdesk/customer-care-1',
     'installable': True,
     'application': True,
     'auto_install': False,
