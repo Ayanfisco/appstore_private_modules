@@ -5,7 +5,7 @@
         <field name="name">Paystack</field>
         <field name="code">paystack</field>
         <field name="sequence">1</field>
-        <field name="image" type="base64" file="free_payment_paystack_18/static/img/paystack_logo.png"/>
+        <field name="image" type="base64" file="payment_paystack_tech/static/img/paystack_logo.png"/>
     </record>
 
     <!-- Payment Provider: Paystack -->
