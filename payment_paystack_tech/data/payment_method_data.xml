@@ -1,0 +1,9 @@
+<odoo>
+    <record id="payment_method_paystack" model="payment.method">
+        <field name="name">Paystack</field>
+        <field name="code">paystack</field>
+        <field name="domain">[]</field>
+        <field name="payment_type">Paystack</field>
+        <field name="provider_id" ref="payment_paystack_tech.payment_provider_paystack"/>
+    </record>
+</odoo>
