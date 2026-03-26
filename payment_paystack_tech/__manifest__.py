@@ -1,5 +1,5 @@
 {
-    'name': 'Free Paystack Payment Provider',
+    'name': 'Paystack Payment Provider',
     'version': '18.0.1.0.0',
     'category': 'Accounting/Payment Providers',
     'summary': 'Payment Provider: Paystack Implementation for African Markets',
