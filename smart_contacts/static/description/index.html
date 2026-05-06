@@ -1,764 +1,386 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Smart Contacts — Odoo App</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap');
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --violet: #5b21b6;
-    --violet-mid: #7c3aed;
-    --violet-light: #ede9fe;
-    --violet-pale: #f5f3ff;
-    --green: #059669;
-    --amber: #d97706;
-    --dark: #0f0a1e;
-    --mid: #374151;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-    --white: #ffffff;
-    --radius: 16px;
-    --shadow: 0 4px 24px rgba(91,33,182,0.10);
-    --shadow-lg: 0 16px 48px rgba(91,33,182,0.18);
-  }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--white);
-    color: var(--dark);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    background: linear-gradient(135deg, #0f0a1e 0%, #1e1045 40%, #2d1b69 100%);
-    padding: 72px 40px 80px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(circle at 20% 50%, rgba(124,58,237,0.25) 0%, transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(91,33,182,0.20) 0%, transparent 45%);
-  }
-  .hero-badge {
-    display: inline-block;
-    background: rgba(124,58,237,0.3);
-    border: 1px solid rgba(167,139,250,0.4);
-    color: #c4b5fd;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 6px 18px;
-    border-radius: 999px;
-    margin-bottom: 28px;
-    position: relative;
-  }
-  .hero-icon {
-    width: 88px;
-    height: 88px;
-    background: linear-gradient(135deg, #7c3aed, #5b21b6);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 28px;
-    position: relative;
-    box-shadow: 0 0 0 1px rgba(167,139,250,0.3), 0 16px 40px rgba(91,33,182,0.5);
-  }
-  .hero-icon svg { width: 48px; height: 48px; }
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(36px, 5vw, 60px);
-    font-weight: 400;
-    color: #ffffff;
-    line-height: 1.1;
-    margin-bottom: 20px;
-    position: relative;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: #c4b5fd;
-  }
-  .hero-sub {
-    font-size: 18px;
-    color: #a5b4fc;
-    max-width: 560px;
-    margin: 0 auto 40px;
-    font-weight: 400;
-    line-height: 1.65;
-    position: relative;
-  }
-  .hero-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, #7c3aed, #5b21b6);
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 16px 36px;
-    border-radius: 12px;
-    text-decoration: none;
-    box-shadow: 0 8px 24px rgba(91,33,182,0.5);
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-  }
-  .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(91,33,182,0.6); }
-  .price-tag {
-    display: inline-block;
-    background: rgba(255,255,255,0.15);
-    border: 1px solid rgba(255,255,255,0.25);
-    color: white;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 4px 14px;
-    border-radius: 999px;
-    margin-left: 8px;
-    vertical-align: middle;
-  }
-  .hero-meta {
-    margin-top: 24px;
-    display: flex;
-    justify-content: center;
-    gap: 28px;
-    flex-wrap: wrap;
-    position: relative;
-  }
-  .hero-meta span {
-    color: #a5b4fc;
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .hero-meta svg { width: 14px; height: 14px; opacity: 0.8; }
-
-  /* ── PROBLEM SECTION ── */
-  .section { padding: 72px 40px; max-width: 1000px; margin: 0 auto; }
-  .section-label {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--violet-mid);
-    margin-bottom: 12px;
-  }
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(28px, 4vw, 42px);
-    font-weight: 400;
-    line-height: 1.2;
-    color: var(--dark);
-    margin-bottom: 16px;
-  }
-  .section-sub {
-    font-size: 17px;
-    color: var(--muted);
-    max-width: 620px;
-    line-height: 1.7;
-  }
-
-  .problem-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 40px;
-  }
-  .problem-card {
-    background: #fff8f0;
-    border: 1px solid #fed7aa;
-    border-radius: var(--radius);
-    padding: 24px;
-  }
-  .problem-icon { font-size: 28px; margin-bottom: 12px; }
-  .problem-card h4 { font-size: 15px; font-weight: 700; color: #92400e; margin-bottom: 6px; }
-  .problem-card p { font-size: 13px; color: #a16207; line-height: 1.6; }
-
-  /* ── FEATURES ── */
-  .features-bg { background: var(--violet-pale); }
-  .features-inner { max-width: 1000px; margin: 0 auto; padding: 72px 40px; }
-
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 24px;
-    margin-top: 48px;
-  }
-  .feature-card {
-    background: white;
-    border: 1px solid #ddd6fe;
-    border-radius: var(--radius);
-    padding: 28px;
-    box-shadow: var(--shadow);
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .feature-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-  .feature-icon-wrap {
-    width: 48px; height: 48px;
-    background: var(--violet-light);
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 16px;
-  }
-  .feature-icon-wrap svg { width: 24px; height: 24px; color: var(--violet-mid); }
-  .feature-card h3 { font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
-  .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
-
-  /* ── SCREENSHOTS ── */
-  .screenshots-section { padding: 72px 40px; max-width: 1000px; margin: 0 auto; }
-  .screenshot-block {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 40px;
-  }
-  @media (max-width: 680px) { .screenshot-block { grid-template-columns: 1fr; } }
-  .screenshot-item {
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-  }
-  .screenshot-item img {
-    width: 100%;
-    display: block;
-    border-bottom: 1px solid var(--border);
-  }
-  .screenshot-caption {
-    padding: 16px 20px;
-    background: white;
-  }
-  .screenshot-caption strong { font-size: 14px; font-weight: 700; color: var(--dark); display: block; margin-bottom: 4px; }
-  .screenshot-caption span { font-size: 12px; color: var(--muted); }
-
-  /* ── MENU PREVIEW ── */
-  .menu-preview {
-    background: linear-gradient(135deg, #0f0a1e 0%, #1e1045 100%);
-    border-radius: var(--radius);
-    padding: 28px 32px;
-    margin-top: 40px;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    flex-wrap: wrap;
-  }
-  .menu-preview-label {
-    color: #a5b4fc;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .menu-chips { display: flex; gap: 8px; flex-wrap: wrap; }
-  .menu-chip {
-    background: rgba(124,58,237,0.3);
-    border: 1px solid rgba(167,139,250,0.4);
-    color: #c4b5fd;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 6px 16px;
-    border-radius: 999px;
-  }
-  .menu-chip.active {
-    background: var(--violet-mid);
-    border-color: var(--violet-mid);
-    color: white;
-  }
-
-  /* ── COMPARISON TABLE ── */
-  .compare-wrap { margin-top: 48px; overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  th {
-    padding: 14px 20px;
-    font-size: 13px;
-    font-weight: 700;
-    text-align: left;
-    background: var(--dark);
-    color: white;
-  }
-  th:first-child { border-radius: 12px 0 0 0; }
-  th:last-child { border-radius: 0 12px 0 0; }
-  th.good { background: var(--violet-mid); }
-  td {
-    padding: 14px 20px;
-    font-size: 14px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-  tr:last-child td { border-bottom: none; }
-  tr:nth-child(even) td { background: #fafafa; }
-  .check { color: var(--green); font-size: 18px; }
-  .cross { color: #dc2626; font-size: 18px; }
-
-  /* ── HOW TO INSTALL ── */
-  .install-bg { background: var(--dark); }
-  .install-inner { max-width: 1000px; margin: 0 auto; padding: 72px 40px; }
-  .install-inner .section-title { color: white; }
-  .install-inner .section-label { color: #c4b5fd; }
-  .install-inner .section-sub { color: #a5b4fc; }
-
-  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: 40px; }
-  .step {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--radius);
-    padding: 28px;
-  }
-  .step-num {
-    width: 36px; height: 36px;
-    background: var(--violet-mid);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 800; color: white;
-    margin-bottom: 16px;
-  }
-  .step h4 { font-size: 15px; font-weight: 700; color: white; margin-bottom: 8px; }
-  .step p { font-size: 13px; color: #9ca3af; line-height: 1.65; }
-  .step code {
-    display: inline-block;
-    background: rgba(124,58,237,0.3);
-    color: #c4b5fd;
-    font-size: 12px;
-    font-family: 'Courier New', monospace;
-    padding: 4px 10px;
-    border-radius: 6px;
-    margin-top: 8px;
-  }
-
-  .where-to-buy {
-    background: rgba(124,58,237,0.15);
-    border: 1px solid rgba(167,139,250,0.3);
-    border-radius: var(--radius);
-    padding: 32px;
-    margin-top: 40px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  @media (max-width: 620px) { .where-to-buy { grid-template-columns: 1fr; } }
-  .buy-option h4 { color: #c4b5fd; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
-  .buy-option p { color: #9ca3af; font-size: 13px; line-height: 1.65; }
-  .buy-option a {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: white;
-    background: var(--violet-mid);
-    font-size: 13px;
-    font-weight: 700;
-    padding: 8px 18px;
-    border-radius: 8px;
-    text-decoration: none;
-    margin-top: 12px;
-  }
-
-  /* ── PRICING ── */
-  .pricing-wrap { max-width: 480px; margin: 48px auto 0; text-align: center; }
-  .pricing-card {
-    background: white;
-    border: 2px solid var(--violet-mid);
-    border-radius: 20px;
-    padding: 40px 36px;
-    box-shadow: var(--shadow-lg);
-    position: relative;
-    overflow: hidden;
-  }
-  .pricing-card::before {
-    content: 'BEST VALUE';
-    position: absolute;
-    top: 16px; right: -24px;
-    background: var(--violet-mid);
-    color: white;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-    padding: 4px 32px;
-    transform: rotate(30deg);
-  }
-  .pricing-name { font-size: 14px; font-weight: 700; color: var(--violet-mid); letter-spacing: 0.08em; text-transform: uppercase; }
-  .pricing-amount { font-family: 'DM Serif Display', serif; font-size: 64px; color: var(--dark); line-height: 1; margin: 16px 0 4px; }
-  .pricing-amount sup { font-size: 28px; vertical-align: super; font-family: 'Inter', sans-serif; font-weight: 700; }
-  .pricing-period { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
-  .pricing-features { list-style: none; text-align: left; margin-bottom: 28px; }
-  .pricing-features li {
-    font-size: 14px;
-    color: var(--mid);
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .pricing-features li::before { content: '✓'; color: var(--green); font-weight: 800; }
-  .pricing-btn {
-    display: block;
-    width: 100%;
-    background: linear-gradient(135deg, var(--violet-mid), var(--violet));
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 16px;
-    border-radius: 12px;
-    text-decoration: none;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(91,33,182,0.4);
-  }
-
-  /* ── FOOTER ── */
-  .footer { background: var(--dark); padding: 40px; text-align: center; }
-  .footer p { color: #6b7280; font-size: 13px; }
-  .footer strong { color: #c4b5fd; }
-
-  /* responsive */
-  @media (max-width: 600px) {
-    .hero { padding: 48px 24px 56px; }
-    .section, .screenshots-section, .features-inner, .install-inner { padding: 48px 24px; }
-    .screenshot-block { grid-template-columns: 1fr; }
-    .problem-grid { grid-template-columns: 1fr; }
-    .where-to-buy { grid-template-columns: 1fr; }
-  }
-</style>
-</head>
-<body>
-
-<!-- ══════════ HERO ══════════ -->
-<section class="hero">
-  <div class="hero-badge">✦ Odoo 18 Compatible</div>
-  <div class="hero-icon">
-    <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="24" cy="16" r="7" fill="white" opacity="0.95"/>
-      <ellipse cx="24" cy="35" rx="12" ry="7" fill="white" opacity="0.95"/>
-      <circle cx="10" cy="20" r="5" fill="white" opacity="0.65"/>
-      <ellipse cx="10" cy="33" rx="8" ry="5" fill="white" opacity="0.65"/>
-      <circle cx="38" cy="20" r="5" fill="white" opacity="0.65"/>
-      <ellipse cx="38" cy="33" rx="8" ry="5" fill="white" opacity="0.65"/>
-    </svg>
-  </div>
-  <h1>Contacts that <em>actually</em><br/>make sense</h1>
-  <p class="hero-sub">
-    Smart Contacts replaces Odoo's jumbled contact list with clean, role-based menus —
-    Customers, Vendors, Employees and more. One contact, multiple roles, zero duplication.
-  </p>
-  <a href="https://apps.odoo.com" class="hero-cta">
-    Get Smart Contacts
-    <span class="price-tag">$9.99 one-time</span>
-  </a>
-  <div class="hero-meta">
-    <span>
-      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 110 14A7 7 0 018 1zm0 1.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM8 4a.75.75 0 01.75.75v3.5l2.25 1.3a.75.75 0 11-.75 1.3L7.5 9.4A.75.75 0 017 8.7V4.75A.75.75 0 018 4z"/></svg>
-      Install in &lt; 2 minutes
-    </span>
-    <span>
-      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 110 16A8 8 0 018 0zm0 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM6.5 5.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zM5 9.75A3.25 3.25 0 018 7c1.8 0 3.25 1.455 3.25 3.25H4.75z"/></svg>
-      Works with existing contacts
-    </span>
-    <span>
-      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1l2.163 4.279L15 6.082l-3.5 3.325.826 4.593L8 11.75l-4.326 2.25.826-4.593L1 6.082l4.837-.803z"/></svg>
-      Odoo 18 Ready
-    </span>
-    <span>
-      <svg viewBox="0 0 16 16" fill="currentColor"><path d="M2.5 2A1.5 1.5 0 001 3.5v9A1.5 1.5 0 002.5 14h11a1.5 1.5 0 001.5-1.5v-9A1.5 1.5 0 0013.5 2h-11zM2.5 3h11a.5.5 0 01.5.5V5h-12V3.5a.5.5 0 01.5-.5zM2 6h12v6.5a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5V6z"/></svg>
-      One-time payment — no subscription
-    </span>
-  </div>
-</section>
-
-<!-- ══════════ PROBLEM ══════════ -->
-<section class="section">
-  <div class="section-label">The Problem</div>
-  <h2 class="section-title">Odoo's default contacts<br/>are a mess</h2>
-  <p class="section-sub">
-    Every vendor, customer, and employee piles into one undifferentiated list.
-    Finding the right person means filtering, guessing, and clicking — every time.
-  </p>
-  <div class="problem-grid">
-    <div class="problem-card">
-      <div class="problem-icon">🗂️</div>
-      <h4>One giant list</h4>
-      <p>Customers, vendors and employees are all mixed together with no separation whatsoever.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">🔍</div>
-      <h4>Wrong contacts in Sales</h4>
-      <p>When creating a sales order, vendors appear in the customer field — causing errors and confusion.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">🔄</div>
-      <h4>Duplicate contact records</h4>
-      <p>Companies create the same person twice — once as a customer and again as a vendor — because there's no multi-role support.</p>
-    </div>
-    <div class="problem-card">
-      <div class="problem-icon">⏱️</div>
-      <h4>Wasted time every day</h4>
-      <p>Your team filters the same views repeatedly just to find the right contact. It adds up fast.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════ FEATURES ══════════ -->
-<div class="features-bg">
-  <div class="features-inner">
-    <div class="section-label">The Solution</div>
-    <h2 class="section-title">Every contact in<br/>exactly the right place</h2>
-    <p class="section-sub">
-      Smart Contacts replaces the default Contacts app with a clean, role-based system
-      that your whole team will actually enjoy using.
-    </p>
-
-    <!-- Menu preview -->
-    <div class="menu-preview">
-      <div>
-        <div class="menu-preview-label">Smart Contacts Menu</div>
-        <div class="menu-chips">
-          <span class="menu-chip active">All Contacts</span>
-          <span class="menu-chip">Customers</span>
-          <span class="menu-chip">Vendors</span>
-          <span class="menu-chip">Employees</span>
-          <span class="menu-chip">Business Partners</span>
+<section style="background-color:#5b21b6; padding:60px 0 50px;">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-md-8 col-12">
+        <div style="margin-bottom:20px;">
+          <span style="background-color:#7c3aed; color:#ffffff; font-size:11px; font-weight:700; letter-spacing:2px; padding:6px 18px; border-radius:20px;">
+            ODOO 18 COMPATIBLE
+          </span>
         </div>
-      </div>
-    </div>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 6h16M4 12h16M4 18h7"/>
-          </svg>
+        <h1 style="color:#ffffff; font-size:42px; font-weight:800; line-height:1.15; margin-bottom:16px;">
+          Smart Contacts
+        </h1>
+        <h2 style="color:#c4b5fd; font-size:22px; font-weight:400; margin-bottom:20px; line-height:1.4;">
+          Contacts that actually make sense
+        </h2>
+        <p style="color:#ddd6fe; font-size:17px; line-height:1.7; margin-bottom:32px;">
+          Replaces Odoo's jumbled contact list with clean, role-based menus —
+          Customers, Vendors, Employees and more. One contact, multiple roles, zero duplication.
+        </p>
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <span style="background-color:#ffffff; color:#5b21b6; font-size:22px; font-weight:800; padding:10px 32px; border-radius:10px; display:inline-block;">
+              $9.99 &nbsp;·&nbsp; One-time payment
+            </span>
+          </div>
         </div>
-        <h3>Role-Based Menus</h3>
-        <p>Dedicated menu items for Customers, Vendors, Employees and Business Partners. Your team always lands exactly where they need to be.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M8 9h8M8 13h5M5 5h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2z"/>
-          </svg>
+        <div class="row justify-content-center" style="margin-top:24px;">
+          <div class="col-auto">
+            <span style="color:#a5b4fc; font-size:13px;">✓ &nbsp;Install in under 2 minutes</span>
+            &nbsp;&nbsp;
+            <span style="color:#a5b4fc; font-size:13px;">✓ &nbsp;Works with existing contacts</span>
+            &nbsp;&nbsp;
+            <span style="color:#a5b4fc; font-size:13px;">✓ &nbsp;No subscription fee</span>
+          </div>
         </div>
-        <h3>Role Toggle Bar</h3>
-        <p>Every contact form has a visual toggle bar. Switch roles on and off instantly — one contact can be a Customer AND a Vendor simultaneously.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-          </svg>
-        </div>
-        <h3>Context-Aware Filtering</h3>
-        <p>Sales only shows customers. Purchase only shows vendors. The right people appear in the right places — automatically, always.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
-        </div>
-        <h3>Replaces, Not Adds</h3>
-        <p>Smart Contacts cleanly replaces the default Contacts app. No duplicate icons, no confusion — just one organised system from day one.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-          </svg>
-        </div>
-        <h3>Multi-Role Support</h3>
-        <p>A supplier who also buys from you? Enable both Customer and Vendor toggles. One clean record, both relationships fully tracked.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
-          </svg>
-        </div>
-        <h3>Works With Existing Data</h3>
-        <p>Installs on top of your existing contacts without deleting anything. All your data stays intact — just better organised going forward.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════ SCREENSHOTS ══════════ -->
-<section class="screenshots-section">
-  <div class="section-label">See It In Action</div>
-  <h2 class="section-title">Screenshots from a live<br/>Odoo 18 instance</h2>
-  <p class="section-sub">
-    These are real screenshots taken directly from the module running on Odoo 18.
-    What you see is exactly what you get.
-  </p>
-  <div class="screenshot-block">
-    <div class="screenshot-item">
-      <img src="screenshot1.png" alt="Smart Contacts — Role toggle bar on a vendor contact form showing Customer, Vendor, Employee and Partner toggles"/>
-      <div class="screenshot-caption">
-        <strong>Role Toggle Bar — Vendor Contact</strong>
-        <span>Each contact shows toggles for all four roles. This vendor has the Vendor toggle on. Flip Customer on and they instantly appear in Sales too.</span>
-      </div>
-    </div>
-    <div class="screenshot-item">
-      <img src="screenshot2.png" alt="Odoo Sales quotation with customer field correctly restricted to only customer contacts"/>
-      <div class="screenshot-caption">
-        <strong>Sales — Customers Only</strong>
-        <span>The Sales quotation customer field only shows contacts marked as Customers. Vendors never pollute your sales workflow again.</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ COMPARISON ══════════ -->
-<section class="section" style="padding-top:0">
-  <div class="section-label">Comparison</div>
-  <h2 class="section-title">Smart Contacts vs<br/>Default Odoo Contacts</h2>
-  <div class="compare-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Feature</th>
-          <th>Default Contacts</th>
-          <th class="good">Smart Contacts</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Separate menu per contact type</td>
-          <td class="cross">✗ All in one list</td>
-          <td class="check">✓ Customers, Vendors, Employees, Partners</td>
-        </tr>
-        <tr>
-          <td>Multi-role contacts</td>
-          <td class="cross">✗ Duplicate records required</td>
-          <td class="check">✓ Toggle any combination of roles</td>
-        </tr>
-        <tr>
-          <td>Sales shows only customers</td>
-          <td class="cross">✗ All contacts appear</td>
-          <td class="check">✓ Customer-only domain enforced</td>
-        </tr>
-        <tr>
-          <td>Purchase shows only vendors</td>
-          <td class="cross">✗ All contacts appear</td>
-          <td class="check">✓ Vendor-only domain enforced</td>
-        </tr>
-        <tr>
-          <td>Role chip / label on each record</td>
-          <td class="cross">✗ Not available</td>
-          <td class="check">✓ Computed role label on all views</td>
-        </tr>
-        <tr>
-          <td>Replaces original app cleanly</td>
-          <td>—</td>
-          <td class="check">✓ Original Contacts app hidden on install</td>
-        </tr>
-        <tr>
-          <td>All Contacts quick access</td>
-          <td>✓ (only option)</td>
-          <td class="check">✓ Available as first menu item</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- ══════════ PRICING ══════════ -->
-<section class="section" style="padding-top:0; text-align:center;">
-  <div class="section-label">Pricing</div>
-  <h2 class="section-title">Simple, honest pricing</h2>
-  <p class="section-sub" style="margin: 0 auto 0;">
-    Pay once. Use forever. No monthly fees, no seat limits, no upsells.
-  </p>
-  <div class="pricing-wrap">
-    <div class="pricing-card">
-      <div class="pricing-name">Smart Contacts</div>
-      <div class="pricing-amount"><sup>$</sup>9.99</div>
-      <div class="pricing-period">one-time payment · all future updates included</div>
-      <ul class="pricing-features">
-        <li>Unlimited users on one Odoo instance</li>
-        <li>All current &amp; future features</li>
-        <li>Role-based menus &amp; toggle bar</li>
-        <li>Sales &amp; Purchase integration</li>
-        <li>Odoo 18 compatible</li>
-        <li>Community support via email</li>
-      </ul>
-      <a href="https://apps.odoo.com" class="pricing-btn">Buy Now — $9.99</a>
+<!-- THE PROBLEM -->
+<section style="background-color:#fff8f0; padding:60px 0;">
+  <div class="container">
+    <div class="row justify-content-center text-center" style="margin-bottom:40px;">
+      <div class="col-md-8 col-12">
+        <p style="color:#d97706; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">The Problem</p>
+        <h2 style="color:#1f2937; font-size:32px; font-weight:800; margin-bottom:14px;">Odoo's default contacts are a mess</h2>
+        <p style="color:#6b7280; font-size:16px; line-height:1.7;">
+          Every vendor, customer and employee piles into one undifferentiated list.
+          Finding the right person means filtering, guessing and clicking — every single time.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-6 col-12" style="margin-bottom:20px;">
+        <div style="background-color:#ffffff; border:1px solid #fed7aa; border-radius:12px; padding:24px; height:100%;">
+          <div style="font-size:32px; margin-bottom:12px;">🗂️</div>
+          <h4 style="color:#92400e; font-size:15px; font-weight:700; margin-bottom:8px;">One giant list</h4>
+          <p style="color:#a16207; font-size:13px; line-height:1.6; margin:0;">Customers, vendors and employees are mixed together with no separation.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12" style="margin-bottom:20px;">
+        <div style="background-color:#ffffff; border:1px solid #fed7aa; border-radius:12px; padding:24px; height:100%;">
+          <div style="font-size:32px; margin-bottom:12px;">🔍</div>
+          <h4 style="color:#92400e; font-size:15px; font-weight:700; margin-bottom:8px;">Wrong contacts in Sales</h4>
+          <p style="color:#a16207; font-size:13px; line-height:1.6; margin:0;">Vendors appear in the customer dropdown on sales orders, causing errors and confusion.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12" style="margin-bottom:20px;">
+        <div style="background-color:#ffffff; border:1px solid #fed7aa; border-radius:12px; padding:24px; height:100%;">
+          <div style="font-size:32px; margin-bottom:12px;">🔄</div>
+          <h4 style="color:#92400e; font-size:15px; font-weight:700; margin-bottom:8px;">Duplicate records</h4>
+          <p style="color:#a16207; font-size:13px; line-height:1.6; margin:0;">Teams create the same person twice — once as customer, again as vendor — because multi-role is missing.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12" style="margin-bottom:20px;">
+        <div style="background-color:#ffffff; border:1px solid #fed7aa; border-radius:12px; padding:24px; height:100%;">
+          <div style="font-size:32px; margin-bottom:12px;">⏱️</div>
+          <h4 style="color:#92400e; font-size:15px; font-weight:700; margin-bottom:8px;">Wasted time daily</h4>
+          <p style="color:#a16207; font-size:13px; line-height:1.6; margin:0;">Your team filters the same views repeatedly just to find the right contact. It adds up fast.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════ HOW TO INSTALL ══════════ -->
-<div class="install-bg">
-  <div class="install-inner">
-    <div class="section-label">Installation</div>
-    <h2 class="section-title" style="color:white;">Up and running<br/>in under 2 minutes</h2>
-    <p class="section-sub">
-      No developer mode required for installation. Works on Odoo.com cloud and self-hosted.
-    </p>
-
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h4>Buy &amp; Download</h4>
-        <p>Purchase from the Odoo App Store. Download the <code>.zip</code> file to your computer.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h4>Upload the Module</h4>
-        <p>Go to <strong style="color:white;">Settings → Technical → Modules</strong>. Click <em style="color:#c4b5fd;">Upload a Module</em> and select the zip file.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h4>Install</h4>
-        <p>Search for <em style="color:#c4b5fd;">Smart Contacts</em> in the Apps list and click <strong style="color:white;">Install</strong>.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h4>Done!</h4>
-        <p>The original Contacts app is replaced. Your new role-based menus are live immediately.</p>
+<!-- THE SOLUTION / FEATURES -->
+<section style="background-color:#f5f3ff; padding:60px 0;">
+  <div class="container">
+    <div class="row justify-content-center text-center" style="margin-bottom:40px;">
+      <div class="col-md-8 col-12">
+        <p style="color:#7c3aed; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">The Solution</p>
+        <h2 style="color:#1f2937; font-size:32px; font-weight:800; margin-bottom:14px;">Every contact in exactly the right place</h2>
+        <p style="color:#6b7280; font-size:16px; line-height:1.7;">
+          Smart Contacts replaces the default Contacts app with a clean, role-based system
+          that your whole team will enjoy using from day one.
+        </p>
       </div>
     </div>
 
-    <div class="where-to-buy">
-      <div class="buy-option">
-        <h4>🛒 Odoo App Store (Recommended)</h4>
-        <p>The official marketplace. Secure payment, guaranteed compatibility badge, and automatic update notifications for future versions.</p>
-        <a href="https://apps.odoo.com/apps/modules/18.0/smart_contacts/">
-          Visit Odoo App Store →
-        </a>
+    <!-- Menu preview bar -->
+    <div class="row justify-content-center" style="margin-bottom:40px;">
+      <div class="col-md-10 col-12">
+        <div style="background-color:#1e1045; border-radius:12px; padding:24px 28px;">
+          <p style="color:#a5b4fc; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:14px;">Smart Contacts Menu Structure</p>
+          <div>
+            <span style="background-color:#7c3aed; color:#ffffff; font-size:13px; font-weight:700; padding:7px 18px; border-radius:20px; margin-right:8px; display:inline-block; margin-bottom:8px;">All Contacts</span>
+            <span style="background-color:#2d1b69; color:#c4b5fd; font-size:13px; font-weight:600; padding:7px 18px; border-radius:20px; margin-right:8px; display:inline-block; margin-bottom:8px;">Customers</span>
+            <span style="background-color:#2d1b69; color:#c4b5fd; font-size:13px; font-weight:600; padding:7px 18px; border-radius:20px; margin-right:8px; display:inline-block; margin-bottom:8px;">Vendors</span>
+            <span style="background-color:#2d1b69; color:#c4b5fd; font-size:13px; font-weight:600; padding:7px 18px; border-radius:20px; margin-right:8px; display:inline-block; margin-bottom:8px;">Employees</span>
+            <span style="background-color:#2d1b69; color:#c4b5fd; font-size:13px; font-weight:600; padding:7px 18px; border-radius:20px; display:inline-block; margin-bottom:8px;">Business Partners</span>
+          </div>
+        </div>
       </div>
-      <div class="buy-option">
-        <h4>📧 Direct Purchase</h4>
-        <p>Prefer to buy directly? Email us for an invoice and we'll send you the module zip file plus a licence key within 24 hours.</p>
-        <a href="mailto:hello@smartcontacts.io">
-          Contact Us →
-        </a>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#ffffff; border:1px solid #ddd6fe; border-radius:14px; padding:28px; height:100%;">
+          <div style="background-color:#ede9fe; border-radius:12px; width:48px; height:48px; text-align:center; padding-top:11px; margin-bottom:16px;">
+            <i class="fa fa-list" style="color:#7c3aed; font-size:20px;"></i>
+          </div>
+          <h3 style="color:#1f2937; font-size:16px; font-weight:700; margin-bottom:8px;">Role-Based Menus</h3>
+          <p style="color:#6b7280; font-size:14px; line-height:1.65; margin:0;">Dedicated menu items for Customers, Vendors, Employees and Business Partners. Land exactly where you need to be — every time.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#ffffff; border:1px solid #ddd6fe; border-radius:14px; padding:28px; height:100%;">
+          <div style="background-color:#ede9fe; border-radius:12px; width:48px; height:48px; text-align:center; padding-top:11px; margin-bottom:16px;">
+            <i class="fa fa-toggle-on" style="color:#7c3aed; font-size:20px;"></i>
+          </div>
+          <h3 style="color:#1f2937; font-size:16px; font-weight:700; margin-bottom:8px;">Role Toggle Bar</h3>
+          <p style="color:#6b7280; font-size:14px; line-height:1.65; margin:0;">Every contact form shows toggle switches for all four roles. One contact can be a Customer AND Vendor simultaneously — no duplication needed.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#ffffff; border:1px solid #ddd6fe; border-radius:14px; padding:28px; height:100%;">
+          <div style="background-color:#ede9fe; border-radius:12px; width:48px; height:48px; text-align:center; padding-top:11px; margin-bottom:16px;">
+            <i class="fa fa-filter" style="color:#7c3aed; font-size:20px;"></i>
+          </div>
+          <h3 style="color:#1f2937; font-size:16px; font-weight:700; margin-bottom:8px;">Context-Aware Filtering</h3>
+          <p style="color:#6b7280; font-size:14px; line-height:1.65; margin:0;">Sales shows only customers. Purchase shows only vendors. The right contacts appear in the right places — automatically, always.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#ffffff; border:1px solid #ddd6fe; border-radius:14px; padding:28px; height:100%;">
+          <div style="background-color:#ede9fe; border-radius:12px; width:48px; height:48px; text-align:center; padding-top:11px; margin-bottom:16px;">
+            <i class="fa fa-bolt" style="color:#7c3aed; font-size:20px;"></i>
+          </div>
+          <h3 style="color:#1f2937; font-size:16px; font-weight:700; margin-bottom:8px;">Replaces, Not Adds</h3>
+          <p style="color:#6b7280; font-size:14px; line-height:1.65; margin:0;">Cleanly hides the default Contacts app on install. No duplicate icons on your home screen — just one organised system from day one.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#ffffff; border:1px solid #ddd6fe; border-radius:14px; padding:28px; height:100%;">
+          <div style="background-color:#ede9fe; border-radius:12px; width:48px; height:48px; text-align:center; padding-top:11px; margin-bottom:16px;">
+            <i class="fa fa-users" style="color:#7c3aed; font-size:20px;"></i>
+          </div>
+          <h3 style="color:#1f2937; font-size:16px; font-weight:700; margin-bottom:8px;">Multi-Role Support</h3>
+          <p style="color:#6b7280; font-size:14px; line-height:1.65; margin:0;">A supplier who also buys from you? Enable Customer + Vendor toggles. One clean record, both relationships fully tracked and filtered correctly.</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#ffffff; border:1px solid #ddd6fe; border-radius:14px; padding:28px; height:100%;">
+          <div style="background-color:#ede9fe; border-radius:12px; width:48px; height:48px; text-align:center; padding-top:11px; margin-bottom:16px;">
+            <i class="fa fa-database" style="color:#7c3aed; font-size:20px;"></i>
+          </div>
+          <h3 style="color:#1f2937; font-size:16px; font-weight:700; margin-bottom:8px;">Works With Existing Data</h3>
+          <p style="color:#6b7280; font-size:14px; line-height:1.65; margin:0;">Installs on top of your existing contacts without deleting anything. All your data stays intact — just better organised going forward.</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ══════════ FOOTER ══════════ -->
-<footer class="footer">
-  <p>
-    <strong>Smart Contacts</strong> &nbsp;·&nbsp;
-    Built for Odoo 18 &nbsp;·&nbsp;
-    LGPL-3 License &nbsp;·&nbsp;
-    $9.99 one-time &nbsp;·&nbsp;
-    <a href="mailto:hello@smartcontacts.io" style="color:#c4b5fd;">hello@smartcontacts.io</a>
-  </p>
-  <p style="margin-top:8px; font-size:11px; color:#4b5563;">
-    Odoo is a trademark of Odoo S.A. Smart Contacts is an independent community module, not affiliated with Odoo S.A.
-  </p>
-</footer>
+<!-- SCREENSHOTS -->
+<section style="background-color:#ffffff; padding:60px 0;">
+  <div class="container">
+    <div class="row justify-content-center text-center" style="margin-bottom:40px;">
+      <div class="col-md-8 col-12">
+        <p style="color:#7c3aed; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">See It In Action</p>
+        <h2 style="color:#1f2937; font-size:32px; font-weight:800; margin-bottom:14px;">Screenshots from a live Odoo 18 instance</h2>
+        <p style="color:#6b7280; font-size:16px; line-height:1.7;">Real screenshots — what you see is exactly what you get.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-12" style="margin-bottom:28px;">
+        <div style="border:1px solid #e5e7eb; border-radius:14px; overflow:hidden;">
+          <img src="screenshot1.png" alt="Smart Contacts role toggle bar on a contact form" style="width:100%; display:block;"/>
+          <div style="padding:18px 20px; background-color:#ffffff;">
+            <strong style="color:#1f2937; font-size:14px; display:block; margin-bottom:4px;">Role Toggle Bar</strong>
+            <span style="color:#6b7280; font-size:13px;">Each contact shows toggles for all four roles. This vendor has Vendor on. Enable Customer too and they instantly appear in Sales — same record, no duplication.</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-12" style="margin-bottom:28px;">
+        <div style="border:1px solid #e5e7eb; border-radius:14px; overflow:hidden;">
+          <img src="screenshot2.png" alt="Sales quotation with customers-only dropdown" style="width:100%; display:block;"/>
+          <div style="padding:18px 20px; background-color:#ffffff;">
+            <strong style="color:#1f2937; font-size:14px; display:block; margin-bottom:4px;">Sales — Customers Only</strong>
+            <span style="color:#6b7280; font-size:13px;">The Sales quotation customer field only shows contacts marked as Customers. Vendors never pollute your sales workflow again.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-</body>
-</html>
+<!-- COMPARISON TABLE -->
+<section style="background-color:#f9fafb; padding:60px 0;">
+  <div class="container">
+    <div class="row justify-content-center text-center" style="margin-bottom:40px;">
+      <div class="col-md-8 col-12">
+        <p style="color:#7c3aed; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">Comparison</p>
+        <h2 style="color:#1f2937; font-size:32px; font-weight:800; margin-bottom:14px;">Smart Contacts vs Default Odoo Contacts</h2>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-12">
+        <table style="width:100%; border-collapse:collapse; border-radius:12px; overflow:hidden;">
+          <thead>
+            <tr>
+              <th style="background-color:#1f2937; color:#ffffff; padding:14px 20px; font-size:13px; font-weight:700; text-align:left;">Feature</th>
+              <th style="background-color:#374151; color:#ffffff; padding:14px 20px; font-size:13px; font-weight:700; text-align:center;">Default Contacts</th>
+              <th style="background-color:#7c3aed; color:#ffffff; padding:14px 20px; font-size:13px; font-weight:700; text-align:center;">Smart Contacts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background-color:#ffffff;">
+              <td style="padding:14px 20px; font-size:14px; color:#374151; border-bottom:1px solid #e5e7eb;">Separate menu per contact type</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#dc2626; border-bottom:1px solid #e5e7eb;">✗ All in one list</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#059669; font-weight:700; border-bottom:1px solid #e5e7eb;">✓ 5 dedicated menus</td>
+            </tr>
+            <tr style="background-color:#f9fafb;">
+              <td style="padding:14px 20px; font-size:14px; color:#374151; border-bottom:1px solid #e5e7eb;">Multi-role contacts (Customer + Vendor)</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#dc2626; border-bottom:1px solid #e5e7eb;">✗ Duplicate records</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#059669; font-weight:700; border-bottom:1px solid #e5e7eb;">✓ Toggle any combination</td>
+            </tr>
+            <tr style="background-color:#ffffff;">
+              <td style="padding:14px 20px; font-size:14px; color:#374151; border-bottom:1px solid #e5e7eb;">Sales shows only customers</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#dc2626; border-bottom:1px solid #e5e7eb;">✗ All contacts shown</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#059669; font-weight:700; border-bottom:1px solid #e5e7eb;">✓ Enforced automatically</td>
+            </tr>
+            <tr style="background-color:#f9fafb;">
+              <td style="padding:14px 20px; font-size:14px; color:#374151; border-bottom:1px solid #e5e7eb;">Purchase shows only vendors</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#dc2626; border-bottom:1px solid #e5e7eb;">✗ All contacts shown</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#059669; font-weight:700; border-bottom:1px solid #e5e7eb;">✓ Enforced automatically</td>
+            </tr>
+            <tr style="background-color:#ffffff;">
+              <td style="padding:14px 20px; font-size:14px; color:#374151; border-bottom:1px solid #e5e7eb;">Role chip label on every record</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#dc2626; border-bottom:1px solid #e5e7eb;">✗ Not available</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#059669; font-weight:700; border-bottom:1px solid #e5e7eb;">✓ Computed automatically</td>
+            </tr>
+            <tr style="background-color:#f9fafb;">
+              <td style="padding:14px 20px; font-size:14px; color:#374151; border-bottom:1px solid #e5e7eb;">Replaces original app cleanly</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#6b7280; border-bottom:1px solid #e5e7eb;">— N/A</td>
+              <td style="padding:14px 20px; font-size:14px; text-align:center; color:#059669; font-weight:700; border-bottom:1px solid #e5e7eb;">✓ Original app hidden on install</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section style="background-color:#ffffff; padding:60px 0;">
+  <div class="container">
+    <div class="row justify-content-center text-center" style="margin-bottom:40px;">
+      <div class="col-md-8 col-12">
+        <p style="color:#7c3aed; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">Pricing</p>
+        <h2 style="color:#1f2937; font-size:32px; font-weight:800; margin-bottom:14px;">Simple, honest pricing</h2>
+        <p style="color:#6b7280; font-size:16px; line-height:1.7;">Pay once. Use forever. No monthly fees, no seat limits, no upsells.</p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-5 col-sm-8 col-12">
+        <div style="border:2px solid #7c3aed; border-radius:20px; padding:40px 36px; text-align:center;">
+          <p style="color:#7c3aed; font-size:12px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px;">Smart Contacts</p>
+          <p style="color:#1f2937; font-size:60px; font-weight:800; line-height:1; margin-bottom:4px;"><sup style="font-size:28px;">$</sup>9.99</p>
+          <p style="color:#6b7280; font-size:14px; margin-bottom:28px;">one-time payment · all updates included</p>
+          <ul style="list-style:none; padding:0; margin:0 0 28px 0; text-align:left;">
+            <li style="padding:10px 0; border-bottom:1px solid #e5e7eb; font-size:14px; color:#374151;">✓ &nbsp;Unlimited users on one Odoo instance</li>
+            <li style="padding:10px 0; border-bottom:1px solid #e5e7eb; font-size:14px; color:#374151;">✓ &nbsp;All current and future features</li>
+            <li style="padding:10px 0; border-bottom:1px solid #e5e7eb; font-size:14px; color:#374151;">✓ &nbsp;Role-based menus and toggle bar</li>
+            <li style="padding:10px 0; border-bottom:1px solid #e5e7eb; font-size:14px; color:#374151;">✓ &nbsp;Sales and Purchase integration</li>
+            <li style="padding:10px 0; border-bottom:1px solid #e5e7eb; font-size:14px; color:#374151;">✓ &nbsp;Odoo 18 compatible</li>
+            <li style="padding:10px 0; font-size:14px; color:#374151;">✓ &nbsp;Community support via email</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO INSTALL -->
+<section style="background-color:#0f0a1e; padding:60px 0;">
+  <div class="container">
+    <div class="row justify-content-center text-center" style="margin-bottom:40px;">
+      <div class="col-md-8 col-12">
+        <p style="color:#c4b5fd; font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px;">Installation</p>
+        <h2 style="color:#ffffff; font-size:32px; font-weight:800; margin-bottom:14px;">Up and running in under 2 minutes</h2>
+        <p style="color:#a5b4fc; font-size:16px; line-height:1.7;">No developer mode required. Works on Odoo.com cloud and self-hosted.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-sm-6 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#1e1045; border:1px solid #2d1b69; border-radius:14px; padding:28px;">
+          <div style="background-color:#7c3aed; border-radius:50%; width:36px; height:36px; text-align:center; padding-top:7px; margin-bottom:16px;">
+            <span style="color:#ffffff; font-size:15px; font-weight:800;">1</span>
+          </div>
+          <h4 style="color:#ffffff; font-size:15px; font-weight:700; margin-bottom:8px;">Buy &amp; Download</h4>
+          <p style="color:#9ca3af; font-size:13px; line-height:1.65; margin:0;">Purchase from the Odoo App Store. Download the <code style="background-color:#2d1b69; color:#c4b5fd; padding:2px 6px; border-radius:4px;">.zip</code> file.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#1e1045; border:1px solid #2d1b69; border-radius:14px; padding:28px;">
+          <div style="background-color:#7c3aed; border-radius:50%; width:36px; height:36px; text-align:center; padding-top:7px; margin-bottom:16px;">
+            <span style="color:#ffffff; font-size:15px; font-weight:800;">2</span>
+          </div>
+          <h4 style="color:#ffffff; font-size:15px; font-weight:700; margin-bottom:8px;">Upload the Module</h4>
+          <p style="color:#9ca3af; font-size:13px; line-height:1.65; margin:0;">Go to <strong style="color:#c4b5fd;">Settings → Technical → Modules</strong>. Click <em style="color:#c4b5fd;">Upload a Module</em> and select the zip.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#1e1045; border:1px solid #2d1b69; border-radius:14px; padding:28px;">
+          <div style="background-color:#7c3aed; border-radius:50%; width:36px; height:36px; text-align:center; padding-top:7px; margin-bottom:16px;">
+            <span style="color:#ffffff; font-size:15px; font-weight:800;">3</span>
+          </div>
+          <h4 style="color:#ffffff; font-size:15px; font-weight:700; margin-bottom:8px;">Install</h4>
+          <p style="color:#9ca3af; font-size:13px; line-height:1.65; margin:0;">Search for <strong style="color:#c4b5fd;">Smart Contacts</strong> in the Apps list and click <strong style="color:#c4b5fd;">Install</strong>.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 col-12" style="margin-bottom:24px;">
+        <div style="background-color:#1e1045; border:1px solid #2d1b69; border-radius:14px; padding:28px;">
+          <div style="background-color:#059669; border-radius:50%; width:36px; height:36px; text-align:center; padding-top:7px; margin-bottom:16px;">
+            <span style="color:#ffffff; font-size:15px; font-weight:800;">✓</span>
+          </div>
+          <h4 style="color:#ffffff; font-size:15px; font-weight:700; margin-bottom:8px;">Done!</h4>
+          <p style="color:#9ca3af; font-size:13px; line-height:1.65; margin:0;">The original Contacts app is replaced. Your new role-based menus are live immediately.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Where to buy -->
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-6 col-12" style="margin-bottom:20px;">
+        <div style="background-color:#1e1045; border:1px solid #2d1b69; border-radius:14px; padding:28px;">
+          <h4 style="color:#c4b5fd; font-size:15px; font-weight:700; margin-bottom:10px;">🛒 &nbsp;Odoo App Store (Recommended)</h4>
+          <p style="color:#9ca3af; font-size:13px; line-height:1.65; margin-bottom:12px;">
+            The official marketplace. Secure payment, guaranteed compatibility badge, and automatic update notifications.
+          </p>
+          <p style="color:#6b7280; font-size:12px; margin:0;">apps.odoo.com/apps/modules/18.0/smart_contacts/</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-12" style="margin-bottom:20px;">
+        <div style="background-color:#1e1045; border:1px solid #2d1b69; border-radius:14px; padding:28px;">
+          <h4 style="color:#c4b5fd; font-size:15px; font-weight:700; margin-bottom:10px;">📧 &nbsp;Direct / Support</h4>
+          <p style="color:#9ca3af; font-size:13px; line-height:1.65; margin-bottom:12px;">
+            Questions before buying? Need help after install? Reach out and we respond within 24 hours.
+          </p>
+          <p style="color:#6b7280; font-size:12px; margin:0;">hello@smartcontacts.io</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<section style="background-color:#1f2937; padding:32px 0;">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-md-8 col-12">
+        <p style="color:#9ca3af; font-size:13px; margin:0;">
+          <strong style="color:#c4b5fd;">Smart Contacts</strong> &nbsp;·&nbsp;
+          Built for Odoo 18 &nbsp;·&nbsp;
+          LGPL-3 License &nbsp;·&nbsp;
+          $9.99 one-time
+        </p>
+        <p style="color:#6b7280; font-size:11px; margin-top:8px;">
+          Odoo is a trademark of Odoo S.A. Smart Contacts is an independent community module, not affiliated with Odoo S.A.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
