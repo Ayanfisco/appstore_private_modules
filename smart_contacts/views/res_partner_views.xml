@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PARTNER FORM VIEW  —  Role toggle bar
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_partner_form_smart" model="ir.ui.view">
+        <field name="name">res.partner.form.smart.contacts</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <div class="sc-role-bar o_row" style="margin: 8px 0 4px 0;">
+                    <span class="sc-role-label">Roles:</span>
+                    <field name="is_customer" widget="boolean_toggle"/>
+                    <label for="is_customer" string="Customer" class="sc-toggle-lbl"/>
+                    <field name="is_vendor" widget="boolean_toggle"/>
+                    <label for="is_vendor" string="Vendor" class="sc-toggle-lbl"/>
+                    <field name="is_employee_contact" widget="boolean_toggle"/>
+                    <label for="is_employee_contact" string="Employee" class="sc-toggle-lbl"/>
+                    <field name="is_partner_contact" widget="boolean_toggle"/>
+                    <label for="is_partner_contact" string="Partner" class="sc-toggle-lbl"/>
+                    <field name="contact_role_label" class="sc-role-chip" readonly="1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         LIST VIEW
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_partner_list_smart" model="ir.ui.view">
+        <field name="name">res.partner.list.smart.contacts</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Contacts" multi_edit="1">
+                <field name="display_name" string="Name"/>
+                <field name="contact_role_label" string="Role(s)" optional="show"/>
+                <field name="email" optional="show"/>
+                <field name="phone" optional="show"/>
+                <field name="city" optional="show"/>
+                <field name="country_id" optional="show"/>
+                <field name="is_customer" column_invisible="1"/>
+                <field name="is_vendor" column_invisible="1"/>
+                <field name="is_employee_contact" column_invisible="1"/>
+                <field name="is_partner_contact" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         KANBAN VIEW
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_partner_kanban_smart" model="ir.ui.view">
+        <field name="name">res.partner.kanban.smart.contacts</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban quick_create="false">
+                <field name="id"/>
+                <field name="display_name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="contact_role_label"/>
+                <field name="image_128"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="sc-kanban-card">
+                            <div class="sc-kanban-info">
+                                <strong class="sc-kanban-name">
+                                    <field name="display_name"/>
+                                </strong>
+                                <span class="sc-role-chip-small">
+                                    <field name="contact_role_label"/>
+                                </span>
+                                <div class="sc-kanban-meta"><field name="email"/></div>
+                                <div class="sc-kanban-meta"><field name="phone"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SEARCH VIEW
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_partner_search_smart" model="ir.ui.view">
+        <field name="name">res.partner.search.smart.contacts</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Search Contacts">
+                <field name="name" string="Name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="city"/>
+                <field name="country_id"/>
+                <separator/>
+                <filter string="Customers"  name="f_customers"  domain="[('is_customer','=',True)]"/>
+                <filter string="Vendors"    name="f_vendors"    domain="[('is_vendor','=',True)]"/>
+                <filter string="Employees"  name="f_employees"  domain="[('is_employee_contact','=',True)]"/>
+                <filter string="Partners"   name="f_partners"   domain="[('is_partner_contact','=',True)]"/>
+                <separator/>
+                <filter string="Companies"   name="f_companies"   domain="[('is_company','=',True)]"/>
+                <filter string="Individuals" name="f_individuals" domain="[('is_company','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Country" name="g_country" context="{'group_by':'country_id'}"/>
+                    <filter string="City"    name="g_city"    context="{'group_by':'city'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         WINDOW ACTIONS
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="action_all_contacts" model="ir.actions.act_window">
+        <field name="name">All Contacts</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="view_ids" eval="[
+            (5,0,0),
+            (0,0,{'view_mode':'list',   'view_id': ref('view_partner_list_smart')}),
+            (0,0,{'view_mode':'kanban', 'view_id': ref('view_partner_kanban_smart')}),
+            (0,0,{'view_mode':'form',   'view_id': ref('view_partner_form_smart')}),
+        ]"/>
+        <field name="search_view_id" ref="view_partner_search_smart"/>
+    </record>
+
+    <record id="action_customers" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('is_customer','=',True)]</field>
+        <field name="context">{'default_is_customer': True, 'search_default_f_customers': 1}</field>
+        <field name="view_ids" eval="[
+            (5,0,0),
+            (0,0,{'view_mode':'list',   'view_id': ref('view_partner_list_smart')}),
+            (0,0,{'view_mode':'kanban', 'view_id': ref('view_partner_kanban_smart')}),
+            (0,0,{'view_mode':'form',   'view_id': ref('view_partner_form_smart')}),
+        ]"/>
+        <field name="search_view_id" ref="view_partner_search_smart"/>
+    </record>
+
+    <record id="action_vendors" model="ir.actions.act_window">
+        <field name="name">Vendors</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('is_vendor','=',True)]</field>
+        <field name="context">{'default_is_vendor': True, 'search_default_f_vendors': 1}</field>
+        <field name="view_ids" eval="[
+            (5,0,0),
+            (0,0,{'view_mode':'list',   'view_id': ref('view_partner_list_smart')}),
+            (0,0,{'view_mode':'kanban', 'view_id': ref('view_partner_kanban_smart')}),
+            (0,0,{'view_mode':'form',   'view_id': ref('view_partner_form_smart')}),
+        ]"/>
+        <field name="search_view_id" ref="view_partner_search_smart"/>
+    </record>
+
+    <record id="action_employee_contacts" model="ir.actions.act_window">
+        <field name="name">Employees</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('is_employee_contact','=',True)]</field>
+        <field name="context">{'default_is_employee_contact': True, 'search_default_f_employees': 1}</field>
+        <field name="view_ids" eval="[
+            (5,0,0),
+            (0,0,{'view_mode':'list',   'view_id': ref('view_partner_list_smart')}),
+            (0,0,{'view_mode':'kanban', 'view_id': ref('view_partner_kanban_smart')}),
+            (0,0,{'view_mode':'form',   'view_id': ref('view_partner_form_smart')}),
+        ]"/>
+        <field name="search_view_id" ref="view_partner_search_smart"/>
+    </record>
+
+    <record id="action_business_partners" model="ir.actions.act_window">
+        <field name="name">Business Partners</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('is_partner_contact','=',True)]</field>
+        <field name="context">{'default_is_partner_contact': True, 'search_default_f_partners': 1}</field>
+        <field name="view_ids" eval="[
+            (5,0,0),
+            (0,0,{'view_mode':'list',   'view_id': ref('view_partner_list_smart')}),
+            (0,0,{'view_mode':'kanban', 'view_id': ref('view_partner_kanban_smart')}),
+            (0,0,{'view_mode':'form',   'view_id': ref('view_partner_form_smart')}),
+        ]"/>
+        <field name="search_view_id" ref="view_partner_search_smart"/>
+    </record>
+
+    <record id="action_sale_customers" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('is_customer','=',True)]</field>
+        <field name="context">{'default_is_customer': True, 'search_default_f_customers': 1}</field>
+        <field name="view_ids" eval="[
+            (5,0,0),
+            (0,0,{'view_mode':'list',   'view_id': ref('view_partner_list_smart')}),
+            (0,0,{'view_mode':'kanban', 'view_id': ref('view_partner_kanban_smart')}),
+            (0,0,{'view_mode':'form',   'view_id': ref('view_partner_form_smart')}),
+        ]"/>
+        <field name="search_view_id" ref="view_partner_search_smart"/>
+    </record>
+
+    <record id="action_purchase_vendors" model="ir.actions.act_window">
+        <field name="name">Vendors</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('is_vendor','=',True)]</field>
+        <field name="context">{'default_is_vendor': True, 'search_default_f_vendors': 1}</field>
+        <field name="view_ids" eval="[
+            (5,0,0),
+            (0,0,{'view_mode':'list',   'view_id': ref('view_partner_list_smart')}),
+            (0,0,{'view_mode':'kanban', 'view_id': ref('view_partner_kanban_smart')}),
+            (0,0,{'view_mode':'form',   'view_id': ref('view_partner_form_smart')}),
+        ]"/>
+        <field name="search_view_id" ref="view_partner_search_smart"/>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SALE ORDER FORM  —  Customer field: is_customer only
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_sale_order_form_sc" model="ir.ui.view">
+        <field name="name">sale.order.form.smart.contacts</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('is_customer', '=', True)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         PURCHASE ORDER FORM  —  Vendor field: is_vendor only
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_purchase_order_form_sc" model="ir.ui.view">
+        <field name="name">purchase.order.form.smart.contacts</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('is_vendor', '=', True)]</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ACCOUNT MOVE — restrict partner by move_type
+         out_invoice/out_refund/out_receipt  = customers only
+         in_invoice/in_refund/in_receipt     = vendors only
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_account_move_form_sc" model="ir.ui.view">
+        <field name="name">account.move.form.smart.contacts</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('is_customer', '=', True)] if move_type in ('out_invoice', 'out_refund', 'out_receipt') else [('is_vendor', '=', True)] if move_type in ('in_invoice', 'in_refund', 'in_receipt') else []</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         ACCOUNT PAYMENT — inbound = customer, outbound = vendor
+    ═══════════════════════════════════════════════════════════════════ -->
+    <record id="view_account_payment_form_sc" model="ir.ui.view">
+        <field name="name">account.payment.form.smart.contacts</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">[('is_customer', '=', True)] if payment_type == 'inbound' else [('is_vendor', '=', True)] if payment_type == 'outbound' else []</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
