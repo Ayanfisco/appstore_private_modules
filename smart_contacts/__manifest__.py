@@ -14,7 +14,7 @@ Features:
 - Sales app shows only Customers; Purchase app shows only Vendors
 - Hides the default Contacts app to eliminate duplication
     """,
-    'author': 'Smart Contacts',
+    'author': 'Tech Joe',
     'category': 'Sales/CRM',
     'depends': ['base', 'contacts', 'sale_management', 'sale', 'purchase'],
     'data': [
