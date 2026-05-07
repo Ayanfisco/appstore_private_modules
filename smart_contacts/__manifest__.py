@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'Smart Contacts — Organised by Role',
+    'name': 'Smart Contacts - Organised by Role',
     'version': '18.0.1.0.0',
     'summary': 'Replace cluttered Contacts with role-based menus: Customers, Vendors, Employees & more',
     'description': """
