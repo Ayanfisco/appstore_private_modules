@@ -605,9 +605,10 @@
                                                         </span>
                                                     </td>
                                                     <td class="text-center">
-                                                        <a t-attf-href="/web/content/hr.payslip/{{ ps.id }}/report_id"
+                                                        <a t-attf-href="/my/ess/payslips/{{ ps.id }}/download"
                                                            class="btn btn-sm btn-outline-secondary"
-                                                           title="Download PDF">
+                                                           title="Download PDF"
+                                                           target="_blank">
                                                             <i class="fa fa-download"/>
                                                         </a>
                                                     </td>

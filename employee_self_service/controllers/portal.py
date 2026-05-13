@@ -458,6 +458,42 @@ class EmployeeSelfServicePortal(http.Controller):
             'page_name': 'ess_payslips',
         })
 
+    # ── Payslip Download ───────────────────────────────────────────────────────
+    @http.route('/my/ess/payslips/<int:payslip_id>/download', type='http', auth='user', website=True)
+    def ess_payslip_download(self, payslip_id, **kw):
+        employee = _get_employee_or_abort()
+        if not employee:
+            return request.redirect('/web?#action=login')
+
+        # Verify the payslip belongs to this employee and is confirmed
+        payslip = request.env['hr.payslip'].sudo().search([
+            ('id', '=', payslip_id),
+            ('employee_id', '=', employee.id),
+            ('state', 'in', ('done', 'paid')),
+        ], limit=1)
+
+        if not payslip:
+            return request.not_found()
+
+        # Render the standard Odoo payslip PDF report
+        pdf_content, content_type = request.env['ir.actions.report'].sudo()._render_qweb_pdf(
+            'hr_payroll.action_report_payslip', payslip.ids
+        )
+
+        filename = 'Payslip-%s-%s.pdf' % (
+            payslip.employee_id.name.replace(' ', '_'),
+            payslip.date_to.strftime('%Y-%m') if payslip.date_to else 'unknown'
+        )
+
+        return request.make_response(
+            pdf_content,
+            headers=[
+                ('Content-Type', 'application/pdf'),
+                ('Content-Disposition', 'attachment; filename="%s"' % filename),
+                ('Content-Length', len(pdf_content)),
+            ]
+        )
+
     # ── Profile — View ────────────────────────────────────────────────────────
     @http.route('/my/ess/profile', type='http', auth='user', website=True,
                 methods=['GET'])
