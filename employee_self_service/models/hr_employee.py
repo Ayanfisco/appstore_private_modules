@@ -82,7 +82,7 @@ class HrEmployee(models.Model):
             'name': self.name,
             'login': work_email,
             'email': work_email,
-            'group_ids': [(6, 0, [portal_group.id])],
+            'group_id': [(6, 0, [portal_group.id])],
             'active': True,
         }
         if partner:
