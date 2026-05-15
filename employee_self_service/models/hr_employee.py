@@ -70,14 +70,31 @@ class HrEmployee(models.Model):
             return self._notify_portal_user_linked(existing)
 
         portal_group = self.env.ref('base.group_portal')
-        new_user = self.env['res.users'].sudo().create({
+
+        partner = self.work_contact_id or self.address_home_id
+        if not partner:
+            partner = self.env['res.partner'].sudo().search([
+                ('email', '=', work_email),
+                ('user_ids', '=', False),
+            ], limit=1)
+
+        user_vals = {
             'name': self.name,
             'login': work_email,
             'email': work_email,
             'group_ids': [(6, 0, [portal_group.id])],
             'active': True,
-        })
-        self.ess_portal_user_id = new_user
+        }
+        if partner:
+            user_vals['partner_id'] = partner.id
+
+        new_user = self.env['res.users'].sudo().create(user_vals)
+
+        # If Odoo still created a duplicate, relink and archive it
+        if partner and new_user.partner_id.id != partner.id:
+            dupe = new_user.partner_id
+            new_user.sudo().write({'partner_id': partner.id})
+            dupe.sudo().write({'active': False})
 
         # Send invitation email if template exists
         auto_invite = self.env['ir.config_parameter'].sudo().get_param(
