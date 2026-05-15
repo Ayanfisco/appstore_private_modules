@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400">
+  <defs>
+    <linearGradient id="bannerBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d47a1"/>
+      <stop offset="55%" style="stop-color:#1565c0"/>
+      <stop offset="100%" style="stop-color:#1a73e8"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#43a047"/>
+      <stop offset="100%" style="stop-color:#66bb6a"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#bannerBg)"/>
+
+  <!-- Decorative circles - background depth -->
+  <circle cx="980" cy="-60" r="280" fill="white" opacity="0.03"/>
+  <circle cx="1100" cy="450" r="220" fill="white" opacity="0.04"/>
+  <circle cx="50" cy="420" r="200" fill="white" opacity="0.03"/>
+
+  <!-- Subtle dot grid pattern -->
+  <pattern id="dots" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <circle cx="2" cy="2" r="1.2" fill="white" opacity="0.08"/>
+  </pattern>
+  <rect width="1200" height="400" fill="url(#dots)"/>
+
+  <!-- Left accent bar -->
+  <rect x="0" y="0" width="6" height="400" fill="url(#accentGrad)"/>
+
+  <!-- ===== LEFT SECTION: Branding ===== -->
+
+  <!-- Icon background circle -->
+  <circle cx="110" cy="200" r="58" fill="white" opacity="0.1" filter="url(#softShadow)"/>
+  <circle cx="110" cy="200" r="50" fill="white" opacity="0.12"/>
+
+  <!-- Person icon inside circle -->
+  <circle cx="110" cy="185" r="16" fill="white" opacity="0.95"/>
+  <path d="M82 228 C82 210 138 210 138 228 L138 234 L82 234 Z" fill="white" opacity="0.95"/>
+  <!-- Green check badge -->
+  <circle cx="148" cy="238" r="13" fill="#43a047"/>
+  <polyline points="142,238 147,243 155,232" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Main title -->
+  <text x="190" y="175" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="white" letter-spacing="-0.5">Employee Self-Service</text>
+  <text x="190" y="225" font-family="Georgia, 'Times New Roman', serif" font-size="46" font-weight="700" fill="white" letter-spacing="-0.5">Portal</text>
+
+  <!-- Subtitle -->
+  <text x="192" y="263" font-family="'Segoe UI', Arial, sans-serif" font-size="18" fill="white" opacity="0.8" letter-spacing="0.3">HR self-service for every employee — no extra licence needed</text>
+
+  <!-- Green accent underline under title -->
+  <rect x="190" y="237" width="180" height="3" rx="2" fill="url(#accentGrad)"/>
+
+  <!-- Version badge -->
+  <rect x="192" y="285" width="110" height="30" rx="15" fill="url(#accentGrad)"/>
+  <text x="247" y="305" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="600" fill="white" text-anchor="middle" letter-spacing="0.5">Odoo 18</text>
+
+  <!-- Author -->
+  <text x="315" y="304" font-family="'Segoe UI', Arial, sans-serif" font-size="13" fill="white" opacity="0.6">by Tech Joe</text>
+
+  <!-- ===== RIGHT SECTION: Feature pills ===== -->
+
+  <!-- Feature cards - right side -->
+  <!-- Card 1 -->
+  <rect x="740" y="48" width="200" height="64" rx="12" fill="url(#cardGrad)" stroke="white" stroke-width="0.8" stroke-opacity="0.2" filter="url(#softShadow)"/>
+  <text x="765" y="76" font-family="'Segoe UI', Arial, sans-serif" font-size="22">🏖️</text>
+  <text x="800" y="74" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="white">Time Off</text>
+  <text x="800" y="93" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.65">Request &amp; track leave</text>
+
+  <!-- Card 2 -->
+  <rect x="960" y="48" width="200" height="64" rx="12" fill="url(#cardGrad)" stroke="white" stroke-width="0.8" stroke-opacity="0.2" filter="url(#softShadow)"/>
+  <text x="985" y="76" font-family="'Segoe UI', Arial, sans-serif" font-size="22">💰</text>
+  <text x="1020" y="74" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="white">Expenses</text>
+  <text x="1020" y="93" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.65">Submit &amp; track claims</text>
+
+  <!-- Card 3 -->
+  <rect x="740" y="132" width="200" height="64" rx="12" fill="url(#cardGrad)" stroke="white" stroke-width="0.8" stroke-opacity="0.2" filter="url(#softShadow)"/>
+  <text x="765" y="160" font-family="'Segoe UI', Arial, sans-serif" font-size="22">🧾</text>
+  <text x="800" y="158" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="white">Payslips</text>
+  <text x="800" y="177" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.65">Download PDF payslips</text>
+
+  <!-- Card 4 -->
+  <rect x="960" y="132" width="200" height="64" rx="12" fill="url(#cardGrad)" stroke="white" stroke-width="0.8" stroke-opacity="0.2" filter="url(#softShadow)"/>
+  <text x="985" y="160" font-family="'Segoe UI', Arial, sans-serif" font-size="22">👤</text>
+  <text x="1020" y="158" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="white">Profile</text>
+  <text x="1020" y="177" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.65">Update personal details</text>
+
+  <!-- Card 5 -->
+  <rect x="740" y="216" width="200" height="64" rx="12" fill="url(#cardGrad)" stroke="white" stroke-width="0.8" stroke-opacity="0.2" filter="url(#softShadow)"/>
+  <text x="765" y="244" font-family="'Segoe UI', Arial, sans-serif" font-size="22">📄</text>
+  <text x="800" y="242" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="white">Documents</text>
+  <text x="800" y="261" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.65">View HR documents</text>
+
+  <!-- Card 6 -->
+  <rect x="960" y="216" width="200" height="64" rx="12" fill="url(#cardGrad)" stroke="white" stroke-width="0.8" stroke-opacity="0.2" filter="url(#softShadow)"/>
+  <text x="985" y="244" font-family="'Segoe UI', Arial, sans-serif" font-size="22">📋</text>
+  <text x="1020" y="242" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="600" fill="white">Dashboard</text>
+  <text x="1020" y="261" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.65">Personalised overview</text>
+
+  <!-- Bottom stat bar -->
+  <rect x="740" y="308" width="420" height="56" rx="12" fill="white" opacity="0.08" stroke="white" stroke-width="0.5" stroke-opacity="0.15"/>
+
+  <!-- Stats inside bar -->
+  <text x="810" y="331" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.6" text-anchor="middle">LICENCES</text>
+  <text x="810" y="352" font-family="Georgia, serif" font-size="18" font-weight="700" fill="#66bb6a" text-anchor="middle">FREE</text>
+
+  <rect x="875" y="318" width="1" height="36" fill="white" opacity="0.2"/>
+
+  <text x="950" y="331" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.6" text-anchor="middle">COMPATIBILITY</text>
+  <text x="950" y="352" font-family="Georgia, serif" font-size="18" font-weight="700" fill="white" text-anchor="middle">CE + EE</text>
+
+  <rect x="1015" y="318" width="1" height="36" fill="white" opacity="0.2"/>
+
+  <text x="1100" y="331" font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="white" opacity="0.6" text-anchor="middle">MOBILE</text>
+  <text x="1100" y="352" font-family="Georgia, serif" font-size="18" font-weight="700" fill="white" text-anchor="middle">100%</text>
+
+  <!-- Divider line between left and right -->
+  <line x1="710" y1="40" x2="710" y2="360" stroke="white" stroke-width="0.5" stroke-opacity="0.15"/>
+
+</svg>

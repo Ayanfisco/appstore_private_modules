@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         Add ESS entry to the standard "My Account" portal home page.
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_my_home_ess" inherit_id="portal.portal_my_home"
+              name="ESS Portal Home Entry"
+              customize_show="False"
+              priority="30">
+        <xpath expr="//div[hasclass('o_portal_my_home')]" position="inside">
+            <div class="o_portal_docs">
+                <t t-call="portal.portal_docs_entry">
+                    <t t-set="title">My HR Portal</t>
+                    <t t-set="url">/my/ess</t>
+                    <t t-set="placeholder_count">0</t>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         Shared sidebar nav macro
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <template id="ess_sidebar_nav" name="ESS Sidebar Navigation">
+        <div class="ess_sidebar">
+            <div class="ess_sidebar_header">
+                <div class="ess_avatar_wrap">
+                    <img t-if="employee.image_128"
+                         t-att-src="'/web/image/hr.employee/%s/image_128' % employee.id"
+                         class="ess_avatar" alt="Avatar"/>
+                    <div t-else="" class="ess_avatar_placeholder">
+                        <i class="fa fa-user"/>
+                    </div>
+                </div>
+                <div class="ess_employee_name">
+                    <strong>
+                        <t t-out="employee.name"/>
+                    </strong>
+                    <small class="d-block text-muted">
+                        <t t-out="employee.job_id.name or employee.job_title or ''"/>
+                    </small>
+                </div>
+            </div>
+            <nav class="ess_nav_links">
+                <a t-attf-href="/my/ess"
+                   t-att-class="'ess_nav_link ' + ('active' if page_name == 'ess_dashboard' else '')">
+                    <i class="fa fa-home"/>
+                    Dashboard
+                </a>
+                <a t-attf-href="/my/ess/leaves"
+                   t-att-class="'ess_nav_link ' + ('active' if page_name == 'ess_leaves' else '')">
+                    <i class="fa fa-calendar"/>
+                    Time Off
+                </a>
+                <a t-attf-href="/my/ess/expenses"
+                   t-att-class="'ess_nav_link ' + ('active' if page_name == 'ess_expenses' else '')">
+                    <i class="fa fa-money"/>
+                    Expenses
+                </a>
+                <a t-attf-href="/my/ess/payslips"
+                   t-att-class="'ess_nav_link ' + ('active' if page_name == 'ess_payslips' else '')">
+                    <i class="fa fa-file-text"/>
+                    Payslips
+                </a>
+                <a t-attf-href="/my/ess/profile"
+                   t-att-class="'ess_nav_link ' + ('active' if page_name == 'ess_profile' else '')">
+                    <i class="fa fa-user-circle"/>
+                    My Profile
+                </a>
+            </nav>
+        </div>
+    </template>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         DASHBOARD
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_ess_dashboard" name="ESS Dashboard">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My HR Portal</t>
+            <div class="ess_layout container-fluid px-0">
+                <div class="ess_body">
+                    <t t-call="employee_self_service.ess_sidebar_nav"/>
+                    <div class="ess_main">
+                        <div class="ess_page_header">
+                            <h3><i class="fa fa-home me-2 text-primary"/>Dashboard
+                            </h3>
+                            <small class="text-muted">
+                                <t t-out="today_fmt"/>
+                            </small>
+                        </div>
+                        <div class="ess_welcome_banner">
+                            <div>
+                                <h5 class="mb-1">Welcome back, <t t-out="employee_first_name"/>! &#x1F44B;
+                                </h5>
+                                <span class="text-muted">
+                                    <t t-out="employee.department_id.name or ''"/>
+                                    <t t-if="employee.job_id">&#183;
+                                        <t t-out="employee.job_id.name"/>
+                                    </t>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="ess_quick_actions_row">
+                            <a t-if="allow_leave" href="/my/ess/leaves" class="ess_quick_btn ess_btn_leave">
+                                <i class="fa fa-calendar-plus-o fa-2x"/>
+                                <span>Request Leave</span>
+                            </a>
+                            <a t-if="allow_expense" href="/my/ess/expenses" class="ess_quick_btn ess_btn_expense">
+                                <i class="fa fa-plus-circle fa-2x"/>
+                                <span>Submit Expense</span>
+                            </a>
+                            <a href="/my/ess/payslips" class="ess_quick_btn ess_btn_payslip">
+                                <i class="fa fa-download fa-2x"/>
+                                <span>My Payslips</span>
+                            </a>
+                            <a t-if="allow_profile_edit" href="/my/ess/profile" class="ess_quick_btn ess_btn_profile">
+                                <i class="fa fa-edit fa-2x"/>
+                                <span>Edit Profile</span>
+                            </a>
+                        </div>
+                        <div class="ess_dashboard_grid">
+                            <!-- Leave Balances -->
+                            <div class="ess_card">
+                                <div class="ess_card_header">
+                                    <i class="fa fa-calendar me-2 text-success"/>
+                                    <strong>Leave Balances</strong>
+                                </div>
+                                <div class="ess_card_body">
+                                    <t t-if="leave_balances">
+                                        <t t-foreach="leave_balances" t-as="lb">
+                                            <div class="ess_leave_balance_row">
+                                                <span class="ess_lb_type">
+                                                    <t t-out="lb['type']"/>
+                                                </span>
+                                                <div class="ess_lb_bar_wrap">
+                                                    <div class="ess_lb_bar">
+                                                        <div class="ess_lb_bar_fill"
+                                                             t-attf-style="width: {{ [100, int((lb['remaining'] / (lb['allocated'] or 1)) * 100)] | min }}%"/>
+                                                    </div>
+                                                </div>
+                                                <span class="ess_lb_count">
+                                                    <t t-out="lb['remaining']"/>
+                                                    /
+                                                    <t t-out="lb['allocated']"/>
+                                                    days
+                                                </span>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <p class="text-muted small mb-0">No leave allocations found.</p>
+                                    </t>
+                                </div>
+                            </div>
+                            <!-- Pending Leave Requests -->
+                            <div class="ess_card">
+                                <div class="ess_card_header">
+                                    <i class="fa fa-clock-o me-2 text-warning"/>
+                                    <strong>Pending Requests</strong>
+                                    <a href="/my/ess/leaves" class="ms-auto small text-primary">View all</a>
+                                </div>
+                                <div class="ess_card_body">
+                                    <t t-if="pending_leaves_fmt">
+                                        <t t-foreach="pending_leaves_fmt" t-as="lv">
+                                            <div class="ess_list_row">
+                                                <div>
+                                                    <strong>
+                                                        <t t-out="lv['name']"/>
+                                                    </strong>
+                                                    <small class="d-block text-muted">
+                                                        <t t-out="lv['date_from']"/>
+                                                        &#8211;
+                                                        <t t-out="lv['date_to']"/>
+                                                    </small>
+                                                </div>
+                                                <span class="ess_status_badge">
+                                                    <t t-out="lv['state_label']"/>
+                                                </span>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <p class="text-muted small mb-0">No pending leave requests.</p>
+                                    </t>
+                                </div>
+                            </div>
+                            <!-- Recent Expenses -->
+                            <div class="ess_card">
+                                <div class="ess_card_header">
+                                    <i class="fa fa-money me-2 text-info"/>
+                                    <strong>Recent Expenses</strong>
+                                    <a href="/my/ess/expenses" class="ms-auto small text-primary">View all</a>
+                                </div>
+                                <div class="ess_card_body">
+                                    <t t-if="pending_expenses_fmt">
+                                        <t t-foreach="pending_expenses_fmt" t-as="exp">
+                                            <div class="ess_list_row">
+                                                <div>
+                                                    <strong>
+                                                        <t t-out="exp['name']"/>
+                                                    </strong>
+                                                    <small class="d-block text-muted">
+                                                        <t t-out="exp['create_date']"/>
+                                                    </small>
+                                                </div>
+                                                <span class="ess_status_badge">
+                                                    <t t-out="exp['state_label']"/>
+                                                </span>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <p class="text-muted small mb-0">No recent expense claims.</p>
+                                    </t>
+                                </div>
+                            </div>
+                            <!-- Recent Payslips -->
+                            <div class="ess_card">
+                                <div class="ess_card_header">
+                                    <i class="fa fa-file-text-o me-2 text-secondary"/>
+                                    <strong>Recent Payslips</strong>
+                                    <a href="/my/ess/payslips" class="ms-auto small text-primary">View all</a>
+                                </div>
+                                <div class="ess_card_body">
+                                    <t t-if="recent_payslips_fmt">
+                                        <t t-foreach="recent_payslips_fmt" t-as="ps">
+                                            <div class="ess_list_row">
+                                                <div>
+                                                    <strong>
+                                                        <t t-out="ps['name']"/>
+                                                    </strong>
+                                                    <small class="d-block text-muted">
+                                                        <t t-out="ps['date_from']"/>
+                                                        &#8211;
+                                                        <t t-out="ps['date_to']"/>
+                                                    </small>
+                                                </div>
+                                                <span class="ess_status_badge ess_state_done">Paid</span>
+                                            </div>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <p class="text-muted small mb-0">No payslips available yet.</p>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         TIME OFF
+         KEY FIX: Use hidden inputs for POST values + JS sync from date picker.
+         The HTML spec guarantees input[type=date].value is ALWAYS yyyy-mm-dd
+         regardless of browser display locale (e.g. Nigerian dd/mm/yyyy display).
+         By posting from hidden inputs we always send yyyy-mm-dd to the server.
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_ess_leaves" name="ESS Time Off">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Time Off</t>
+            <div class="ess_layout container-fluid px-0">
+                <div class="ess_body">
+                    <t t-call="employee_self_service.ess_sidebar_nav"/>
+                    <div class="ess_main">
+                        <div class="ess_page_header">
+                            <h3><i class="fa fa-calendar me-2 text-success"/>Time Off
+                            </h3>
+                        </div>
+
+                        <!-- Success banner -->
+                        <div t-if="success" class="alert alert-success">
+                            <i class="fa fa-check-circle me-2"/>
+                            Your leave request has been submitted and is awaiting approval.
+                        </div>
+
+                        <!-- Error banner -->
+                        <t t-if="errors">
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    <li t-foreach="errors" t-as="err">
+                                        <t t-out="err"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </t>
+
+                        <!-- New request form -->
+                        <t t-if="allow_leave">
+                            <div class="ess_card mb-4">
+                                <div class="ess_card_header">
+                                    <i class="fa fa-plus-circle me-2 text-success"/>
+                                    <strong>New Leave Request</strong>
+                                </div>
+                                <div class="ess_card_body">
+                                    <form action="/my/ess/leaves/new" method="post"
+                                          class="row g-3" id="ess_leave_form">
+                                        <input type="hidden" name="csrf_token"
+                                               t-att-value="request.csrf_token()"/>
+
+                                        <div class="col-md-4">
+                                            <label class="form-label fw-semibold">Leave Type</label>
+                                            <select name="leave_type_id" class="form-select" required="required">
+                                                <option value="">-- Select --</option>
+                                                <t t-foreach="leave_types" t-as="lt">
+                                                    <option t-att-value="lt.id">
+                                                        <t t-out="lt.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">From</label>
+                                            <!-- Hidden field carries the actual POST value (always yyyy-mm-dd) -->
+                                            <input type="hidden" name="date_from" id="date_from_val"/>
+                                            <!-- Visible picker controls display only; its .value is always yyyy-mm-dd per spec -->
+                                            <input type="date" id="date_from_picker"
+                                                   class="form-control"
+                                                   t-att-min="today_fmt"/>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">To</label>
+                                            <input type="hidden" name="date_to" id="date_to_val"/>
+                                            <input type="date" id="date_to_picker"
+                                                   class="form-control"
+                                                   t-att-min="today_fmt"/>
+                                        </div>
+
+                                        <div class="col-md-2 d-flex align-items-end">
+                                            <button type="submit" class="btn btn-success w-100">
+                                                <i class="fa fa-send me-1"/>
+                                                Submit
+                                            </button>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Reason (optional)</label>
+                                            <input type="text" name="name" class="form-control"
+                                                   placeholder="Briefly describe the reason"/>
+                                        </div>
+                                    </form>
+
+                                    <!-- DATE SYNC SCRIPT
+                                         IMPORTANT: Do NOT put any HTML tags inside this script block.
+                                         The XML parser will treat them as XML elements and break.
+                                         input[type=date].value is guaranteed yyyy-mm-dd by the HTML spec. -->
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                    (function () {
+                                        var fromPicker = document.getElementById('date_from_picker');
+                                        var toPicker   = document.getElementById('date_to_picker');
+                                        var fromVal    = document.getElementById('date_from_val');
+                                        var toVal      = document.getElementById('date_to_val');
+                                        var form       = document.getElementById('ess_leave_form');
+
+                                        function sync() {
+                                            fromVal.value = fromPicker.value;
+                                            toVal.value   = toPicker.value;
+                                            if (fromPicker.value) {
+                                                toPicker.min = fromPicker.value;
+                                            }
+                                        }
+
+                                        fromPicker.addEventListener('change', sync);
+                                        toPicker.addEventListener('change', sync);
+
+                                        form.addEventListener('submit', function (e) {
+                                            sync();
+                                            if (!fromVal.value || !toVal.value) {
+                                                e.preventDefault();
+                                                alert('Please select both a start date and an end date.');
+                                            }
+                                        });
+                                    })();
+                                    //]]>
+                                    </script>
+                                </div>
+                            </div>
+                        </t>
+
+                        <!-- Leave history -->
+                        <div class="ess_card">
+                            <div class="ess_card_header">
+                                <i class="fa fa-history me-2"/>
+                                <strong>My Leave History</strong>
+                            </div>
+                            <div class="ess_card_body p-0">
+                                <t t-if="leaves_fmt">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover ess_table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Type</th>
+                                                    <th>From</th>
+                                                    <th>To</th>
+                                                    <th>Days</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="leaves_fmt" t-as="lv">
+                                                    <td>
+                                                        <t t-out="lv['holiday_status_name']"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-out="lv['date_from']"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-out="lv['date_to']"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-out="lv['number_of_days']"/>
+                                                    </td>
+                                                    <td>
+                                                        <span class="ess_status_badge">
+                                                            <t t-out="lv['state_label']"/>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <p class="text-muted text-center py-4 mb-0">No leave requests yet.</p>
+                                </t>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         EXPENSES
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_ess_expenses" name="ESS Expenses">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Expenses</t>
+            <div class="ess_layout container-fluid px-0">
+                <div class="ess_body">
+                    <t t-call="employee_self_service.ess_sidebar_nav"/>
+                    <div class="ess_main">
+                        <div class="ess_page_header">
+                            <h3><i class="fa fa-money me-2 text-info"/>Expenses
+                            </h3>
+                        </div>
+                        <div t-if="success" class="alert alert-success">
+                            <i class="fa fa-check-circle me-2"/>
+                            Your expense claim has been submitted successfully!
+                        </div>
+                        <t t-if="errors">
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    <li t-foreach="errors" t-as="err">
+                                        <t t-out="err"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </t>
+                        <t t-if="allow_expense">
+                            <div class="ess_card mb-4">
+                                <div class="ess_card_header">
+                                    <i class="fa fa-plus-circle me-2 text-info"/>
+                                    <strong>Submit New Expense</strong>
+                                </div>
+                                <div class="ess_card_body">
+                                    <form action="/my/ess/expenses/new" method="post" class="row g-3">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="col-md-4">
+                                            <label class="form-label fw-semibold">Expense Name</label>
+                                            <input type="text" name="name" class="form-control"
+                                                   required="required" placeholder="e.g. Client Meeting Transport"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Total Amount</label>
+                                            <input type="number" name="total_amount" class="form-control"
+                                                   step="0.01" min="0.01" required="required" placeholder="0.00"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label fw-semibold">Date</label>
+                                            <input type="date" name="expense_date" class="form-control"/>
+                                        </div>
+                                        <div class="col-md-2 d-flex align-items-end">
+                                            <button type="submit" class="btn btn-info text-white w-100">
+                                                <i class="fa fa-send me-1"/>Submit
+                                            </button>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold">Description (optional)</label>
+                                            <textarea name="description" class="form-control" rows="2"
+                                                      placeholder="Add any relevant details..."/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </t>
+                        <div class="ess_card">
+                            <div class="ess_card_header">
+                                <i class="fa fa-history me-2"/>
+                                <strong>My Expense Claims</strong>
+                            </div>
+                            <div class="ess_card_body p-0">
+                                <t t-if="expenses_fmt">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover ess_table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Description</th>
+                                                    <th>Submitted</th>
+                                                    <th class="text-end">Total</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="expenses_fmt" t-as="exp">
+                                                    <td>
+                                                        <t t-out="exp['name']"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-out="exp['create_date']"/>
+                                                    </td>
+                                                    <td class="text-end fw-bold">
+                                                        <t t-out="exp['total_amount']"/>
+                                                    </td>
+                                                    <td>
+                                                        <span class="ess_status_badge">
+                                                            <t t-out="exp['state_label']"/>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <p class="text-muted text-center py-4 mb-0">No expense claims yet.</p>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         PAYSLIPS
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_ess_payslips" name="ESS Payslips">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">Payslips</t>
+            <div class="ess_layout container-fluid px-0">
+                <div class="ess_body">
+                    <t t-call="employee_self_service.ess_sidebar_nav"/>
+                    <div class="ess_main">
+                        <div class="ess_page_header">
+                            <h3><i class="fa fa-file-text me-2 text-secondary"/>Payslips
+                            </h3>
+                        </div>
+                        <div class="ess_card">
+                            <div class="ess_card_header">
+                                <i class="fa fa-list me-2"/>
+                                <strong>My Payslips</strong>
+                            </div>
+                            <div class="ess_card_body p-0">
+                                <t t-if="payslips_fmt">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover ess_table mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Period</th>
+                                                    <th>Reference</th>
+                                                    <th class="text-end">Net Pay</th>
+                                                    <th>Status</th>
+                                                    <th class="text-center">Download</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr t-foreach="payslips_fmt" t-as="ps">
+                                                    <td>
+                                                        <t t-out="ps['date_from']"/>
+                                                    </td>
+                                                    <td>
+                                                        <t t-out="ps['name']"/>
+                                                    </td>
+                                                    <td class="text-end fw-bold">
+                                                        <t t-out="ps['net_wage']"/>
+                                                    </td>
+                                                    <td>
+                                                        <span class="ess_status_badge ess_state_done">
+                                                            <t t-out="ps['state_label']"/>
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a t-attf-href="/my/ess/payslips/{{ ps['id'] }}/download"
+                                                           class="btn btn-sm btn-outline-secondary"
+                                                           title="Download PDF" target="_blank">
+                                                            <i class="fa fa-download"/>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="text-center py-5">
+                                        <i class="fa fa-file-text-o fa-3x text-muted mb-3 d-block"/>
+                                        <p class="text-muted">
+                                            No payslips available yet.
+                                            <br/>
+                                            <small>Payslips will appear here once HR has processed and confirmed them.
+                                            </small>
+                                        </p>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <!-- ══════════════════════════════════════════════════════════════════════════
+         MY PROFILE
+         ══════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_ess_profile" name="ESS My Profile">
+        <t t-call="portal.portal_layout">
+            <t t-set="title">My Profile</t>
+            <div class="ess_layout container-fluid px-0">
+                <div class="ess_body">
+                    <t t-call="employee_self_service.ess_sidebar_nav"/>
+                    <div class="ess_main">
+                        <div class="ess_page_header">
+                            <h3><i class="fa fa-user-circle me-2 text-primary"/>My Profile
+                            </h3>
+                        </div>
+                        <div t-if="success" class="alert alert-success">
+                            <i class="fa fa-check-circle me-2"/>
+                            Your profile has been updated successfully.
+                        </div>
+                        <div class="ess_card mb-4">
+                            <div class="ess_card_header">
+                                <i class="fa fa-id-card me-2"/>
+                                <strong>Employee Information</strong>
+                                <small class="ms-2 text-muted">(managed by HR)</small>
+                            </div>
+                            <div class="ess_card_body">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <label class="ess_field_label">Full Name</label>
+                                        <div class="ess_field_value">
+                                            <t t-out="employee.name or '-'"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="ess_field_label">Job Title</label>
+                                        <div class="ess_field_value">
+                                            <t t-out="employee.job_id.name or employee.job_title or '-'"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="ess_field_label">Department</label>
+                                        <div class="ess_field_value">
+                                            <t t-out="employee.department_id.name or '-'"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="ess_field_label">Work Email</label>
+                                        <div class="ess_field_value">
+                                            <t t-out="employee.work_email or '-'"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="ess_field_label">Manager</label>
+                                        <div class="ess_field_value">
+                                            <t t-out="employee.parent_id.name or '-'"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="ess_field_label">Company</label>
+                                        <div class="ess_field_value">
+                                            <t t-out="employee.company_id.name or '-'"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <t t-if="allow_profile_edit">
+                            <div class="ess_card">
+                                <div class="ess_card_header">
+                                    <i class="fa fa-edit me-2 text-primary"/>
+                                    <strong>Update My Details</strong>
+                                </div>
+                                <div class="ess_card_body">
+                                    <form action="/my/ess/profile/save" method="post" class="row g-3">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        <div class="col-12">
+                                            <h6 class="text-muted fw-bold text-uppercase small mb-2">Contact
+                                                Information
+                                            </h6>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label fw-semibold">Mobile Phone</label>
+                                            <input type="tel" name="mobile_phone" class="form-control"
+                                                   t-att-value="employee.mobile_phone or ''"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label fw-semibold">Work Phone</label>
+                                            <input type="tel" name="work_phone" class="form-control"
+                                                   t-att-value="employee.work_phone or ''"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label fw-semibold">Personal Email</label>
+                                            <input type="email" name="private_email" class="form-control"
+                                                   t-att-value="employee.private_email or ''"/>
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            <h6 class="text-muted fw-bold text-uppercase small mb-2">Emergency Contact
+                                            </h6>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold">Emergency Contact Name</label>
+                                            <input type="text" name="emergency_contact" class="form-control"
+                                                   t-att-value="employee.emergency_contact or ''"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold">Emergency Phone</label>
+                                            <input type="tel" name="emergency_phone" class="form-control"
+                                                   t-att-value="employee.emergency_phone or ''"/>
+                                        </div>
+                                        <div class="col-12 mt-3">
+                                            <button type="submit" class="btn btn-primary px-4">
+                                                <i class="fa fa-save me-2"/>Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="alert alert-warning">
+                                <i class="fa fa-lock me-2"/>
+                                Profile editing has been disabled by your HR administrator.
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ── Add ESS tab to employee form ──────────────────────────────────── -->
+    <record id="view_employee_form_ess" model="ir.ui.view">
+        <field name="name">hr.employee.form.ess</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Self-Service Portal"
+                      name="ess_portal"
+                      groups="hr.group_hr_user">
+                    <group>
+                        <group string="Portal Access">
+                            <field name="ess_portal_user_id"
+                                   readonly="1"
+                                   widget="many2one_avatar_user"/>
+                            <field name="ess_portal_active"
+                                   readonly="1"
+                                   widget="boolean_toggle"/>
+                        </group>
+                    </group>
+
+                    <div class="o_form_buttons mt-3">
+                        <!-- Create portal user button — shown when no user yet -->
+                        <button type="object"
+                                name="action_create_ess_portal_user"
+                                string="Create Portal User"
+                                class="btn btn-primary"
+                                invisible="ess_portal_user_id != False"
+                                confirm="This will create a portal account and send an invitation email to the employee. Continue?"/>
+
+                        <!-- Revoke button — shown when user exists -->
+                        <button type="object"
+                                name="action_revoke_ess_portal_user"
+                                string="Revoke Portal Access"
+                                class="btn btn-danger ms-2"
+                                invisible="ess_portal_user_id == False"
+                                confirm="This will remove portal access for this employee. The user account will not be deleted. Continue?"/>
+                    </div>
+
+                    <!-- Help text -->
+                    <div class="alert alert-info mt-3">
+                        <i class="fa fa-info-circle me-2"/>
+                        <strong>Employee Self-Service Portal</strong> lets employees
+                        request leave, submit expenses, view payslips, and update
+                        their profile — without needing an internal Odoo user licence.
+                        <br/>
+                        Portal URL: <code>/my/ess</code>
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
