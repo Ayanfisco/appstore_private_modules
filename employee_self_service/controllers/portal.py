@@ -553,8 +553,9 @@ class EmployeeSelfServicePortal(http.Controller):
         return request.redirect('/my/ess/profile?success=1')
 
     @http.route('/my', type='http', auth='user', website=True)
-    def index(self, **kw):
+    def ess_home_redirect(self, **kw):
         employee = _get_employee_or_abort()
         if employee:
             return request.redirect('/my/ess')
-        return super().index(**kw)
+        # Non-employee portal users go to the standard Odoo portal home
+        return request.redirect('/my/home')
