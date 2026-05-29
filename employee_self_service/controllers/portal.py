@@ -553,8 +553,8 @@ class EmployeeSelfServicePortal(http.Controller):
         return request.redirect('/my/ess/profile?success=1')
 
     @http.route('/my', type='http', auth='user', website=True)
-    def home(self, **kw):
+    def index(self, **kw):
         employee = _get_employee_or_abort()
         if employee:
             return request.redirect('/my/ess')
-        return super().home(**kw)
+        return super().index(**kw)
