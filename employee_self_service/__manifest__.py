@@ -1,6 +1,6 @@
 {
     'name': 'Employee Self-Service Portal',
-    'version': '19.0.1.0.0',
+    'version': '19.0.2.0.0',
     'category': 'Human Resources/Employees',
     'summary': 'Give every employee a self-service portal — leave requests, '
                'expense submissions, payslip downloads, profile updates, and '
