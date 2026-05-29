@@ -42,11 +42,13 @@ def _parse_date(date_str):
     for fmt in ('%Y-%m-%d', '%d/%m/%Y', '%m/%d/%Y', '%d-%m-%Y'):
         try:
             result = datetime.strptime(date_str, fmt).date()
-            _logger.info('ESS _parse_date: %r parsed as %s using fmt %s', date_str, result, fmt)
+            _logger.info(
+                'ESS _parse_date: %r parsed as %s using fmt %s', date_str, result, fmt)
             return result
         except ValueError:
             continue
-    _logger.warning('ESS _parse_date: could not parse %r with any known format', date_str)
+    _logger.warning(
+        'ESS _parse_date: could not parse %r with any known format', date_str)
     return None
 
 
@@ -218,7 +220,7 @@ class EmployeeSelfServicePortal(http.Controller):
 
         # Normalize: treat empty string same as None
         date_from = (date_from or '').strip() or None
-        date_to   = (date_to   or '').strip() or None
+        date_to = (date_to or '').strip() or None
 
         if not date_from:
             errors.append(_('Please select a start date.'))
@@ -226,7 +228,7 @@ class EmployeeSelfServicePortal(http.Controller):
             errors.append(_('Please select an end date.'))
 
         parsed_from = _parse_date(date_from) if date_from else None
-        parsed_to   = _parse_date(date_to)   if date_to   else None
+        parsed_to = _parse_date(date_to) if date_to else None
 
         if date_from and not parsed_from:
             errors.append(_(
@@ -256,7 +258,7 @@ class EmployeeSelfServicePortal(http.Controller):
                 if not lv.date_from or not lv.date_to:
                     continue
                 lv_from = lv.date_from.date()
-                lv_to   = lv.date_to.date()
+                lv_to = lv.date_to.date()
                 if lv_from <= parsed_to and lv_to >= parsed_from:
                     overlap = lv
                     break
@@ -269,7 +271,7 @@ class EmployeeSelfServicePortal(http.Controller):
                 ) % (
                     overlap.holiday_status_id.name,
                     overlap.date_from.date().strftime('%d/%m/%Y') if overlap.date_from else '-',
-                    overlap.date_to.date().strftime('%d/%m/%Y')   if overlap.date_to   else '-',
+                    overlap.date_to.date().strftime('%d/%m/%Y') if overlap.date_to else '-',
                     dict(
                         confirm='Pending',
                         validate1='Partially Approved',
@@ -280,7 +282,7 @@ class EmployeeSelfServicePortal(http.Controller):
         # ── Create and confirm leave ───────────────────────────────────────────
         if not errors and parsed_from and parsed_to:
             date_from_norm = parsed_from.strftime('%Y-%m-%d')
-            date_to_norm   = parsed_to.strftime('%Y-%m-%d')
+            date_to_norm = parsed_to.strftime('%Y-%m-%d')
 
             try:
                 leave_type = request.env['hr.leave.type'].sudo().browse(
@@ -310,11 +312,12 @@ class EmployeeSelfServicePortal(http.Controller):
                             'request_date_from': date_from_norm,   # yyyy-mm-dd string
                             'request_date_to':   date_to_norm,     # yyyy-mm-dd string
                             'name': name or _('Leave Request'),
-                            'state' : 'draft',
+                            'state': 'draft',
                         })
                         # Defensive check — ensure employee wasn't overridden
                         if new_leave.employee_id.id != employee.id:
-                            new_leave.sudo().write({'employee_id': employee.id})
+                            new_leave.sudo().write(
+                                {'employee_id': employee.id})
                         # Odoo 17: submit for manager approval
                         new_leave.sudo().action_confirm()
                     return request.redirect('/my/ess/leaves?success=1')
@@ -325,12 +328,14 @@ class EmployeeSelfServicePortal(http.Controller):
                 errors.append(_friendly_leave_error(msg))
 
             except Exception as e:
-                _logger.exception('ESS: leave creation failed unexpectedly: %s', e)
+                _logger.exception(
+                    'ESS: leave creation failed unexpectedly: %s', e)
                 msg = str(e)
                 if _is_overlap_error(msg):
                     errors.append(_friendly_leave_error(msg))
                 else:
-                    errors.append(_('An unexpected error occurred. Please contact HR.'))
+                    errors.append(
+                        _('An unexpected error occurred. Please contact HR.'))
 
         # ── Re-render form with errors ─────────────────────────────────────────
         leave_types = request.env['hr.leave.type'].sudo().search([
@@ -395,7 +400,8 @@ class EmployeeSelfServicePortal(http.Controller):
             except ValueError:
                 errors.append(_('Invalid amount entered.'))
 
-        parsed_expense_date = _parse_date(expense_date) if expense_date else date.today()
+        parsed_expense_date = _parse_date(
+            expense_date) if expense_date else date.today()
         if not parsed_expense_date:
             parsed_expense_date = date.today()
 
@@ -426,7 +432,8 @@ class EmployeeSelfServicePortal(http.Controller):
                 errors.append(msg)
             except Exception as e:
                 _logger.exception('ESS: expense submission failed: %s', e)
-                errors.append(_('Could not submit expense. Please contact HR.'))
+                errors.append(
+                    _('Could not submit expense. Please contact HR.'))
 
         sheets = request.env['hr.expense.sheet'].sudo().search([
             ('employee_id', '=', employee.id),
@@ -509,3 +516,11 @@ class EmployeeSelfServicePortal(http.Controller):
                 _logger.exception('ESS: profile save failed: %s', e)
 
         return request.redirect('/my/ess/profile?success=1')
+
+    @http.route('/my', type='http', auth='user', website=True)
+    def ess_home_redirect(self, **kw):
+        employee = _get_employee_or_abort()
+        if employee:
+            return request.redirect('/my/ess')
+        # Non-employee portal users go to the standard Odoo portal home
+        return request.redirect('/my/home')
