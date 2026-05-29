@@ -107,7 +107,7 @@ class HrEmployee(models.Model):
                     raise_if_not_found=False,
                 )
                 if template:
-                    template.sudo().send_mail(self.id, force_send=True)
+                    template.sudo().send_mail(self.id)
             except Exception as e:
                 _logger.warning('ESS: invitation email failed: %s', e)
 
