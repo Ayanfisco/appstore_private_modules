@@ -176,7 +176,7 @@ class EmployeeAppraisal(models.Model):
                 record.manager_rating = 0.0
                 record.final_rating = 0.0
 
-    @api.depends('employee_id', 'env.user')
+    @api.depends('employee_id')
     def _compute_is_manager(self):
         """Determine if current user is the manager of the employee being appraised"""
         for record in self:
@@ -252,7 +252,7 @@ class EmployeeAppraisal(models.Model):
             raise ValidationError(
                 _('Please add competencies before submitting.')
             )
-        if not self.employee_id.manager_id:
+        if not self.employee_id.parent_id:
             raise ValidationError(
                 _('The employee must have a manager assigned before submitting.')
             )
