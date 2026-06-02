@@ -141,6 +141,9 @@ class EmployeeAppraisal(models.Model):
         string='Company',
         default=lambda self: self.env.company
     )
+    is_manager = fields.Boolean(
+        string="Is Manager", compute='_compute_is_manager'
+    )
 
     @api.model
     def create(self, vals):
@@ -166,20 +169,31 @@ class EmployeeAppraisal(models.Model):
                 record.self_rating = total_self / count if count else 0.0
                 record.manager_rating = total_manager / count if count else 0.0
                 record.final_rating = (
-                                              record.self_rating + record.manager_rating
-                                      ) / 2 if count else 0.0
+                    record.self_rating + record.manager_rating
+                ) / 2 if count else 0.0
             else:
                 record.self_rating = 0.0
                 record.manager_rating = 0.0
                 record.final_rating = 0.0
 
+    @api.depends('employee_id', 'env.user')
+    def _compute_is_manager(self):
+        """Determine if current user is the manager of the employee being appraised"""
+        for record in self:
+            record.is_manager = (
+                record.employee_id.parent_id.user_id == self.env.user
+            ) if record.employee_id.parent_id else False
+
     @api.depends('self_rating', 'manager_rating', 'final_rating')
     def _compute_rating_percent(self):
         """Convert 0-5 ratings to 0-100 percentages for progress bars"""
         for record in self:
-            record.self_rating_percent = (record.self_rating / 5.0) * 100 if record.self_rating else 0.0
-            record.manager_rating_percent = (record.manager_rating / 5.0) * 100 if record.manager_rating else 0.0
-            record.final_rating_percent = (record.final_rating / 5.0) * 100 if record.final_rating else 0.0
+            record.self_rating_percent = (
+                record.self_rating / 5.0) * 100 if record.self_rating else 0.0
+            record.manager_rating_percent = (
+                record.manager_rating / 5.0) * 100 if record.manager_rating else 0.0
+            record.final_rating_percent = (
+                record.final_rating / 5.0) * 100 if record.final_rating else 0.0
 
     @api.depends('competency_ids.self_rating',
                  'competency_ids.manager_rating',
@@ -192,7 +206,8 @@ class EmployeeAppraisal(models.Model):
 
                 for line in record.competency_ids:
                     if line.self_rating and line.manager_rating:
-                        avg_rating = (line.self_rating + line.manager_rating) / 2
+                        avg_rating = (line.self_rating +
+                                      line.manager_rating) / 2
                         weighted_score += avg_rating * (line.weightage / 100)
 
                 record.weighted_final_rating = weighted_score
@@ -236,6 +251,10 @@ class EmployeeAppraisal(models.Model):
         if not self.competency_ids:
             raise ValidationError(
                 _('Please add competencies before submitting.')
+            )
+        if not self.employee_id.manager_id:
+            raise ValidationError(
+                _('The employee must have a manager assigned before submitting.')
             )
         self.write({'state': 'pending'})
 
