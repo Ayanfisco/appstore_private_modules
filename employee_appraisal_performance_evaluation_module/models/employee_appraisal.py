@@ -144,6 +144,7 @@ class EmployeeAppraisal(models.Model):
     is_manager = fields.Boolean(
         string="Is Manager", compute='_compute_is_manager'
     )
+    
 
     @api.model
     def create(self, vals):
