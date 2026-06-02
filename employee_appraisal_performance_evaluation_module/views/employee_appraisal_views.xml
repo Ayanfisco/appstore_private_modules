@@ -69,7 +69,7 @@
                                     <field name="self_rating"
                                            readonly="parent.state not in ('self', 'manager', 'done')"/>
                                     <field name="manager_rating"
-                                           readonly="parent.state not in ('manager', 'done') and not parent.is_manager"/>
+                                           readonly="parent.state not in ('manager', 'done') or not parent.is_manager"/>
                                     <field name="comments"/>
                                 </list>
                             </field>
