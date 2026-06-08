@@ -35,34 +35,36 @@ class HrEmployee(models.Model):
 
     # ── One-click portal user creation ───────────────────────────────────────
     def action_create_ess_portal_user(self):
+        already_has_user = []  # collect employees that already have portal users
+        created = []  # collect successfully created ones
+
         for user in self:
 
+            # collect instead of raise
             if user.ess_portal_user_id:
-                raise UserError(
-                    _('Employee %s already has a portal user: %s')
-                    % (user.name, user.ess_portal_user_id.login)
-                )
+                already_has_user.append(user.name)
+                continue  # skip, process next employee
 
             work_email = user.work_email or user.private_email
             if not work_email:
-                raise UserError(
-                    _('Please set a Work Email or Private Email on %s before '
-                      'creating a portal user.') % user.name
+                already_has_user.append(
+                    _('%s (no email set)') % user.name
                 )
+                continue  # skip, process next employee
 
             existing = self.env['res.users'].sudo().search(
                 [('login', '=', work_email)], limit=1
             )
             if existing:
                 if not existing.share:
-                    raise UserError(
-                        _('A non-portal (internal) user with email %s already '
-                          'exists. Cannot create a portal user with the same '
-                          'email.') % work_email
+                    already_has_user.append(
+                        _('%s (internal user exists with same email)') % user.name
                     )
+                    continue
                 user.ess_portal_user_id = existing
                 self._notify_portal_user_linked(existing)
-                continue  # ✅ move to next employee
+                created.append(user.name)
+                continue
 
             portal_group = self.env.ref('base.group_portal')
 
@@ -84,8 +86,6 @@ class HrEmployee(models.Model):
                 user_vals['partner_id'] = partner.id
 
             new_user = self.env['res.users'].sudo().create(user_vals)
-
-            # ✅ link back to employee
             user.ess_portal_user_id = new_user
 
             if partner and new_user.partner_id.id != partner.id:
@@ -103,18 +103,32 @@ class HrEmployee(models.Model):
                         raise_if_not_found=False,
                     )
                     if template:
-                        template.sudo().send_mail(user.id)  # ✅
+                        template.sudo().send_mail(user.id)
                 except Exception as e:
                     _logger.warning('ESS: invitation email failed: %s', e)
+
+            created.append(user.name)
+
+        # build feedback message
+        message_parts = []
+        if created:
+            message_parts.append(
+                _('Portal users created for: %s') % ', '.join(created)
+            )
+        if already_has_user:
+            message_parts.append(
+                _('Skipped (already have portal user or issue): %s')
+                % ', '.join(already_has_user)
+            )
 
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
-                'title': _('Portal User Created'),
-                'message': _('Portal users created successfully.'),
-                'type': 'success',
-                'sticky': False,
+                'title': _('Portal User Processing Complete'),
+                'message': ' | '.join(message_parts) or _('Nothing to process.'),
+                'type': 'success' if created else 'warning',
+                'sticky': True,  # keep visible so user can read the full list
             },
         }
 
