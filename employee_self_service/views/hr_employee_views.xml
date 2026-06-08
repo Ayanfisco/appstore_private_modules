@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <!-- ── Add ESS tab to employee form ──────────────────────────────────── -->
     <record id="view_employee_form_ess" model="ir.ui.view">
         <field name="name">hr.employee.form.ess</field>
@@ -53,5 +52,12 @@
             </xpath>
         </field>
     </record>
-
+    <record id="action_create_portal_users" model="ir.actions.server">
+        <field name="name">Create Portal Users</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code"> records.action_create_ess_portal_user() </field>
+    </record>
 </odoo>
