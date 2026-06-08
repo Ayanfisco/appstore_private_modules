@@ -35,89 +35,84 @@ class HrEmployee(models.Model):
 
     # ── One-click portal user creation ───────────────────────────────────────
     def action_create_ess_portal_user(self):
-        """
-        Create a portal user for this employee and optionally send them
-        an invitation email. Callable from the employee form button.
-        """
-        self.ensure_one()
+        for user in self:
 
-        if self.ess_portal_user_id:
-            raise UserError(
-                _('Employee %s already has a portal user: %s')
-                % (self.name, self.ess_portal_user_id.login)
-            )
-
-        work_email = self.work_email or self.private_email
-        if not work_email:
-            raise UserError(
-                _('Please set a Work Email or Private Email on %s before '
-                  'creating a portal user.') % self.name
-            )
-
-        # Check for existing user with this email
-        existing = self.env['res.users'].sudo().search(
-            [('login', '=', work_email)], limit=1
-        )
-        if existing:
-            if not existing.share:
+            if user.ess_portal_user_id:
                 raise UserError(
-                    _('A non-portal (internal) user with email %s already '
-                      'exists. Cannot create a portal user with the same '
-                      'email.') % work_email
+                    _('Employee %s already has a portal user: %s')
+                    % (user.name, user.ess_portal_user_id.login)
                 )
-            # Re-use existing portal user
-            self.ess_portal_user_id = existing
-            return self._notify_portal_user_linked(existing)
 
-        portal_group = self.env.ref('base.group_portal')
-
-        partner = self.work_contact_id or self.address_home_id
-        if not partner:
-            partner = self.env['res.partner'].sudo().search([
-                ('email', '=', work_email),
-                ('user_ids', '=', False),
-            ], limit=1)
-
-        user_vals = {
-            'name': self.name,
-            'login': work_email,
-            'email': work_email,
-            'groups_id': [(6, 0, [portal_group.id])],
-            'active': True,
-        }
-        if partner:
-            user_vals['partner_id'] = partner.id
-
-        new_user = self.env['res.users'].sudo().create(user_vals)
-
-        # If Odoo still created a duplicate, relink and archive it
-        if partner and new_user.partner_id.id != partner.id:
-            dupe = new_user.partner_id
-            new_user.sudo().write({'partner_id': partner.id})
-            dupe.sudo().write({'active': False})
-
-        # Send invitation email if template exists
-        auto_invite = self.env['ir.config_parameter'].sudo().get_param(
-            'employee_self_service.auto_invite_email', 'True'
-        )
-        if auto_invite == 'True':
-            try:
-                template = self.env.ref(
-                    'employee_self_service.mail_template_ess_portal_invite',
-                    raise_if_not_found=False,
+            work_email = user.work_email or user.private_email
+            if not work_email:
+                raise UserError(
+                    _('Please set a Work Email or Private Email on %s before '
+                      'creating a portal user.') % user.name
                 )
-                if template:
-                    template.sudo().send_mail(self.id)
-            except Exception as e:
-                _logger.warning('ESS: invitation email failed: %s', e)
+
+            existing = self.env['res.users'].sudo().search(
+                [('login', '=', work_email)], limit=1
+            )
+            if existing:
+                if not existing.share:
+                    raise UserError(
+                        _('A non-portal (internal) user with email %s already '
+                          'exists. Cannot create a portal user with the same '
+                          'email.') % work_email
+                    )
+                user.ess_portal_user_id = existing
+                self._notify_portal_user_linked(existing)
+                continue  # ✅ move to next employee
+
+            portal_group = self.env.ref('base.group_portal')
+
+            partner = user.work_contact_id or user.address_home_id
+            if not partner:
+                partner = self.env['res.partner'].sudo().search([
+                    ('email', '=', work_email),
+                    ('user_ids', '=', False),
+                ], limit=1)
+
+            user_vals = {
+                'name': user.name,
+                'login': work_email,
+                'email': work_email,
+                'groups_id': [(6, 0, [portal_group.id])],
+                'active': True,
+            }
+            if partner:
+                user_vals['partner_id'] = partner.id
+
+            new_user = self.env['res.users'].sudo().create(user_vals)
+
+            # ✅ link back to employee
+            user.ess_portal_user_id = new_user
+
+            if partner and new_user.partner_id.id != partner.id:
+                dupe = new_user.partner_id
+                new_user.sudo().write({'partner_id': partner.id})
+                dupe.sudo().write({'active': False})
+
+            auto_invite = self.env['ir.config_parameter'].sudo().get_param(
+                'employee_self_service.auto_invite_email', 'True'
+            )
+            if auto_invite == 'True':
+                try:
+                    template = self.env.ref(
+                        'employee_self_service.mail_template_ess_portal_invite',
+                        raise_if_not_found=False,
+                    )
+                    if template:
+                        template.sudo().send_mail(user.id)  # ✅
+                except Exception as e:
+                    _logger.warning('ESS: invitation email failed: %s', e)
 
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
                 'title': _('Portal User Created'),
-                'message': _('Portal user %s created for %s.')
-                % (new_user.login, self.name),
+                'message': _('Portal users created successfully.'),
                 'type': 'success',
                 'sticky': False,
             },
