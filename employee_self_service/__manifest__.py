@@ -2,19 +2,14 @@
     'name': 'Employee Self-Service Portal',
     'version': '19.0.2.0.0',
     'category': 'Human Resources/Employees',
-    'summary': 'Give every employee a self-service portal — leave requests, '
-               'expense submissions, payslip downloads, profile updates, and '
-               'personal documents — without needing an internal Odoo licence.',
+    'summary': 'Empower your workforce with a centralized, mobile-responsive HR portal for leave requests, expense submissions, payslip downloads, and profile updates.',
     'description': """
 Employee Self-Service Portal
 =============================
 
-A complete self-service portal that lets your employees manage their own HR
-activities from any browser or phone — without requiring an expensive Odoo
-internal user licence.
+A seamless frontend application built on native architecture that allows distributed workforces, remote employees, and deskless staff to manage routine HR requests from any browser or phone.
 
-Perfect for SMEs who want to give staff access to HR functions without paying
-per-seat Enterprise/internal user fees.
+Optimizes internal administrative workflows by extending personal HR tracking to the secure standard web portal layer, lowering overall manual backend data entry.
 
 What employees can do
 ---------------------
@@ -34,12 +29,12 @@ What HR / Admins can do
 
 Technical features
 ------------------
-* Odoo 19 v19 compliant (no attrs, list not tree, app/block/setting in config)
-* All portal routes use auth='user' with employee-ownership guard
-* Works with Odoo Community AND Enterprise
-* Depends only on: hr, hr_holidays, hr_expense, portal, mail
-* Clean QWeb portal templates extending portal.portal_layout
-* Responsive design with Bootstrap 5 (already in Odoo 19)
+* Odoo 19 compliant (uses modern views, configurations, and field structures)
+* Robust security — all portal routes use auth='user' with explicit employee-ownership guards
+* Comprehensive system design — fully operational with standard Community and Enterprise environments
+* Fully modular design depending on core base sets: hr, hr_holidays, hr_expense, portal, mail
+* Scalable QWeb layouts cleanly inheriting from portal.portal_layout
+* Responsive frontend implementation utilising core Bootstrap components
     """,
     'author': 'Tech Joe',
     'website': '',
