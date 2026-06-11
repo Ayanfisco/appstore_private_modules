@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="743ddf46-1d55-4d9a-bcb0-e61fcee33dc8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/employee_self_service/__manifest__.py" beforeDir="false" afterPath="$PROJECT_DIR$/employee_self_service/__manifest__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/employee_self_service/static/description/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/employee_self_service/static/description/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/employee_self_service/static/description/banner.png" beforeDir="false" afterPath="$PROJECT_DIR$/employee_self_service/static/description/banner.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,15 +23,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "19.0",
-    "last_opened_file_path": "C:/Users/HP/Documents/appstore_private_modules"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;19.0&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/HP/Documents/appstore_private_modules&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\HP\Documents\appstore_private_modules\employee_self_service\static\description\screenshots" />
+      <recent name="C:\Users\HP\Documents\appstore_private_modules\employee_self_service\static\description" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
