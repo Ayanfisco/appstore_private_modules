@@ -4,17 +4,17 @@
     'category': 'Human Resources/Employees',
     'summary': 'Give every employee a self-service portal — leave requests, '
                'expense submissions, payslip downloads, profile updates, and '
-               'personal documents — without needing an internal Odoo licence.',
+               'personal documents, all from any browser or phone.',
     'description': """
 Employee Self-Service Portal
 =============================
 
 A complete self-service portal that lets your employees manage their own HR
-activities from any browser or phone — without requiring an expensive Odoo
-internal user licence.
+activities from any browser or phone, no extra apps, no extra logins to
+remember.
 
-Perfect for SMEs who want to give staff access to HR functions without paying
-per-seat Enterprise/internal user fees.
+Perfect for companies who want to reduce HR admin overhead and give staff
+direct, secure access to their own HR information through Odoo's portal.
 
 What employees can do
 ---------------------
@@ -40,6 +40,13 @@ Technical features
 * Depends only on: hr, hr_holidays, hr_expense, portal, mail
 * Clean QWeb portal templates extending portal.portal_layout
 * Responsive design with Bootstrap 5 (already in Odoo 18)
+
+Note on user licensing
+-----------------------
+This module uses Odoo's standard portal access groups. Whether portal-based
+employee accounts count toward your Odoo subscription's user count depends
+on your subscription terms; we recommend confirming with Odoo or your Odoo
+partner for deployments with a large number of employees.
     """,
     'author': 'Tech Joe',
     'website': '',
