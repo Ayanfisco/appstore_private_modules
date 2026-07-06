@@ -51,8 +51,8 @@
         <field name="name">Patient Record</field>
         <field name="model">clinic.patient</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">clinic_management.report_patient_document</field>
-        <field name="report_file">clinic_management.report_patient_document</field>
+        <field name="report_name">clinic_management_tech.report_patient_document</field>
+        <field name="report_file">clinic_management_tech.report_patient_document</field>
         <field name="binding_model_id" ref="model_clinic_patient"/>
         <field name="binding_type">report</field>
         <!-- <field name="paperformat_id" ref="base.paperformat_a4"/> -->

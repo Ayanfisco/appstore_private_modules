@@ -80,10 +80,10 @@ Key Features
     ],
     'assets': {
         'web.assets_backend': [
-            'clinic_management/static/src/css/clinic_style.css',
+            'clinic_management_tech/static/src/css/clinic_style.css',
         ],
         'web.assets_frontend': [
-            'clinic_management/static/src/css/clinic_portal.css',
+            'clinic_management_tech/static/src/css/clinic_portal.css',
         ],
     },
     'images': ['static/description/banner.png'],

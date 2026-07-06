@@ -126,8 +126,8 @@
         <field name="name">Medical Prescription</field>
         <field name="model">clinic.prescription</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">clinic_management.report_prescription_document</field>
-        <field name="report_file">clinic_management.report_prescription_document</field>
+        <field name="report_name">clinic_management_tech.report_prescription_document</field>
+        <field name="report_file">clinic_management_tech.report_prescription_document</field>
         <field name="binding_model_id" ref="model_clinic_prescription"/>
         <field name="binding_type">report</field>
         <!-- <field name="paperformat_id" ref="base.paperformat_a4"/> -->

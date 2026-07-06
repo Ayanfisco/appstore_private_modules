@@ -58,7 +58,7 @@ class ClinicLabTest(models.Model):
         self.state = 'cancelled'
 
     def action_print_report(self):
-        return self.env.ref('clinic_management.action_report_lab').report_action(self)
+        return self.env.ref('clinic_management_tech.action_report_lab').report_action(self)
 
 
 class ClinicLabTestLine(models.Model):

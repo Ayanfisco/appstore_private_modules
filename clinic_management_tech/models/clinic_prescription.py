@@ -44,7 +44,7 @@ class ClinicPrescription(models.Model):
         self.state = 'cancelled'
 
     def action_print(self):
-        return self.env.ref('clinic_management.action_report_prescription').report_action(self)
+        return self.env.ref('clinic_management_tech.action_report_prescription').report_action(self)
 
 
 class ClinicPrescriptionLine(models.Model):

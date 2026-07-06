@@ -80,7 +80,7 @@ class ClinicController(http.Controller):
         doctors = request.env['clinic.doctor'].sudo().search([
             ('state', '=', 'active')
         ])
-        return request.render('clinic_management.website_appointment_home', {
+        return request.render('clinic_management_tech.website_appointment_home', {
             'doctors': doctors,
         })
 
@@ -130,7 +130,7 @@ class ClinicController(http.Controller):
                 error['gender'] = 'Please select a gender.'
 
             if error:
-                return request.render('clinic_management.website_appointment_book', {
+                return request.render('clinic_management_tech.website_appointment_book', {
                     'doctors': doctors,
                     'error': error,
                     'values': post,
@@ -157,13 +157,13 @@ class ClinicController(http.Controller):
                 'state': 'scheduled',
             })
 
-            return request.render('clinic_management.website_appointment_confirm', {
+            return request.render('clinic_management_tech.website_appointment_confirm', {
                 'patient_name': name,
                 'doctor': request.env['clinic.doctor'].sudo().browse(doctor_id),
                 'appointment_date': appointment_date,
             })
 
-        return request.render('clinic_management.website_appointment_book', {
+        return request.render('clinic_management_tech.website_appointment_book', {
             'doctors': doctors,
             'error': {},
             'values': {},
@@ -189,7 +189,7 @@ class ClinicController(http.Controller):
         """
         patient = self._get_patient_for_user()
         if not patient:
-            return request.render('clinic_management.portal_no_patient', {})
+            return request.render('clinic_management_tech.portal_no_patient', {})
         return patient
 
     @http.route('/my/health', type='http', auth='user', website=True)
@@ -197,7 +197,7 @@ class ClinicController(http.Controller):
         """Patient portal dashboard — overview of health records (read-only)."""
         patient = self._get_patient_for_user()
         if not patient:
-            return request.render('clinic_management.portal_no_patient', {})
+            return request.render('clinic_management_tech.portal_no_patient', {})
 
         upcoming = request.env['clinic.appointment'].sudo().search([
             ('patient_id', '=', patient.id),
@@ -218,7 +218,7 @@ class ClinicController(http.Controller):
             ('move_type', '=', 'out_invoice'),
         ], order='invoice_date desc', limit=5)
 
-        return request.render('clinic_management.portal_dashboard', {
+        return request.render('clinic_management_tech.portal_dashboard', {
             'patient': patient,
             'upcoming_appointments': upcoming,
             'recent_prescriptions': recent_prescriptions,
@@ -231,13 +231,13 @@ class ClinicController(http.Controller):
         """All appointments for the logged-in patient (read-only)."""
         patient = self._get_patient_for_user()
         if not patient:
-            return request.render('clinic_management.portal_no_patient', {})
+            return request.render('clinic_management_tech.portal_no_patient', {})
 
         appointments = request.env['clinic.appointment'].sudo().search([
             ('patient_id', '=', patient.id),
         ], order='appointment_date desc')
 
-        return request.render('clinic_management.portal_appointments', {
+        return request.render('clinic_management_tech.portal_appointments', {
             'patient': patient,
             'appointments': appointments,
         })
@@ -247,13 +247,13 @@ class ClinicController(http.Controller):
         """All prescriptions for the logged-in patient (read-only)."""
         patient = self._get_patient_for_user()
         if not patient:
-            return request.render('clinic_management.portal_no_patient', {})
+            return request.render('clinic_management_tech.portal_no_patient', {})
 
         prescriptions = request.env['clinic.prescription'].sudo().search([
             ('patient_id', '=', patient.id),
         ], order='prescription_date desc')
 
-        return request.render('clinic_management.portal_prescriptions', {
+        return request.render('clinic_management_tech.portal_prescriptions', {
             'patient': patient,
             'prescriptions': prescriptions,
         })
@@ -263,13 +263,13 @@ class ClinicController(http.Controller):
         """All lab test results for the logged-in patient (read-only)."""
         patient = self._get_patient_for_user()
         if not patient:
-            return request.render('clinic_management.portal_no_patient', {})
+            return request.render('clinic_management_tech.portal_no_patient', {})
 
         lab_tests = request.env['clinic.lab.test'].sudo().search([
             ('patient_id', '=', patient.id),
         ], order='request_date desc')
 
-        return request.render('clinic_management.portal_lab_results', {
+        return request.render('clinic_management_tech.portal_lab_results', {
             'patient': patient,
             'lab_tests': lab_tests,
         })
@@ -282,8 +282,8 @@ class ClinicController(http.Controller):
         """
         patient = self._get_patient_for_user()
         if not patient:
-            return request.render('clinic_management.portal_no_patient', {})
+            return request.render('clinic_management_tech.portal_no_patient', {})
 
-        return request.render('clinic_management.portal_profile', {
+        return request.render('clinic_management_tech.portal_profile', {
             'patient': patient,
         })

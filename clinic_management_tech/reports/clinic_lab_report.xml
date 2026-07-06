@@ -103,8 +103,8 @@
         <field name="name">Laboratory Report</field>
         <field name="model">clinic.lab.test</field>
         <field name="report_type">qweb-pdf</field>
-        <field name="report_name">clinic_management.report_lab_document</field>
-        <field name="report_file">clinic_management.report_lab_document</field>
+        <field name="report_name">clinic_management_tech.report_lab_document</field>
+        <field name="report_file">clinic_management_tech.report_lab_document</field>
         <field name="binding_model_id" ref="model_clinic_lab_test"/>
         <field name="binding_type">report</field>
         <!-- <field name="paperformat_id" ref="base.paperformat_a4"/> -->

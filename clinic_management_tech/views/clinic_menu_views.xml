@@ -89,7 +89,7 @@
               name="Configuration"
               parent="menu_clinic_root"
               sequence="100"
-              groups="clinic_management.group_clinic_manager"/>
+              groups="clinic_management_tech.group_clinic_manager"/>
 
     <menuitem id="menu_clinic_doctor"
               name="Doctors"
