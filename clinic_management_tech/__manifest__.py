@@ -27,8 +27,7 @@ Key Features
 * **Security** — Role-based access: Administrator, Doctor, Nurse/Receptionist, Lab Technician, Pharmacist.
 * **Demo Data** — Pre-loaded sample patients, doctors, and appointments.
     """,
-    'author': 'Matt O\'Bell Ltd',
-    'website': 'https://mattobell.net',
+    'author': 'Tech Joe',
     'license': 'OPL-1',
     'price': 149.99,
     'currency': 'USD',
