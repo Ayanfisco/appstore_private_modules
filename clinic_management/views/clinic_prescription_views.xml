@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_clinic_prescription_form" model="ir.ui.view">
+        <field name="name">clinic.prescription.form</field>
+        <field name="model">clinic.prescription</field>
+        <field name="arch" type="xml">
+            <form string="Prescription">
+                <header>
+                    <button name="action_issue" string="Issue Prescription" type="object"
+                            invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_dispense" string="Mark Dispensed" type="object"
+                            invisible="state != 'issued'"/>
+                    <button name="action_print" string="Print / PDF" type="object" icon="fa-print"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ['dispensed','cancelled']"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,issued,dispensed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="consultation_id"/>
+                        </group>
+                        <group>
+                            <field name="prescription_date"/>
+                            <field name="valid_until"/>
+                            <field name="diagnosis"/>
+                        </group>
+                    </group>
+                    <separator string="Medications"/>
+                    <field name="line_ids">
+                        <list editable="bottom">
+                            <field name="medication_name"/>
+                            <field name="dosage"/>
+                            <field name="route"/>
+                            <field name="frequency"/>
+                            <field name="duration"/>
+                            <field name="quantity"/>
+                            <field name="refills"/>
+                            <field name="instructions"/>
+                        </list>
+                    </field>
+                    <group string="Instructions to Patient">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_clinic_prescription_list" model="ir.ui.view">
+        <field name="name">clinic.prescription.list</field>
+        <field name="model">clinic.prescription</field>
+        <field name="arch" type="xml">
+            <list string="Prescriptions">
+                <field name="name"/>
+                <field name="prescription_date"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="diagnosis"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-success="state == 'issued'"
+                       decoration-warning="state == 'dispensed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_clinic_prescription" model="ir.actions.act_window">
+        <field name="name">Prescriptions</field>
+        <field name="res_model">clinic.prescription</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

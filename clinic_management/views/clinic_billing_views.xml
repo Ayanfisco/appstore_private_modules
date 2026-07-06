@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_clinic_billing_form" model="ir.ui.view">
+        <field name="name">clinic.billing.form</field>
+        <field name="model">clinic.billing</field>
+        <field name="arch" type="xml">
+            <form string="Billing">
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object"
+                            invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_pay" string="Mark Paid" type="object"
+                            invisible="state != 'confirmed'" class="oe_highlight"/>
+                    <button name="action_create_invoice" string="Create Odoo Invoice" type="object"
+                            invisible="state not in ['confirmed','paid']" icon="fa-file-text-o"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ['paid','cancelled']"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="consultation_id"/>
+                            <field name="billing_date"/>
+                        </group>
+                        <group string="Payment">
+                            <field name="payment_method"/>
+                            <field name="insurance_provider" invisible="payment_method != 'insurance'"/>
+                            <field name="insurance_claim_no" invisible="payment_method != 'insurance'"/>
+                            <field name="invoice_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <separator string="Billing Items"/>
+                    <field name="line_ids">
+                        <list editable="bottom">
+                            <field name="service_name"/>
+                            <field name="service_type"/>
+                            <field name="quantity"/>
+                            <field name="unit_price"/>
+                            <field name="discount_pct"/>
+                            <field name="total_price" readonly="1"/>
+                        </list>
+                    </field>
+                    <group class="oe_subtotal_footer">
+                        <field name="subtotal" readonly="1"/>
+                        <field name="discount_amount"/>
+                        <field name="tax_ids" widget="many2many_tags"/>
+                        <field name="tax_amount" readonly="1" string="Tax"/>
+                        <div class="oe_subtotal_footer_separator"/>
+                        <field name="total" readonly="1" class="oe_subtotal_footer_separator"/>
+                        <field name="amount_paid"/>
+                        <field name="balance_due" readonly="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_clinic_billing_list" model="ir.ui.view">
+        <field name="name">clinic.billing.list</field>
+        <field name="model">clinic.billing</field>
+        <field name="arch" type="xml">
+            <list string="Billing" decoration-success="state == 'paid'" decoration-danger="balance_due &gt; 0 and state != 'cancelled'">
+                <field name="name"/>
+                <field name="billing_date"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="total"/>
+                <field name="amount_paid"/>
+                <field name="balance_due"/>
+                <field name="payment_method"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'confirmed'"
+                       decoration-success="state == 'paid'"
+                       decoration-danger="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_clinic_billing" model="ir.actions.act_window">
+        <field name="name">Billing</field>
+        <field name="res_model">clinic.billing</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

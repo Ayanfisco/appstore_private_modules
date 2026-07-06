@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         /appointment  —  Booking Landing Page
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="website_appointment_home" name="Website: Book Appointment Home">
+        <t t-call="website.layout">
+            <div class="medicore-public">
+
+                <!-- Hero Banner -->
+                <section class="mc-hero">
+                    <div class="mc-hero__content">
+                        <span class="mc-hero__tag">🏥 MediCore Healthcare</span>
+                        <h1 class="mc-hero__title">Your Health,<br/><em>Simplified.</em></h1>
+                        <p class="mc-hero__sub">Book an appointment with one of our specialists in under 60 seconds.</p>
+                        <a href="/appointment/book" class="mc-btn mc-btn--primary mc-btn--lg">
+                            Book an Appointment →
+                        </a>
+                        <a href="/web/login" class="mc-btn mc-btn--ghost mc-btn--lg">
+                            Patient Portal Login
+                        </a>
+                    </div>
+                    <div class="mc-hero__graphic">
+                        <div class="mc-pulse-ring"/>
+                        <div class="mc-hero__icon">⚕️</div>
+                    </div>
+                </section>
+
+                <!-- How it Works -->
+                <section class="mc-steps-section">
+                    <h2 class="mc-section-heading">How It Works</h2>
+                    <div class="mc-steps">
+                        <div class="mc-step">
+                            <div class="mc-step__num">1</div>
+                            <div class="mc-step__icon">👤</div>
+                            <h3>Fill Your Details</h3>
+                            <p>Enter your name, contact info, and reason for visit.</p>
+                        </div>
+                        <div class="mc-step__arrow">→</div>
+                        <div class="mc-step">
+                            <div class="mc-step__num">2</div>
+                            <div class="mc-step__icon">🩺</div>
+                            <h3>Choose a Doctor</h3>
+                            <p>Select from our team of certified specialists.</p>
+                        </div>
+                        <div class="mc-step__arrow">→</div>
+                        <div class="mc-step">
+                            <div class="mc-step__num">3</div>
+                            <div class="mc-step__icon">✅</div>
+                            <h3>Get Confirmed</h3>
+                            <p>Receive instant confirmation and visit your doctor.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Doctor Cards -->
+                <section class="mc-doctors-section">
+                    <h2 class="mc-section-heading">Our Specialists</h2>
+                    <div class="mc-doctors-grid">
+                        <t t-foreach="doctors" t-as="doctor">
+                            <div class="mc-doctor-card">
+                                <div class="mc-doctor-card__avatar">
+                                    <t t-esc="doctor.name[0].upper()"/>
+                                </div>
+                                <div class="mc-doctor-card__info">
+                                    <strong t-esc="doctor.name"/>
+                                    <span t-esc="doctor.specialization"/>
+                                    <small t-esc="doctor.qualification or ''"/>
+                                </div>
+                                <a t-attf-href="/appointment/book?doctor_id=#{doctor.id}"
+                                   class="mc-btn mc-btn--outline mc-btn--sm">Book</a>
+                            </div>
+                        </t>
+                        <t t-if="not doctors">
+                            <p class="mc-no-doctors">No doctors available at the moment. Please call us.</p>
+                        </t>
+                    </div>
+                </section>
+
+            </div>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         /appointment/book  —  Booking Form
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="website_appointment_book" name="Website: Appointment Booking Form">
+        <t t-call="website.layout">
+            <div class="medicore-public">
+                <div class="mc-booking-wrapper">
+
+                    <!-- Left info panel -->
+                    <div class="mc-booking-panel">
+                        <div class="mc-booking-panel__logo">⚕️</div>
+                        <h2>Book Your Visit</h2>
+                        <p>Fill in your details and we'll confirm your appointment promptly.</p>
+                        <ul class="mc-booking-perks">
+                            <li>✓ Instant booking confirmation</li>
+                            <li>✓ No registration fee</li>
+                            <li>✓ Access your records online</li>
+                            <li>✓ SMS/Email reminders</li>
+                        </ul>
+                        <div class="mc-booking-contact">
+                            <strong>Need help?</strong>
+                            <span>Call us or walk in — we're open Mon–Sat</span>
+                        </div>
+                    </div>
+
+                    <!-- Form -->
+                    <div class="mc-booking-form-wrapper">
+                        <form action="/appointment/book" method="POST" class="mc-booking-form">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                            <h3 class="mc-booking-form__title">Personal Information</h3>
+
+                            <div class="mc-form-row">
+                                <div class="mc-form-group" t-att-class="'mc-form-group--error' if error.get('name') else ''">
+                                    <label for="name">Full Name <span class="mc-required">*</span></label>
+                                    <input type="text" id="name" name="name" class="mc-input"
+                                           placeholder="e.g. Chioma Okafor"
+                                           t-att-value="values.get('name', '')"/>
+                                    <t t-if="error.get('name')">
+                                        <span class="mc-error-msg" t-esc="error['name']"/>
+                                    </t>
+                                </div>
+                                <div class="mc-form-group" t-att-class="'mc-form-group--error' if error.get('email') else ''">
+                                    <label for="email">Email Address <span class="mc-required">*</span></label>
+                                    <input type="email" id="email" name="email" class="mc-input"
+                                           placeholder="you@example.com"
+                                           t-att-value="values.get('email', '')"/>
+                                    <t t-if="error.get('email')">
+                                        <span class="mc-error-msg" t-esc="error['email']"/>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="mc-form-row">
+                                <div class="mc-form-group" t-att-class="'mc-form-group--error' if error.get('date_of_birth') else ''">
+                                    <label for="date_of_birth">Date of Birth <span class="mc-required">*</span></label>
+                                    <input type="date" id="date_of_birth" name="date_of_birth" class="mc-input"
+                                           t-att-value="values.get('date_of_birth', '')"/>
+                                    <t t-if="error.get('date_of_birth')">
+                                        <span class="mc-error-msg" t-esc="error['date_of_birth']"/>
+                                    </t>
+                                    <small class="mc-form-hint">Skip this if you're already a returning patient.</small>
+                                </div>
+                                <div class="mc-form-group" t-att-class="'mc-form-group--error' if error.get('gender') else ''">
+                                    <label for="gender">Gender <span class="mc-required">*</span></label>
+                                    <select id="gender" name="gender" class="mc-input mc-select">
+                                        <option value="">— Select —</option>
+                                        <option value="male" t-att-selected="values.get('gender') == 'male'">Male</option>
+                                        <option value="female" t-att-selected="values.get('gender') == 'female'">Female</option>
+                                        <option value="other" t-att-selected="values.get('gender') == 'other'">Other</option>
+                                    </select>
+                                    <t t-if="error.get('gender')">
+                                        <span class="mc-error-msg" t-esc="error['gender']"/>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="mc-form-row">
+                                <div class="mc-form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" class="mc-input"
+                                           placeholder="+234 800 000 0000"
+                                           t-att-value="values.get('phone', '')"/>
+                                </div>
+                                <div class="mc-form-group" t-att-class="'mc-form-group--error' if error.get('doctor_id') else ''">
+                                    <label for="doctor_id">Select Doctor <span class="mc-required">*</span></label>
+                                    <select id="doctor_id" name="doctor_id" class="mc-input mc-select">
+                                        <option value="">— Choose a Specialist —</option>
+                                        <t t-foreach="doctors" t-as="doctor">
+                                            <option t-att-value="doctor.id"
+                                                    t-att-selected="values.get('doctor_id') == str(doctor.id)">
+                                                Dr. <t t-esc="doctor.name"/> — <t t-esc="doctor.specialization"/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                    <t t-if="error.get('doctor_id')">
+                                        <span class="mc-error-msg" t-esc="error['doctor_id']"/>
+                                    </t>
+                                </div>
+                            </div>
+
+                            <div class="mc-form-row">
+                                <div class="mc-form-group" t-att-class="'mc-form-group--error' if error.get('appointment_date') else ''">
+                                    <label for="appointment_date">Preferred Date &amp; Time <span class="mc-required">*</span></label>
+                                    <input type="datetime-local" id="appointment_date" name="appointment_date"
+                                           class="mc-input" t-att-value="values.get('appointment_date', '')"/>
+                                    <t t-if="error.get('appointment_date')">
+                                        <span class="mc-error-msg" t-esc="error['appointment_date']"/>
+                                    </t>
+                                </div>
+                                <div class="mc-form-group">
+                                    <label for="reason">Reason / Chief Complaint</label>
+                                    <textarea id="reason" name="reason" class="mc-input mc-textarea"
+                                              placeholder="Briefly describe your symptoms or reason for visit..."
+                                              rows="3"><t t-esc="values.get('reason', '')"/></textarea>
+                                </div>
+                            </div>
+
+                            <div class="mc-form-actions">
+                                <button type="submit" class="mc-btn mc-btn--primary mc-btn--full">
+                                    Confirm Appointment →
+                                </button>
+                                <p class="mc-form-note">
+                                    Already a patient?
+                                    <a href="/web/login">Sign in to your portal</a>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         /appointment/book  —  Confirmation Page
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="website_appointment_confirm" name="Website: Appointment Confirmed">
+        <t t-call="website.layout">
+            <div class="medicore-public">
+                <div class="mc-confirm-wrapper">
+                    <div class="mc-confirm-card">
+                        <div class="mc-confirm-icon">✅</div>
+                        <h1>Appointment Booked!</h1>
+                        <p class="mc-confirm-sub">
+                            Thank you, <strong t-esc="patient_name"/>. Your appointment has been scheduled.
+                        </p>
+                        <div class="mc-confirm-details">
+                            <div class="mc-confirm-detail">
+                                <span class="mc-confirm-detail__label">Doctor</span>
+                                <span class="mc-confirm-detail__value">Dr. <t t-esc="doctor.name"/></span>
+                            </div>
+                            <div class="mc-confirm-detail">
+                                <span class="mc-confirm-detail__label">Specialization</span>
+                                <span class="mc-confirm-detail__value" t-esc="doctor.specialization"/>
+                            </div>
+                            <div class="mc-confirm-detail">
+                                <span class="mc-confirm-detail__label">Date &amp; Time</span>
+                                <span class="mc-confirm-detail__value"
+                                      t-esc="appointment_date.strftime('%B %d, %Y at %I:%M %p')"/>
+                            </div>
+                        </div>
+                        <p class="mc-confirm-note">
+                            You will receive a confirmation email shortly.<br/>
+                            Create a portal account to track your health records online.
+                        </p>
+                        <div class="mc-confirm-actions">
+                            <a href="/web/signup" class="mc-btn mc-btn--primary">Create Portal Account</a>
+                            <a href="/appointment" class="mc-btn mc-btn--outline">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

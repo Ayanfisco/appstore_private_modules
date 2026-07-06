@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- ─── Sequences ─────────────────────────────────────────────────────── -->
+        <record id="seq_clinic_patient" model="ir.sequence">
+            <field name="name">Patient ID</field>
+            <field name="code">clinic.patient</field>
+            <field name="prefix">PAT/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_clinic_doctor" model="ir.sequence">
+            <field name="name">Doctor ID</field>
+            <field name="code">clinic.doctor</field>
+            <field name="prefix">DOC/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_clinic_appointment" model="ir.sequence">
+            <field name="name">Appointment Reference</field>
+            <field name="code">clinic.appointment</field>
+            <field name="prefix">APT/%(year)s/%(month)s/</field>
+            <field name="padding">4</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_clinic_consultation" model="ir.sequence">
+            <field name="name">Consultation Reference</field>
+            <field name="code">clinic.consultation</field>
+            <field name="prefix">CON/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_clinic_prescription" model="ir.sequence">
+            <field name="name">Prescription Reference</field>
+            <field name="code">clinic.prescription</field>
+            <field name="prefix">RX/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_clinic_lab_test" model="ir.sequence">
+            <field name="name">Lab Test Reference</field>
+            <field name="code">clinic.lab.test</field>
+            <field name="prefix">LAB/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_clinic_billing" model="ir.sequence">
+            <field name="name">Billing Reference</field>
+            <field name="code">clinic.billing</field>
+            <field name="prefix">BILL/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_clinic_pharmacy" model="ir.sequence">
+            <field name="name">Pharmacy Dispensing Reference</field>
+            <field name="code">clinic.pharmacy</field>
+            <field name="prefix">PHM/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+        </record>
+    </data>
+</odoo>

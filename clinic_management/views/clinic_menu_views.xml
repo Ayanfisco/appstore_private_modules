@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ─── Root Menu ─────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_clinic_root"
+              name="Clinic"
+              sequence="50"
+              web_icon="clinic_management,static/src/img/clinic_menu_icon.png"/>
+
+    <!-- ─── Reception / Front Desk ───────────────────────────────────────────── -->
+    <menuitem id="menu_clinic_reception"
+              name="Reception"
+              parent="menu_clinic_root"
+              sequence="10"/>
+
+    <menuitem id="menu_clinic_patient"
+              name="Patients"
+              parent="menu_clinic_reception"
+              action="action_clinic_patient"
+              sequence="10"/>
+
+    <menuitem id="menu_clinic_appointment"
+              name="Appointments"
+              parent="menu_clinic_reception"
+              action="action_clinic_appointment"
+              sequence="20"/>
+
+    <menuitem id="menu_clinic_billing"
+              name="Billing"
+              parent="menu_clinic_reception"
+              action="action_clinic_billing"
+              sequence="30"/>
+
+    <!-- ─── Clinical ─────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_clinic_clinical"
+              name="Clinical"
+              parent="menu_clinic_root"
+              sequence="20"/>
+
+    <menuitem id="menu_clinic_consultation"
+              name="Consultations"
+              parent="menu_clinic_clinical"
+              action="action_clinic_consultation"
+              sequence="10"/>
+
+    <menuitem id="menu_clinic_prescription"
+              name="Prescriptions"
+              parent="menu_clinic_clinical"
+              action="action_clinic_prescription"
+              sequence="20"/>
+
+    <menuitem id="menu_clinic_vital_signs"
+              name="Vital Signs"
+              parent="menu_clinic_clinical"
+              action="action_clinic_vital_signs"
+              sequence="30"/>
+
+    <!-- ─── Laboratory ────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_clinic_lab"
+              name="Laboratory"
+              parent="menu_clinic_root"
+              sequence="30"/>
+
+    <menuitem id="menu_clinic_lab_test"
+              name="Lab Requests"
+              parent="menu_clinic_lab"
+              action="action_clinic_lab_test"
+              sequence="10"/>
+
+    <menuitem id="menu_clinic_lab_catalog"
+              name="Test Catalog"
+              parent="menu_clinic_lab"
+              action="action_clinic_lab_catalog"
+              sequence="20"/>
+
+    <!-- ─── Pharmacy ──────────────────────────────────────────────────────────── -->
+    <menuitem id="menu_clinic_pharmacy_root"
+              name="Pharmacy"
+              parent="menu_clinic_root"
+              sequence="40"/>
+
+    <menuitem id="menu_clinic_pharmacy"
+              name="Dispensing"
+              parent="menu_clinic_pharmacy_root"
+              action="action_clinic_pharmacy"
+              sequence="10"/>
+
+    <!-- ─── Configuration ─────────────────────────────────────────────────────── -->
+    <menuitem id="menu_clinic_config"
+              name="Configuration"
+              parent="menu_clinic_root"
+              sequence="100"
+              groups="clinic_management.group_clinic_manager"/>
+
+    <menuitem id="menu_clinic_doctor"
+              name="Doctors"
+              parent="menu_clinic_config"
+              action="action_clinic_doctor"
+              sequence="10"/>
+
+    <menuitem id="menu_clinic_department"
+              name="Departments"
+              parent="menu_clinic_config"
+              action="action_clinic_department"
+              sequence="20"/>
+</odoo>

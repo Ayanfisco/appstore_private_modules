@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_clinic_consultation_form" model="ir.ui.view">
+        <field name="name">clinic.consultation.form</field>
+        <field name="model">clinic.consultation</field>
+        <field name="arch" type="xml">
+            <form string="Consultation">
+                <header>
+                    <button name="action_start" string="Start" type="object" invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_done" string="Complete" type="object" invisible="state != 'in_progress'" class="oe_highlight"/>
+                    <button name="action_create_prescription" string="New Prescription" type="object" icon="fa-medkit"/>
+                    <button name="action_create_lab_request" string="Request Lab Test" type="object" icon="fa-flask"/>
+                    <button name="action_cancel" string="Cancel" type="object" invisible="state == 'done'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-medkit">
+                            <field name="prescription_count" widget="statinfo" string="Prescriptions"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-flask">
+                            <field name="lab_test_count" widget="statinfo" string="Lab Tests"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="appointment_id"/>
+                        </group>
+                        <group>
+                            <field name="consultation_date"/>
+                            <field name="final_diagnosis"/>
+                            <field name="icd10_code"/>
+                            <field name="severity"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Clinical Notes" name="clinical">
+                            <group string="Chief Complaint">
+                                <field name="chief_complaint" nolabel="1" placeholder="Main reason for visit..."/>
+                            </group>
+                            <group string="History of Present Illness">
+                                <field name="history_of_illness" nolabel="1"/>
+                            </group>
+                            <group string="Physical Examination">
+                                <field name="physical_examination" nolabel="1"/>
+                            </group>
+                            <group string="Diagnosis">
+                                <group>
+                                    <field name="provisional_diagnosis"/>
+                                    <field name="final_diagnosis"/>
+                                    <field name="icd10_code"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Vital Signs" name="vitals">
+                            <field name="vital_ids">
+                                <list editable="bottom">
+                                    <field name="recorded_at"/>
+                                    <field name="blood_pressure_display"/>
+                                    <field name="pulse_rate"/>
+                                    <field name="temperature"/>
+                                    <field name="spo2"/>
+                                    <field name="weight"/>
+                                    <field name="height"/>
+                                    <field name="bmi" readonly="1"/>
+                                    <field name="blood_sugar"/>
+                                    <field name="pain_scale"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Treatment Plan" name="treatment">
+                            <group string="Treatment Plan">
+                                <field name="treatment_plan" nolabel="1"/>
+                            </group>
+                            <group string="Follow-Up">
+                                <field name="follow_up_date"/>
+                                <field name="follow_up_notes"/>
+                            </group>
+                            <group string="Additional Notes">
+                                <field name="clinical_notes" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Prescriptions" name="prescriptions">
+                            <field name="prescription_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="prescription_date"/>
+                                    <field name="diagnosis"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Lab Tests" name="lab">
+                            <field name="lab_test_ids">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="request_date"/>
+                                    <field name="urgency"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_clinic_consultation_list" model="ir.ui.view">
+        <field name="name">clinic.consultation.list</field>
+        <field name="model">clinic.consultation</field>
+        <field name="arch" type="xml">
+            <list string="Consultations" decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="consultation_date"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="final_diagnosis"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-warning="state == 'in_progress'"
+                       decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_clinic_consultation" model="ir.actions.act_window">
+        <field name="name">Consultations</field>
+        <field name="res_model">clinic.consultation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

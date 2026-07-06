@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_clinic_invoice_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div style="border-bottom:2px solid #1a7f5a; padding-bottom:10px; margin-bottom:20px;">
+                            <h2 style="color:#1a7f5a; margin:0;">CLINIC BILL / RECEIPT</h2>
+                            <p style="margin:0; font-size:12px; color:#666;">
+                                Bill No: <strong><t t-esc="doc.name"/></strong> &amp;nbsp;|&amp;nbsp;
+                                Date: <t t-esc="doc.billing_date"/>
+                            </p>
+                        </div>
+                        <div class="row" style="margin-bottom:16px;">
+                            <div class="col-6" style="background:#f7faf9; padding:10px; border-radius:6px;">
+                                <h5 style="color:#1a7f5a; margin-bottom:6px;">PATIENT</h5>
+                                <p style="margin:2px 0;"><strong><t t-esc="doc.patient_id.name"/></strong></p>
+                                <p style="margin:2px 0; font-size:12px;">ID: <t t-esc="doc.patient_id.patient_id"/></p>
+                                <p style="margin:2px 0; font-size:12px;"><t t-esc="doc.patient_id.phone or ''"/></p>
+                            </div>
+                            <div class="col-6" style="background:#f7faf9; padding:10px; border-radius:6px; margin-left:8px;">
+                                <h5 style="color:#1a7f5a; margin-bottom:6px;">PAYMENT INFO</h5>
+                                <p style="margin:2px 0; font-size:12px;">Method: <t t-esc="doc.payment_method or '—'"/></p>
+                                <t t-if="doc.insurance_provider">
+                                    <p style="margin:2px 0; font-size:12px;">Insurer: <t t-esc="doc.insurance_provider"/></p>
+                                    <p style="margin:2px 0; font-size:12px;">Claim: <t t-esc="doc.insurance_claim_no or '—'"/></p>
+                                </t>
+                            </div>
+                        </div>
+
+                        <table class="table table-sm table-bordered" style="font-size:12px; margin-bottom:16px;">
+                            <thead style="background:#1a7f5a; color:white;">
+                                <tr>
+                                    <th>Service / Item</th>
+                                    <th>Type</th>
+                                    <th class="text-right">Qty</th>
+                                    <th class="text-right">Unit Price</th>
+                                    <th class="text-right">Discount</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.line_ids" t-as="line">
+                                    <tr>
+                                        <td><t t-esc="line.service_name"/></td>
+                                        <td><t t-esc="line.service_type"/></td>
+                                        <td class="text-right"><t t-esc="line.quantity"/></td>
+                                        <td class="text-right"><t t-esc="'%.2f' % line.unit_price"/></td>
+                                        <td class="text-right"><t t-esc="'%.0f%%' % (line.discount_pct or 0)"/></td>
+                                        <td class="text-right"><strong><t t-esc="'%.2f' % line.total_price"/></strong></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-6 offset-6">
+                                <table class="table table-sm" style="font-size:12px;">
+                                    <tr><td>Subtotal</td><td class="text-right"><t t-esc="'%.2f' % doc.subtotal"/></td></tr>
+                                    <tr><td>Discount</td><td class="text-right"><t t-esc="'%.2f' % (doc.discount_amount or 0)"/></td></tr>
+                                    <tr><td>VAT (7.5%)</td><td class="text-right"><t t-esc="'%.2f' % doc.tax_amount"/></td></tr>
+                                    <tr style="font-size:14px; font-weight:bold; background:#f7faf9;">
+                                        <td>TOTAL</td><td class="text-right"><t t-esc="'%.2f' % doc.total"/></td>
+                                    </tr>
+                                    <tr><td>Amount Paid</td><td class="text-right"><t t-esc="'%.2f' % (doc.amount_paid or 0)"/></td></tr>
+                                    <tr style="color: #e74c3c;" t-if="doc.balance_due > 0">
+                                        <td><strong>Balance Due</strong></td>
+                                        <td class="text-right"><strong><t t-esc="'%.2f' % doc.balance_due"/></strong></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:30px; text-align:center; font-size:11px; color:#aaa; border-top:1px solid #eee; padding-top:10px;">
+                            <p>Thank you for choosing our clinic. Get well soon!</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_clinic_invoice" model="ir.actions.report">
+        <field name="name">Clinic Bill</field>
+        <field name="model">clinic.billing</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">clinic_management.report_clinic_invoice_document</field>
+        <field name="report_file">clinic_management.report_clinic_invoice_document</field>
+        <field name="binding_model_id" ref="model_clinic_billing"/>
+        <field name="binding_type">report</field>
+        <!-- <field name="paperformat_id" ref="base.paperformat_a4"/> -->
+    </record>
+</odoo>

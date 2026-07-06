@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_patient_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div style="border-bottom:2px solid #1a7f5a; padding-bottom:12px; margin-bottom:20px;">
+                            <h2 style="color:#1a7f5a; margin:0;">PATIENT MEDICAL RECORD</h2>
+                            <p style="margin:0; font-size:11px; color:#888;">Generated on <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%d %b %Y %H:%M')"/></p>
+                        </div>
+                        <div class="row" style="margin-bottom:20px;">
+                            <div class="col-9">
+                                <h3 style="margin:0;"><t t-esc="doc.name"/></h3>
+                                <p style="margin:2px 0; font-size:13px; color:#1a7f5a;"><strong>Patient ID: <t t-esc="doc.patient_id"/></strong></p>
+                                <table style="font-size:12px; margin-top:10px; width:100%;">
+                                    <tr>
+                                        <td style="width:33%;"><strong>Gender:</strong> <t t-esc="doc.gender"/></td>
+                                        <td style="width:33%;"><strong>Age:</strong> <t t-esc="doc.age"/> yrs</td>
+                                        <td style="width:33%;"><strong>Blood Group:</strong> <t t-esc="doc.blood_group or 'Unknown'"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>DOB:</strong> <t t-esc="doc.date_of_birth"/></td>
+                                        <td><strong>Phone:</strong> <t t-esc="doc.phone or '—'"/></td>
+                                        <td><strong>Status:</strong> <t t-esc="doc.state"/></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom:16px;">
+                            <div class="col-6">
+                                <h5 style="color:#1a7f5a;">Medical Information</h5>
+                                <p style="font-size:12px;"><strong>Allergies:</strong> <t t-esc="doc.allergies or 'None known'"/></p>
+                                <p style="font-size:12px;"><strong>Chronic Conditions:</strong> <t t-esc="doc.chronic_conditions or 'None'"/></p>
+                                <p style="font-size:12px;"><strong>Current Medications:</strong> <t t-esc="doc.current_medications or 'None'"/></p>
+                            </div>
+                            <div class="col-6">
+                                <h5 style="color:#1a7f5a;">Insurance</h5>
+                                <p style="font-size:12px;"><strong>Provider:</strong> <t t-esc="doc.insurance_provider or '—'"/></p>
+                                <p style="font-size:12px;"><strong>Policy No:</strong> <t t-esc="doc.insurance_policy_no or '—'"/></p>
+                                <p style="font-size:12px;"><strong>Valid Until:</strong> <t t-esc="doc.insurance_valid_to or '—'"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_patient" model="ir.actions.report">
+        <field name="name">Patient Record</field>
+        <field name="model">clinic.patient</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">clinic_management.report_patient_document</field>
+        <field name="report_file">clinic_management.report_patient_document</field>
+        <field name="binding_model_id" ref="model_clinic_patient"/>
+        <field name="binding_type">report</field>
+        <!-- <field name="paperformat_id" ref="base.paperformat_a4"/> -->
+    </record>
+</odoo>

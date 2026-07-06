@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_lab_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row" style="border-bottom:2px solid #1a7f5a; padding-bottom:10px; margin-bottom:20px;">
+                            <div class="col-8">
+                                <h2 style="color:#1a7f5a; margin:0;">LABORATORY REPORT</h2>
+                                <p style="margin:0; font-size:12px; color:#666;">
+                                    Ref: <strong><t t-esc="doc.name"/></strong> &amp;nbsp;|&amp;nbsp;
+                                    Requested: <t t-esc="doc.request_date"/>
+                                </p>
+                            </div>
+                            <div class="col-4 text-right">
+                                <t t-if="doc.urgency == 'stat'">
+                                    <span style="background:#e74c3c; color:white; padding:4px 10px; border-radius:4px; font-size:12px;">STAT</span>
+                                </t>
+                                <t t-elif="doc.urgency == 'urgent'">
+                                    <span style="background:#f39c12; color:white; padding:4px 10px; border-radius:4px; font-size:12px;">URGENT</span>
+                                </t>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom:20px;">
+                            <div class="col-6" style="background:#f7faf9; padding:12px; border-radius:6px;">
+                                <h5 style="color:#1a7f5a; margin-bottom:6px;">PATIENT</h5>
+                                <p style="margin:2px 0;"><strong><t t-esc="doc.patient_id.name"/></strong></p>
+                                <p style="margin:2px 0; font-size:12px;">ID: <t t-esc="doc.patient_id.patient_id"/></p>
+                                <p style="margin:2px 0; font-size:12px;">
+                                    Age: <t t-esc="doc.patient_id.age"/> | Gender: <t t-esc="doc.patient_id.gender"/>
+                                </p>
+                            </div>
+                            <div class="col-6" style="background:#f7faf9; padding:12px; border-radius:6px; margin-left:8px;">
+                                <h5 style="color:#1a7f5a; margin-bottom:6px;">REQUEST DETAILS</h5>
+                                <p style="margin:2px 0; font-size:12px;">Requested by: <strong>Dr. <t t-esc="doc.doctor_id.name"/></strong></p>
+                                <t t-if="doc.lab_technician_id">
+                                    <p style="margin:2px 0; font-size:12px;">Technician: <t t-esc="doc.lab_technician_id.name"/></p>
+                                </t>
+                                <t t-if="doc.sample_date">
+                                    <p style="margin:2px 0; font-size:12px;">Sample Collected: <t t-esc="doc.sample_date"/></p>
+                                </t>
+                                <t t-if="doc.result_date">
+                                    <p style="margin:2px 0; font-size:12px;">Results Ready: <t t-esc="doc.result_date"/></p>
+                                </t>
+                            </div>
+                        </div>
+
+                        <h5 style="color:#1a7f5a; border-bottom:1px solid #ddd; padding-bottom:4px;">TEST RESULTS</h5>
+                        <table class="table table-sm table-bordered" style="font-size:12px; margin-bottom:16px;">
+                            <thead style="background:#1a7f5a; color:white;">
+                                <tr>
+                                    <th>Test Name</th>
+                                    <th>Category</th>
+                                    <th>Result</th>
+                                    <th>Unit</th>
+                                    <th>Reference Range</th>
+                                    <th>Flag</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.line_ids" t-as="line">
+                                    <tr t-attf-style="background: #{line.flag == 'critical' and '#fde8e8' or (line.flag in ['low','high'] and '#fff8e1' or 'white')};">
+                                        <td><strong><t t-esc="line.test_name"/></strong></td>
+                                        <td><t t-esc="line.test_category"/></td>
+                                        <td><strong><t t-esc="line.result_value or '—'"/></strong></td>
+                                        <td><t t-esc="line.unit or ''"/></td>
+                                        <td><t t-esc="line.reference_range or ''"/></td>
+                                        <td>
+                                            <t t-if="line.flag == 'critical'"><span style="color:#e74c3c; font-weight:bold;">CRITICAL</span></t>
+                                            <t t-elif="line.flag == 'high'"><span style="color:#e67e22;">H</span></t>
+                                            <t t-elif="line.flag == 'low'"><span style="color:#3498db;">L</span></t>
+                                            <t t-else=""><span style="color:#27ae60;">N</span></t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <t t-if="doc.result_summary">
+                            <div style="background:#f0f7ff; padding:10px 14px; border-radius:6px; margin-bottom:16px;">
+                                <strong>Impression / Summary:</strong><br/>
+                                <span style="font-size:12px;"><t t-esc="doc.result_summary"/></span>
+                            </div>
+                        </t>
+
+                        <div style="margin-top:40px;">
+                            <div style="border-top:1px solid #333; padding-top:4px; width:180px; text-align:center; display:inline-block;">
+                                <p style="margin:0; font-size:11px;">Lab Technician Signature</p>
+                            </div>
+                            <div style="float:right; font-size:10px; color:#aaa;">
+                                <p>This report is computer generated.</p>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_lab" model="ir.actions.report">
+        <field name="name">Laboratory Report</field>
+        <field name="model">clinic.lab.test</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">clinic_management.report_lab_document</field>
+        <field name="report_file">clinic_management.report_lab_document</field>
+        <field name="binding_model_id" ref="model_clinic_lab_test"/>
+        <field name="binding_type">report</field>
+        <!-- <field name="paperformat_id" ref="base.paperformat_a4"/> -->
+    </record>
+</odoo>

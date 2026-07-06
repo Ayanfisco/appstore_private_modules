@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ─── Security Category ─────────────────────────────────────────────── -->
+        <record id="module_clinic_category" model="ir.module.category">
+            <field name="name">Clinic Management</field>
+            <field name="description">Manage clinical operations and healthcare records.</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- ─── Groups ───────────────────────────────────────────────────────── -->
+        <record id="group_clinic_receptionist" model="res.groups">
+            <field name="name">Receptionist / Nurse</field>
+            <field name="category_id" ref="module_clinic_category"/>
+            <field name="comment">Can register patients, book appointments, record vital signs.</field>
+        </record>
+
+        <record id="group_clinic_doctor" model="res.groups">
+            <field name="name">Doctor</field>
+            <field name="category_id" ref="module_clinic_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_clinic_receptionist'))]"/>
+            <field name="comment">Can create consultations, prescriptions, and lab requests.</field>
+        </record>
+
+        <record id="group_clinic_lab_technician" model="res.groups">
+            <field name="name">Lab Technician</field>
+            <field name="category_id" ref="module_clinic_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_clinic_receptionist'))]"/>
+            <field name="comment">Can process lab tests and enter results.</field>
+        </record>
+
+        <record id="group_clinic_pharmacist" model="res.groups">
+            <field name="name">Pharmacist</field>
+            <field name="category_id" ref="module_clinic_category"/>
+            <field name="implied_ids" eval="[(4, ref('group_clinic_receptionist'))]"/>
+            <field name="comment">Can dispense medications linked to prescriptions.</field>
+        </record>
+
+        <record id="group_clinic_manager" model="res.groups">
+            <field name="name">Clinic Manager / Administrator</field>
+            <field name="category_id" ref="module_clinic_category"/>
+            <field name="implied_ids" eval="[
+                (4, ref('group_clinic_doctor')),
+                (4, ref('group_clinic_lab_technician')),
+                (4, ref('group_clinic_pharmacist')),
+            ]"/>
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+            <field name="comment">Full access to all clinic records, configuration, and reports.</field>
+        </record>
+
+        <!-- ─── Record Rules (Portal) ───────────────────────────────────────────
+             The ACLs in ir.model.access.csv grant base.group_portal *read*
+             access to clinic.patient/appointment/prescription/lab.test so the
+             patient portal pages can function. Without a row-level rule here,
+             that ACL alone lets ANY portal user read EVERY patient's record
+             via direct ORM/JSON-RPC calls (the controller's use of sudo() is
+             irrelevant to this — a portal user can call the model directly).
+             These rules scope every portal read strictly to records that
+             belong to that portal user's own linked patient.
+        -->
+        <record id="rule_clinic_patient_portal_own" model="ir.rule">
+            <field name="name">Patient Portal: own record only</field>
+            <field name="model_id" ref="model_clinic_patient"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('partner_id', '=', user.partner_id.id)]</field>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="rule_clinic_appointment_portal_own" model="ir.rule">
+            <field name="name">Patient Portal: own appointments only</field>
+            <field name="model_id" ref="model_clinic_appointment"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('patient_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="rule_clinic_prescription_portal_own" model="ir.rule">
+            <field name="name">Patient Portal: own prescriptions only</field>
+            <field name="model_id" ref="model_clinic_prescription"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('patient_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="rule_clinic_prescription_line_portal_own" model="ir.rule">
+            <field name="name">Patient Portal: own prescription lines only</field>
+            <field name="model_id" ref="model_clinic_prescription_line"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('prescription_id.patient_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+
+        <record id="rule_clinic_lab_test_portal_own" model="ir.rule">
+            <field name="name">Patient Portal: own lab tests only</field>
+            <field name="model_id" ref="model_clinic_lab_test"/>
+            <field name="groups" eval="[(4, ref('base.group_portal'))]"/>
+            <field name="domain_force">[('patient_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="perm_read">1</field>
+            <field name="perm_write">0</field>
+            <field name="perm_create">0</field>
+            <field name="perm_unlink">0</field>
+        </record>
+    </data>
+</odoo>

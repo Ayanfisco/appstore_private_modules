@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ─── Demo Doctors ──────────────────────────────────────────────────── -->
+        <record id="demo_doctor_chukwu" model="clinic.doctor">
+            <field name="name">Dr. Emeka Chukwuemeka</field>
+            <field name="specialization">General Practice</field>
+            <field name="qualification">MBBS, MPH</field>
+            <field name="medical_council_no">MDCN/12345</field>
+            <field name="years_of_experience">10</field>
+            <field name="department" ref="dept_general"/>
+            <field name="phone">+234 801 234 5678</field>
+            <field name="email">emeka@clinic.ng</field>
+            <field name="consultation_fee">5000</field>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_doctor_okafor" model="clinic.doctor">
+            <field name="name">Dr. Ngozi Okafor</field>
+            <field name="specialization">Obstetrics &amp; Gynaecology</field>
+            <field name="qualification">MBBS, FWACS</field>
+            <field name="medical_council_no">MDCN/67890</field>
+            <field name="years_of_experience">15</field>
+            <field name="department" ref="dept_obs_gynae"/>
+            <field name="phone">+234 802 345 6789</field>
+            <field name="email">ngozi@clinic.ng</field>
+            <field name="consultation_fee">7500</field>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_doctor_ibrahim" model="clinic.doctor">
+            <field name="name">Dr. Abubakar Ibrahim</field>
+            <field name="specialization">Pediatrics</field>
+            <field name="qualification">MBBS, FMCP</field>
+            <field name="medical_council_no">MDCN/24680</field>
+            <field name="years_of_experience">8</field>
+            <field name="department" ref="dept_pediatrics"/>
+            <field name="phone">+234 803 456 7890</field>
+            <field name="email">ibrahim@clinic.ng</field>
+            <field name="consultation_fee">5500</field>
+            <field name="state">active</field>
+        </record>
+
+        <!-- ─── Demo Patients ─────────────────────────────────────────────────── -->
+        <record id="demo_patient_adaobi" model="clinic.patient">
+            <field name="name">Adaobi Okonkwo</field>
+            <field name="gender">female</field>
+            <field name="date_of_birth">1988-04-15</field>
+            <field name="blood_group">o+</field>
+            <field name="phone">+234 805 111 2222</field>
+            <field name="mobile">+234 805 111 2222</field>
+            <field name="email">adaobi@example.com</field>
+            <field name="city">Lagos</field>
+            <field name="allergies">Penicillin</field>
+            <field name="chronic_conditions">Hypertension</field>
+            <field name="insurance_provider">NHIS</field>
+            <field name="insurance_policy_no">NHIS/LAG/001234</field>
+            <field name="primary_doctor_id" ref="demo_doctor_chukwu"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_patient_musa" model="clinic.patient">
+            <field name="name">Musa Usman</field>
+            <field name="gender">male</field>
+            <field name="date_of_birth">1975-09-22</field>
+            <field name="blood_group">a+</field>
+            <field name="phone">+234 806 222 3333</field>
+            <field name="city">Abuja</field>
+            <field name="chronic_conditions">Type 2 Diabetes, Hypertension</field>
+            <field name="primary_doctor_id" ref="demo_doctor_chukwu"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_patient_chisom" model="clinic.patient">
+            <field name="name">Chisom Eze</field>
+            <field name="gender">female</field>
+            <field name="date_of_birth">1995-12-01</field>
+            <field name="blood_group">b+</field>
+            <field name="phone">+234 807 333 4444</field>
+            <field name="city">Port Harcourt</field>
+            <field name="primary_doctor_id" ref="demo_doctor_okafor"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_patient_emeka_jr" model="clinic.patient">
+            <field name="name">Emeka Nwosu Jr</field>
+            <field name="gender">male</field>
+            <field name="date_of_birth">2018-06-10</field>
+            <field name="blood_group">o+</field>
+            <field name="phone">+234 808 444 5555</field>
+            <field name="emergency_contact_name">Emeka Nwosu Sr</field>
+            <field name="emergency_contact_phone">+234 808 444 6666</field>
+            <field name="emergency_contact_relation">Father</field>
+            <field name="primary_doctor_id" ref="demo_doctor_ibrahim"/>
+            <field name="state">active</field>
+        </record>
+
+        <record id="demo_patient_fatima" model="clinic.patient">
+            <field name="name">Fatima Al-Hassan</field>
+            <field name="gender">female</field>
+            <field name="date_of_birth">1992-03-18</field>
+            <field name="blood_group">ab+</field>
+            <field name="phone">+234 809 555 6666</field>
+            <field name="city">Kano</field>
+            <field name="primary_doctor_id" ref="demo_doctor_chukwu"/>
+            <field name="state">active</field>
+        </record>
+
+        <!-- ─── Demo Appointments ─────────────────────────────────────────────── -->
+        <record id="demo_appt_1" model="clinic.appointment">
+            <field name="patient_id" ref="demo_patient_adaobi"/>
+            <field name="doctor_id" ref="demo_doctor_chukwu"/>
+            <field name="appointment_date" eval="(DateTime.now() + timedelta(days=1)).replace(hour=9, minute=0, second=0)"/>
+            <field name="appointment_type">follow_up</field>
+            <field name="chief_complaint">Follow-up for hypertension review and BP monitoring</field>
+            <field name="state">confirmed</field>
+            <field name="priority">0</field>
+        </record>
+
+        <record id="demo_appt_2" model="clinic.appointment">
+            <field name="patient_id" ref="demo_patient_musa"/>
+            <field name="doctor_id" ref="demo_doctor_chukwu"/>
+            <field name="appointment_date" eval="(DateTime.now() + timedelta(days=1)).replace(hour=10, minute=0, second=0)"/>
+            <field name="appointment_type">follow_up</field>
+            <field name="chief_complaint">Routine diabetes management follow-up, HbA1c review</field>
+            <field name="state">scheduled</field>
+            <field name="priority">1</field>
+        </record>
+
+        <record id="demo_appt_3" model="clinic.appointment">
+            <field name="patient_id" ref="demo_patient_chisom"/>
+            <field name="doctor_id" ref="demo_doctor_okafor"/>
+            <field name="appointment_date" eval="(DateTime.now() + timedelta(days=2)).replace(hour=11, minute=0, second=0)"/>
+            <field name="appointment_type">new</field>
+            <field name="chief_complaint">Antenatal registration — first visit</field>
+            <field name="state">scheduled</field>
+            <field name="priority">0</field>
+        </record>
+
+        <record id="demo_appt_4" model="clinic.appointment">
+            <field name="patient_id" ref="demo_patient_emeka_jr"/>
+            <field name="doctor_id" ref="demo_doctor_ibrahim"/>
+            <field name="appointment_date" eval="(DateTime.now() + timedelta(days=2)).replace(hour=14, minute=0, second=0)"/>
+            <field name="appointment_type">routine</field>
+            <field name="chief_complaint">Routine immunization and growth check — 6 year old</field>
+            <field name="state">scheduled</field>
+            <field name="priority">0</field>
+        </record>
+
+        <!-- Demo Lab Test Catalog entries already in clinic_data.xml -->
+    </data>
+</odoo>

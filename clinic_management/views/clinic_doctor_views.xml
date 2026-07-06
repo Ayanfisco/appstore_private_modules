@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_clinic_doctor_form" model="ir.ui.view">
+        <field name="name">clinic.doctor.form</field>
+        <field name="model">clinic.doctor</field>
+        <field name="arch" type="xml">
+            <form string="Doctor">
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="active,on_leave,inactive"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_appointments" type="object" class="oe_stat_button" icon="fa-calendar">
+                            <field name="appointment_count" widget="statinfo" string="Appointments"/>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-users">
+                            <field name="patient_count" widget="statinfo" string="Patients"/>
+                        </button>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="Dr. Full Name"/></h1>
+                        <h3><field name="specialization" placeholder="Specialization"/></h3>
+                    </div>
+                    <group>
+                        <group string="Professional Details">
+                            <field name="doctor_id" readonly="1"/>
+                            <field name="qualification"/>
+                            <field name="medical_council_no"/>
+                            <field name="years_of_experience"/>
+                            <field name="department"/>
+                            <field name="user_id"/>
+                        </group>
+                        <group string="Contact &amp; Fees">
+                            <field name="phone"/>
+                            <field name="mobile"/>
+                            <field name="email" widget="email"/>
+                            <field name="consultation_fee"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Availability" name="schedule">
+                            <group string="Working Days">
+                                <div class="o_field_widget o_wrap_field">
+                                    <field name="available_monday" widget="boolean_toggle"/> Monday
+                                    <field name="available_tuesday" widget="boolean_toggle"/> Tuesday
+                                    <field name="available_wednesday" widget="boolean_toggle"/> Wednesday
+                                    <field name="available_thursday" widget="boolean_toggle"/> Thursday
+                                    <field name="available_friday" widget="boolean_toggle"/> Friday
+                                    <field name="available_saturday" widget="boolean_toggle"/> Saturday
+                                    <field name="available_sunday" widget="boolean_toggle"/> Sunday
+                                </div>
+                            </group>
+                            <group>
+                                <field name="start_time" widget="float_time"/>
+                                <field name="end_time" widget="float_time"/>
+                                <field name="consultation_duration"/>
+                            </group>
+                        </page>
+                        <page string="Bio / Notes" name="bio">
+                            <field name="notes" placeholder="Doctor bio, specialization details, etc."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_clinic_doctor_list" model="ir.ui.view">
+        <field name="name">clinic.doctor.list</field>
+        <field name="model">clinic.doctor</field>
+        <field name="arch" type="xml">
+            <list string="Doctors">
+                <field name="doctor_id"/>
+                <field name="name"/>
+                <field name="specialization"/>
+                <field name="department"/>
+                <field name="phone"/>
+                <field name="consultation_fee"/>
+                <field name="appointment_count"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-warning="state == 'on_leave'"
+                       decoration-danger="state == 'inactive'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_clinic_doctor" model="ir.actions.act_window">
+        <field name="name">Doctors</field>
+        <field name="res_model">clinic.doctor</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Add your first doctor!</p>
+        </field>
+    </record>
+
+    <!-- Department -->
+    <record id="view_clinic_department_list" model="ir.ui.view">
+        <field name="name">clinic.department.list</field>
+        <field name="model">clinic.department</field>
+        <field name="arch" type="xml">
+            <list string="Departments" editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="head_doctor_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_clinic_department" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="res_model">clinic.department</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

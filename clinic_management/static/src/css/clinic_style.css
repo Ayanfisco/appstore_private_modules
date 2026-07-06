@@ -1,0 +1,76 @@
+/* ─── Clinic Management Module Styles ──────────────────────────── */
+
+/* Stat buttons */
+.o_clinic_stat_box {
+    background: linear-gradient(135deg, #1a7f5a 0%, #2ecc71 100%);
+    color: white;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+/* Patient form header accent */
+.o_form_view .o_clinic_header {
+    background-color: #f7faf9;
+    border-left: 4px solid #1a7f5a;
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 12px;
+}
+
+/* Allergy warning highlight */
+.o_field_widget[name="allergies"] .o_field_text {
+    color: #c0392b;
+    font-weight: 500;
+}
+
+/* Vital signs table */
+.o_list_view .o_data_row td[class*="blood_pressure"] {
+    font-weight: bold;
+    color: #1a7f5a;
+}
+
+/* Priority coloring */
+.o_priority .o_priority_star {
+    color: #f39c12;
+}
+
+/* Calendar appointment colors */
+.o_calendar_view .o_appointment_done {
+    opacity: 0.6;
+}
+
+/* BMI badge styling */
+.o_field_char[name="bmi_category"] {
+    font-weight: 500;
+}
+
+/* Report header green bar */
+.clinic_report_header {
+    background-color: #1a7f5a;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 4px 4px 0 0;
+}
+
+/* Kanban patient card */
+.o_kanban_view .o_kanban_record {
+    border-left: 3px solid #1a7f5a;
+}
+
+/* Status bar color override */
+.o_statusbar_status button.btn-primary {
+    background-color: #1a7f5a !important;
+    border-color: #1a7f5a !important;
+}
+
+/* Invoice/billing total footer */
+.oe_subtotal_footer {
+    border-top: 2px solid #1a7f5a;
+    margin-top: 8px;
+}
+
+/* Lab result flags */
+.o_badge_cell[style*="critical"] {
+    background-color: #e74c3c;
+    color: white;
+}

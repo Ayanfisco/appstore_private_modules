@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_clinic_lab_test_form" model="ir.ui.view">
+        <field name="name">clinic.lab.test.form</field>
+        <field name="model">clinic.lab.test</field>
+        <field name="arch" type="xml">
+            <form string="Lab Test Request">
+                <header>
+                    <button name="action_collect_sample" string="Collect Sample" type="object"
+                            invisible="state != 'requested'" class="oe_highlight"/>
+                    <button name="action_start_processing" string="Start Processing" type="object"
+                            invisible="state != 'sample_collected'" class="oe_highlight"/>
+                    <button name="action_done" string="Results Ready" type="object"
+                            invisible="state != 'in_progress'" class="oe_highlight"/>
+                    <button name="action_print_report" string="Print Report" type="object" icon="fa-print"
+                            invisible="state != 'done'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ['done','cancelled']"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="requested,sample_collected,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="consultation_id"/>
+                            <field name="lab_technician_id"/>
+                        </group>
+                        <group>
+                            <field name="request_date"/>
+                            <field name="sample_date"/>
+                            <field name="result_date"/>
+                            <field name="urgency" widget="radio"/>
+                        </group>
+                    </group>
+                    <group string="Clinical Information">
+                        <field name="clinical_notes" nolabel="1"/>
+                    </group>
+                    <separator string="Tests Requested"/>
+                    <field name="line_ids">
+                        <list editable="bottom">
+                            <field name="test_name"/>
+                            <field name="test_category"/>
+                            <field name="result_value"/>
+                            <field name="unit"/>
+                            <field name="reference_range"/>
+                            <field name="flag" widget="badge"
+                                   decoration-success="flag == 'normal'"
+                                   decoration-warning="flag in ['low','high']"
+                                   decoration-danger="flag == 'critical'"/>
+                            <field name="price"/>
+                            <field name="notes"/>
+                        </list>
+                    </field>
+                    <group string="Result Summary / Impression">
+                        <field name="result_summary" nolabel="1"/>
+                    </group>
+                    <group string="Attachments (Scanned Reports)">
+                        <field name="attachment_ids" widget="many2many_binary"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_clinic_lab_test_list" model="ir.ui.view">
+        <field name="name">clinic.lab.test.list</field>
+        <field name="model">clinic.lab.test</field>
+        <field name="arch" type="xml">
+            <list string="Lab Tests" decoration-danger="urgency == 'stat'" decoration-warning="urgency == 'urgent'">
+                <field name="name"/>
+                <field name="request_date"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="urgency" widget="badge"
+                       decoration-success="urgency == 'routine'"
+                       decoration-warning="urgency == 'urgent'"
+                       decoration-danger="urgency == 'stat'"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'requested'"
+                       decoration-warning="state in ['sample_collected','in_progress']"
+                       decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_clinic_lab_test" model="ir.actions.act_window">
+        <field name="name">Lab Tests</field>
+        <field name="res_model">clinic.lab.test</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Lab Catalog -->
+    <record id="view_clinic_lab_catalog_list" model="ir.ui.view">
+        <field name="name">clinic.lab.test.catalog.list</field>
+        <field name="model">clinic.lab.test.catalog</field>
+        <field name="arch" type="xml">
+            <list string="Lab Test Catalog" editable="bottom">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category"/>
+                <field name="unit"/>
+                <field name="reference_range"/>
+                <field name="price"/>
+                <field name="turnaround_time"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_clinic_lab_catalog" model="ir.actions.act_window">
+        <field name="name">Lab Test Catalog</field>
+        <field name="res_model">clinic.lab.test.catalog</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

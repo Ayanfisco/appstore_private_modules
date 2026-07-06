@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- ─── Patient Form View ─────────────────────────────────────────────────── -->
+    <record id="view_clinic_patient_form" model="ir.ui.view">
+        <field name="name">clinic.patient.form</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <header>
+                    <button name="action_new_appointment" string="New Appointment" type="object"
+                            class="oe_highlight" icon="fa-calendar-plus-o"/>
+                    <field name="state" widget="statusbar" statusbar_visible="active,inactive,deceased"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_appointments" type="object" class="oe_stat_button" icon="fa-calendar">
+                            <field name="appointment_count" widget="statinfo" string="Appointments"/>
+                        </button>
+                        <button name="action_view_consultations" type="object" class="oe_stat_button" icon="fa-stethoscope">
+                            <field name="consultation_count" widget="statinfo" string="Consultations"/>
+                        </button>
+                    </div>
+                    <field name="image" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label for="name" string="Patient Name"/>
+                        <h1><field name="name" placeholder="Full Name"/></h1>
+                        <h3 class="text-muted"><field name="patient_id" readonly="1"/></h3>
+                    </div>
+                    <group>
+                        <group string="Personal Information">
+                            <field name="gender"/>
+                            <field name="date_of_birth"/>
+                            <field name="age" readonly="1"/>
+                            <field name="blood_group"/>
+                            <field name="marital_status"/>
+                            <field name="nationality"/>
+                        </group>
+                        <group string="Contact Information">
+                            <field name="phone"/>
+                            <field name="mobile"/>
+                            <field name="email" widget="email"/>
+                            <field name="street"/>
+                            <field name="city"/>
+                            <field name="state_id"/>
+                            <field name="country_id"/>
+                        </group>
+                    </group>
+                    <group string="Emergency Contact">
+                        <group>
+                            <field name="emergency_contact_name"/>
+                            <field name="emergency_contact_phone"/>
+                            <field name="emergency_contact_relation"/>
+                        </group>
+                        <group string="Primary Doctor">
+                            <field name="primary_doctor_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Medical History" name="medical">
+                            <group>
+                                <group string="Allergies">
+                                    <field name="allergies" nolabel="1" placeholder="List known allergies..."/>
+                                </group>
+                                <group string="Chronic Conditions">
+                                    <field name="chronic_conditions" nolabel="1" placeholder="Diabetes, Hypertension, Asthma..."/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Current Medications">
+                                    <field name="current_medications" nolabel="1"/>
+                                </group>
+                                <group string="Surgical History">
+                                    <field name="surgical_history" nolabel="1"/>
+                                </group>
+                            </group>
+                            <group string="Family Medical History">
+                                <field name="family_history" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page string="Insurance" name="insurance">
+                            <group>
+                                <field name="insurance_provider"/>
+                                <field name="insurance_policy_no"/>
+                                <field name="insurance_valid_to"/>
+                            </group>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="Internal notes about this patient..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <!-- ─── Patient List View ─────────────────────────────────────────────────── -->
+    <record id="view_clinic_patient_list" model="ir.ui.view">
+        <field name="name">clinic.patient.list</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <list string="Patients" decoration-muted="state == 'deceased'" decoration-info="state == 'inactive'">
+                <field name="patient_id"/>
+                <field name="name"/>
+                <field name="gender"/>
+                <field name="age"/>
+                <field name="blood_group"/>
+                <field name="phone"/>
+                <field name="primary_doctor_id"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-danger="state == 'deceased'"
+                       decoration-warning="state == 'inactive'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ─── Patient Kanban View ───────────────────────────────────────────────── -->
+    <record id="view_clinic_patient_kanban" model="ir.ui.view">
+        <field name="name">clinic.patient.kanban</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="gender"/>
+                <field name="age"/>
+                <field name="blood_group"/>
+                <field name="phone"/>
+                <field name="image"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('clinic.patient', 'image', record.id.raw_value)"
+                                     alt="Patient Photo" class="o_image_64_cover"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div><field name="patient_id"/> | <field name="blood_group"/></div>
+                                <div>Age: <field name="age"/> | <field name="gender"/></div>
+                                <div><field name="phone"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ─── Search View ───────────────────────────────────────────────────────── -->
+    <record id="view_clinic_patient_search" model="ir.ui.view">
+        <field name="name">clinic.patient.search</field>
+        <field name="model">clinic.patient</field>
+        <field name="arch" type="xml">
+            <search string="Search Patients">
+                <field name="name" string="Patient Name/ID" filter_domain="['|', ('name','ilike',self), ('patient_id','ilike',self)]"/>
+                <field name="phone"/>
+                <field name="primary_doctor_id"/>
+                <separator/>
+                <filter string="Active" name="active" domain="[('state','=','active')]"/>
+                <filter string="Male" name="male" domain="[('gender','=','male')]"/>
+                <filter string="Female" name="female" domain="[('gender','=','female')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Gender" name="by_gender" context="{'group_by': 'gender'}"/>
+                    <filter string="Blood Group" name="by_blood" context="{'group_by': 'blood_group'}"/>
+                    <filter string="Primary Doctor" name="by_doctor" context="{'group_by': 'primary_doctor_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ─── Action ───────────────────────────────────────────────────────────── -->
+    <record id="action_clinic_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">clinic.patient</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="search_view_id" ref="view_clinic_patient_search"/>
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register your first patient!</p>
+            <p>Start by creating a patient profile with their personal and medical information.</p>
+        </field>
+    </record>
+</odoo>

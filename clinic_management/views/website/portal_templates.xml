@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Extend Odoo Portal home with MediCore section
+         Portal user lands on /my → sees "My Health Dashboard" link → /my/health
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_my_home_medicore" name="Portal: MediCore Health Records"
+              inherit_id="portal.portal_my_home" priority="30">
+        <!-- Odoo 18: portal_my_home uses named category divs.
+             portal_common_category always renders (no t-if guard), unlike
+             portal_client_category which requires portal_client_category_enable.
+             config_card=True forces the card visible without a JS counter. -->
+        <xpath expr="//div[@id='portal_common_category']" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My Health Dashboard</t>
+                <t t-set="text">View your appointments, prescriptions and lab results</t>
+                <t t-set="url" t-value="'/my/health'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         No Patient Record Found
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_no_patient" name="Portal: No Patient Record">
+        <t t-call="portal.portal_layout">
+            <div class="medicore-portal">
+                <div class="mc-no-patient">
+                    <div class="mc-no-patient__icon">🏥</div>
+                    <h2>No Patient Record Found</h2>
+                    <p>Your account is not yet linked to a patient record.<br/>
+                       Please contact our clinic to complete your registration.</p>
+                    <a href="/appointment/book" class="mc-btn mc-btn--primary">Book an Appointment</a>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Portal Layout — shared sidebar nav
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_layout" name="MediCore Portal Layout">
+        <t t-call="portal.portal_layout">
+            <t t-set="o_portal_fullwidth_alert" groups="base.group_user"/>
+            <div class="medicore-portal">
+                <div class="mc-portal-wrapper">
+                    <!-- Sidebar -->
+                    <aside class="mc-sidebar">
+                        <div class="mc-sidebar__header">
+                            <div class="mc-sidebar__avatar">
+                                <span t-esc="patient.name[0].upper()"/>
+                            </div>
+                            <div class="mc-sidebar__info">
+                                <strong t-esc="patient.name"/>
+                                <small t-esc="patient.patient_id"/>
+                            </div>
+                        </div>
+                        <nav class="mc-sidebar__nav">
+                            <a t-attf-class="mc-nav-link #{'mc-nav-link--active' if request.httprequest.path == '/my/health' else ''}"
+                               href="/my/health">
+                                <span class="mc-nav-icon">📊</span> Dashboard
+                            </a>
+                            <a t-attf-class="mc-nav-link #{'mc-nav-link--active' if '/appointments' in request.httprequest.path else ''}"
+                               href="/my/health/appointments">
+                                <span class="mc-nav-icon">📅</span> Appointments
+                            </a>
+                            <a t-attf-class="mc-nav-link #{'mc-nav-link--active' if '/prescriptions' in request.httprequest.path else ''}"
+                               href="/my/health/prescriptions">
+                                <span class="mc-nav-icon">💊</span> Prescriptions
+                            </a>
+                            <a t-attf-class="mc-nav-link #{'mc-nav-link--active' if '/lab-results' in request.httprequest.path else ''}"
+                               href="/my/health/lab-results">
+                                <span class="mc-nav-icon">🧪</span> Lab Results
+                            </a>
+                            <a t-attf-class="mc-nav-link #{'mc-nav-link--active' if '/profile' in request.httprequest.path else ''}"
+                               href="/my/health/profile">
+                                <span class="mc-nav-icon">👤</span> My Profile
+                            </a>
+                        </nav>
+                    </aside>
+
+                    <!-- Main content slot -->
+                    <main class="mc-main">
+                        <t t-out="0"/>
+                    </main>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Dashboard
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_dashboard" name="Patient Portal: Dashboard">
+        <t t-call="clinic_management.portal_layout">
+            <!-- Hero welcome banner -->
+            <div class="mc-dash-hero">
+                <div class="mc-dash-hero__text">
+                    <span class="mc-dash-hero__greeting">Welcome back 👋</span>
+                    <h1 class="mc-dash-hero__name" t-esc="patient.name"/>
+                    <p class="mc-dash-hero__meta">
+                        Patient ID <strong t-esc="patient.patient_id"/>
+                        <t t-if="patient.primary_doctor_id">
+                            &#160;·&#160; Primary Doctor: Dr. <t t-esc="patient.primary_doctor_id.name"/>
+                        </t>
+                    </p>
+                </div>
+                <div class="mc-dash-hero__actions">
+                    <a href="/appointment/book" class="mc-btn mc-btn--light">+ Book Appointment</a>
+                </div>
+            </div>
+
+            <!-- Health snapshot -->
+            <div class="mc-snapshot-row">
+                <div class="mc-snapshot-card">
+                    <span class="mc-snapshot-card__icon">🩸</span>
+                    <div>
+                        <span class="mc-snapshot-card__label">Blood Group</span>
+                        <strong class="mc-snapshot-card__value" t-esc="patient.blood_group and patient.blood_group.upper() or '—'"/>
+                    </div>
+                </div>
+                <div class="mc-snapshot-card">
+                    <span class="mc-snapshot-card__icon">🎂</span>
+                    <div>
+                        <span class="mc-snapshot-card__label">Age</span>
+                        <strong class="mc-snapshot-card__value"><t t-esc="patient.age"/> yrs</strong>
+                    </div>
+                </div>
+                <div class="mc-snapshot-card">
+                    <span class="mc-snapshot-card__icon">🛡️</span>
+                    <div>
+                        <span class="mc-snapshot-card__label">Insurance</span>
+                        <strong class="mc-snapshot-card__value" t-esc="patient.insurance_provider or 'Not on file'"/>
+                    </div>
+                </div>
+                <div t-attf-class="mc-snapshot-card #{'mc-snapshot-card--alert' if patient.allergies else ''}">
+                    <span class="mc-snapshot-card__icon"><t t-esc="'⚠️' if patient.allergies else '✅'"/></span>
+                    <div>
+                        <span class="mc-snapshot-card__label">Allergies</span>
+                        <strong class="mc-snapshot-card__value" t-esc="patient.allergies or 'None on file'"/>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats row -->
+            <div class="mc-stats-row">
+                <div class="mc-stat-card mc-stat-card--blue">
+                    <div class="mc-stat-card__number" t-esc="patient.appointment_count"/>
+                    <div class="mc-stat-card__label">Total Appointments</div>
+                </div>
+                <div class="mc-stat-card mc-stat-card--green">
+                    <div class="mc-stat-card__number" t-esc="len(upcoming_appointments)"/>
+                    <div class="mc-stat-card__label">Upcoming</div>
+                </div>
+                <div class="mc-stat-card mc-stat-card--purple">
+                    <div class="mc-stat-card__number" t-esc="len(recent_prescriptions)"/>
+                    <div class="mc-stat-card__label">Prescriptions</div>
+                </div>
+                <div class="mc-stat-card mc-stat-card--orange">
+                    <div class="mc-stat-card__number" t-esc="len(lab_tests)"/>
+                    <div class="mc-stat-card__label">Lab Tests</div>
+                </div>
+            </div>
+
+            <!-- Upcoming appointments -->
+            <div class="mc-section">
+                <div class="mc-section__header">
+                    <h2 class="mc-section-title">Upcoming Appointments</h2>
+                    <a href="/my/health/appointments" class="mc-link">View all →</a>
+                </div>
+                <t t-if="upcoming_appointments">
+                    <div class="mc-appointment-list">
+                        <t t-foreach="upcoming_appointments" t-as="appt">
+                            <div class="mc-appointment-card">
+                                <div class="mc-appointment-card__date">
+                                    <span class="mc-date-day" t-esc="appt.appointment_date.strftime('%d')"/>
+                                    <span class="mc-date-month" t-esc="appt.appointment_date.strftime('%b')"/>
+                                </div>
+                                <div class="mc-appointment-card__info">
+                                    <strong t-esc="appt.doctor_id.name"/>
+                                    <span t-esc="appt.doctor_id.specialization"/>
+                                    <span t-esc="appt.appointment_date.strftime('%I:%M %p')"/>
+                                </div>
+                                <div t-attf-class="mc-badge mc-badge--#{appt.state}">
+                                    <t t-esc="appt.state.replace('_', ' ').title()"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="mc-empty-state">
+                        <span>📅</span>
+                        <p>No upcoming appointments.</p>
+                    </div>
+                </t>
+            </div>
+
+            <!-- Recent Prescriptions -->
+            <div class="mc-section">
+                <div class="mc-section__header">
+                    <h2 class="mc-section-title">Recent Prescriptions</h2>
+                    <a href="/my/health/prescriptions" class="mc-link">View all →</a>
+                </div>
+                <t t-if="recent_prescriptions">
+                    <table class="mc-table">
+                        <thead>
+                            <tr>
+                                <th>Reference</th>
+                                <th>Doctor</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="recent_prescriptions" t-as="rx">
+                                <tr>
+                                    <td t-esc="rx.name"/>
+                                    <td t-esc="rx.doctor_id.name"/>
+                                    <td t-esc="rx.prescription_date"/>
+                                    <td>
+                                        <span t-attf-class="mc-badge mc-badge--#{rx.state}" t-esc="rx.state.title()"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
+                <t t-else="">
+                    <div class="mc-empty-state">
+                        <span>💊</span><p>No prescriptions on record.</p>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Appointments Page
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_appointments" name="Patient Portal: Appointments">
+        <t t-call="clinic_management.portal_layout">
+            <div class="mc-page-header">
+                <h1 class="mc-page-title">My Appointments</h1>
+            </div>
+            <t t-if="appointments">
+                <div class="mc-appointment-list">
+                    <t t-foreach="appointments" t-as="appt">
+                        <div class="mc-appointment-card mc-appointment-card--full">
+                            <div class="mc-appointment-card__date">
+                                <span class="mc-date-day" t-esc="appt.appointment_date.strftime('%d')"/>
+                                <span class="mc-date-month" t-esc="appt.appointment_date.strftime('%b %Y')"/>
+                            </div>
+                            <div class="mc-appointment-card__info">
+                                <strong t-esc="appt.name"/>
+                                <span>Dr. <t t-esc="appt.doctor_id.name"/> — <t t-esc="appt.doctor_id.specialization"/></span>
+                                <span t-esc="appt.appointment_date.strftime('%I:%M %p')"/>
+                                <t t-if="appt.chief_complaint">
+                                    <small>Reason: <t t-esc="appt.chief_complaint"/></small>
+                                </t>
+                            </div>
+                            <div t-attf-class="mc-badge mc-badge--#{appt.state}">
+                                <t t-esc="appt.state.replace('_', ' ').title()"/>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="mc-empty-state">
+                    <span>📅</span>
+                    <p>You have no appointments yet.</p>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Prescriptions Page
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_prescriptions" name="Patient Portal: Prescriptions">
+        <t t-call="clinic_management.portal_layout">
+            <div class="mc-page-header">
+                <h1 class="mc-page-title">My Prescriptions</h1>
+            </div>
+            <t t-if="prescriptions">
+                <table class="mc-table">
+                    <thead>
+                        <tr>
+                            <th>Reference</th><th>Doctor</th><th>Date</th><th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="prescriptions" t-as="rx">
+                            <tr>
+                                <td t-esc="rx.name"/>
+                                <td t-esc="rx.doctor_id.name"/>
+                                <td t-esc="rx.prescription_date"/>
+                                <td><span t-attf-class="mc-badge mc-badge--#{rx.state}" t-esc="rx.state.title()"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+            <t t-else="">
+                <div class="mc-empty-state">
+                    <span>💊</span><p>No prescriptions found.</p>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Lab Results Page
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_lab_results" name="Patient Portal: Lab Results">
+        <t t-call="clinic_management.portal_layout">
+            <div class="mc-page-header">
+                <h1 class="mc-page-title">Lab Results</h1>
+            </div>
+            <t t-if="lab_tests">
+                <table class="mc-table">
+                    <thead>
+                        <tr>
+                            <th>Test</th><th>Requested</th><th>Status</th><th>Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="lab_tests" t-as="lab">
+                            <tr>
+                                <td t-esc="lab.test_name"/>
+                                <td t-esc="lab.request_date"/>
+                                <td><span t-attf-class="mc-badge mc-badge--#{lab.state}" t-esc="lab.state.replace('_',' ').title()"/></td>
+                                <td t-esc="lab.result or '—'"/>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </t>
+            <t t-else="">
+                <div class="mc-empty-state">
+                    <span>🧪</span><p>No lab results available.</p>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════
+         Profile Page — READ-ONLY
+         Patients cannot modify their records. Contact clinic staff for updates.
+    ════════════════════════════════════════════════════════════════════════ -->
+    <template id="portal_profile" name="Patient Portal: Profile">
+        <t t-call="clinic_management.portal_layout">
+            <div class="mc-page-header">
+                <h1 class="mc-page-title">My Profile</h1>
+            </div>
+
+            <div class="mc-alert mc-alert--info">
+                ℹ️ Your profile is managed by clinic staff. To update your information, please contact the clinic directly.
+            </div>
+
+            <div class="mc-form mc-form--readonly">
+                <div class="mc-form-grid">
+                    <div class="mc-form-group mc-form-group--readonly">
+                        <label>Full Name</label>
+                        <p t-esc="patient.name"/>
+                    </div>
+                    <div class="mc-form-group mc-form-group--readonly">
+                        <label>Patient ID</label>
+                        <p t-esc="patient.patient_id"/>
+                    </div>
+                    <div class="mc-form-group mc-form-group--readonly">
+                        <label>Date of Birth</label>
+                        <p t-esc="patient.date_of_birth"/>
+                    </div>
+                    <div class="mc-form-group mc-form-group--readonly">
+                        <label>Blood Group</label>
+                        <p t-esc="patient.blood_group or '—'"/>
+                    </div>
+                    <div class="mc-form-group mc-form-group--readonly">
+                        <label>Phone</label>
+                        <p t-esc="patient.phone or '—'"/>
+                    </div>
+                    <div class="mc-form-group mc-form-group--readonly">
+                        <label>Mobile / WhatsApp</label>
+                        <p t-esc="patient.mobile or '—'"/>
+                    </div>
+                    <div class="mc-form-group mc-form-group--readonly">
+                        <label>Emergency Contact</label>
+                        <p t-esc="patient.emergency_contact_name or '—'"/>
+                    </div>
+                    <div class="mc-form-group mc-form-group--readonly">
+                        <label>Emergency Phone</label>
+                        <p t-esc="patient.emergency_contact_phone or '—'"/>
+                    </div>
+                </div>
+
+                <!-- Medical info (read-only) -->
+                <div class="mc-medical-info">
+                    <h3>Medical Information</h3>
+                    <div class="mc-medical-info__grid">
+                        <div>
+                            <label>Known Allergies</label>
+                            <p t-esc="patient.allergies or '—'"/>
+                        </div>
+                        <div>
+                            <label>Chronic Conditions</label>
+                            <p t-esc="patient.chronic_conditions or '—'"/>
+                        </div>
+                        <div>
+                            <label>Current Medications</label>
+                            <p t-esc="patient.current_medications or '—'"/>
+                        </div>
+                        <div>
+                            <label>Insurance Provider</label>
+                            <p t-esc="patient.insurance_provider or '—'"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>

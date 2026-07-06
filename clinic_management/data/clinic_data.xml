@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- ─── Departments ───────────────────────────────────────────────────── -->
+        <record id="dept_general" model="clinic.department">
+            <field name="name">General Practice / OPD</field>
+            <field name="code">GP</field>
+        </record>
+        <record id="dept_pediatrics" model="clinic.department">
+            <field name="name">Pediatrics</field>
+            <field name="code">PED</field>
+        </record>
+        <record id="dept_obs_gynae" model="clinic.department">
+            <field name="name">Obstetrics &amp; Gynaecology</field>
+            <field name="code">OBG</field>
+        </record>
+        <record id="dept_surgery" model="clinic.department">
+            <field name="name">Surgery</field>
+            <field name="code">SUR</field>
+        </record>
+        <record id="dept_internal_medicine" model="clinic.department">
+            <field name="name">Internal Medicine</field>
+            <field name="code">IM</field>
+        </record>
+        <record id="dept_ent" model="clinic.department">
+            <field name="name">ENT</field>
+            <field name="code">ENT</field>
+        </record>
+        <record id="dept_dental" model="clinic.department">
+            <field name="name">Dental</field>
+            <field name="code">DEN</field>
+        </record>
+        <record id="dept_ophthalmology" model="clinic.department">
+            <field name="name">Ophthalmology</field>
+            <field name="code">OPH</field>
+        </record>
+        <record id="dept_cardiology" model="clinic.department">
+            <field name="name">Cardiology</field>
+            <field name="code">CAR</field>
+        </record>
+        <record id="dept_laboratory" model="clinic.department">
+            <field name="name">Laboratory</field>
+            <field name="code">LAB</field>
+        </record>
+        <record id="dept_radiology" model="clinic.department">
+            <field name="name">Radiology / Imaging</field>
+            <field name="code">RAD</field>
+        </record>
+        <record id="dept_pharmacy" model="clinic.department">
+            <field name="name">Pharmacy</field>
+            <field name="code">PHM</field>
+        </record>
+
+        <!-- ─── Lab Test Catalog ─────────────────────────────────────────────── -->
+        <record id="lab_fbc" model="clinic.lab.test.catalog">
+            <field name="name">Full Blood Count (FBC)</field>
+            <field name="code">FBC</field>
+            <field name="category">hematology</field>
+            <field name="turnaround_time">2-4 hours</field>
+        </record>
+        <record id="lab_rbs" model="clinic.lab.test.catalog">
+            <field name="name">Random Blood Sugar</field>
+            <field name="code">RBS</field>
+            <field name="category">biochemistry</field>
+            <field name="unit">mg/dL</field>
+            <field name="reference_range">70–140 mg/dL</field>
+            <field name="turnaround_time">30 minutes</field>
+        </record>
+        <record id="lab_fbs" model="clinic.lab.test.catalog">
+            <field name="name">Fasting Blood Sugar</field>
+            <field name="code">FBS</field>
+            <field name="category">biochemistry</field>
+            <field name="unit">mg/dL</field>
+            <field name="reference_range">70–100 mg/dL</field>
+            <field name="turnaround_time">1–2 hours</field>
+        </record>
+        <record id="lab_lft" model="clinic.lab.test.catalog">
+            <field name="name">Liver Function Test (LFT)</field>
+            <field name="code">LFT</field>
+            <field name="category">biochemistry</field>
+            <field name="turnaround_time">4–6 hours</field>
+        </record>
+        <record id="lab_urea_creatinine" model="clinic.lab.test.catalog">
+            <field name="name">Urea &amp; Creatinine (KFT)</field>
+            <field name="code">KFT</field>
+            <field name="category">biochemistry</field>
+            <field name="turnaround_time">4–6 hours</field>
+        </record>
+        <record id="lab_lipid" model="clinic.lab.test.catalog">
+            <field name="name">Lipid Profile</field>
+            <field name="code">LIPID</field>
+            <field name="category">biochemistry</field>
+            <field name="turnaround_time">4–6 hours</field>
+        </record>
+        <record id="lab_urinalysis" model="clinic.lab.test.catalog">
+            <field name="name">Urinalysis (U/A)</field>
+            <field name="code">UA</field>
+            <field name="category">urinalysis</field>
+            <field name="turnaround_time">1 hour</field>
+        </record>
+        <record id="lab_malaria" model="clinic.lab.test.catalog">
+            <field name="name">Malaria Parasite (MP)</field>
+            <field name="code">MP</field>
+            <field name="category">microbiology</field>
+            <field name="turnaround_time">2 hours</field>
+        </record>
+        <record id="lab_hiv" model="clinic.lab.test.catalog">
+            <field name="name">HIV Rapid Test</field>
+            <field name="code">HIV</field>
+            <field name="category">immunology</field>
+            <field name="turnaround_time">30 minutes</field>
+        </record>
+        <record id="lab_thyroid" model="clinic.lab.test.catalog">
+            <field name="name">Thyroid Function (TFT)</field>
+            <field name="code">TFT</field>
+            <field name="category">biochemistry</field>
+            <field name="turnaround_time">6–24 hours</field>
+        </record>
+        <record id="lab_hba1c" model="clinic.lab.test.catalog">
+            <field name="name">HbA1c (Glycated Haemoglobin)</field>
+            <field name="code">HBA1C</field>
+            <field name="category">biochemistry</field>
+            <field name="unit">%</field>
+            <field name="reference_range">&lt; 5.7%</field>
+            <field name="turnaround_time">4 hours</field>
+        </record>
+        <record id="lab_pregnancy" model="clinic.lab.test.catalog">
+            <field name="name">Pregnancy Test (βhCG)</field>
+            <field name="code">BHCG</field>
+            <field name="category">immunology</field>
+            <field name="turnaround_time">30 minutes</field>
+        </record>
+    </data>
+</odoo>
