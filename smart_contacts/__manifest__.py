@@ -34,6 +34,4 @@ Sales, Purchase, Invoices, Bills, and Payments.
     'application': True,
     'auto_install': False,
     'license': 'LGPL-3',
-    'price': 9.99,
-    'currency': 'USD',
 }
