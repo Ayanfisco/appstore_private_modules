@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_vehicle_loan_amortization_wizard_form" model="ir.ui.view">
+        <field name="name">vehicle.loan.amortization.wizard.form</field>
+        <field name="model">vehicle.loan.amortization.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Loan Amortization Schedule">
+                <sheet>
+                    <field name="sale_id" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <group>
+                        <group string="Loan Summary">
+                            <field name="loan_amount" widget="monetary"/>
+                            <field name="interest_rate" widget="percentage"/>
+                            <field name="loan_term"/>
+                            <field name="monthly_payment" widget="monetary"/>
+                        </group>
+                        <group string="Totals">
+                            <field name="total_interest" widget="monetary"/>
+                            <field name="total_payable" widget="monetary"/>
+                        </group>
+                    </group>
+                    <field name="line_ids">
+                        <list create="0" delete="0" edit="0">
+                            <field name="sequence" string="Month"/>
+                            <field name="payment" widget="monetary"/>
+                            <field name="principal" widget="monetary"/>
+                            <field name="interest" widget="monetary"/>
+                            <field name="balance" widget="monetary"/>
+                            <field name="currency_id" column_invisible="1"/>
+                        </list>
+                    </field>
+                </sheet>
+                <footer>
+                    <button string="Close" special="cancel" class="btn-primary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_vehicle_registration_expiry" model="ir.cron">
+            <field name="name">Vehicle Dealership: Registration Expiry Reminder</field>
+            <field name="model_id" ref="model_vehicle_vehicle"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_registration_expiry_reminder()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">True</field>
+        </record>
+
+        <record id="ir_cron_vehicle_warranty_expiry" model="ir.cron">
+            <field name="name">Vehicle Dealership: Warranty Expiry Reminder</field>
+            <field name="model_id" ref="model_vehicle_sale"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_warranty_expiry_reminder()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

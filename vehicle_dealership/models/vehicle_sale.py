@@ -1,5 +1,7 @@
+from dateutil.relativedelta import relativedelta
+
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 
 
 class VehicleSale(models.Model):
@@ -48,6 +50,18 @@ class VehicleSale(models.Model):
     interest_rate = fields.Float(string='Interest Rate (%)', tracking=True)
     monthly_payment = fields.Monetary(string='Monthly Payment',
                                       compute='_compute_monthly_payment', store=True)
+    total_payable = fields.Monetary(string='Total Payable (Loan)',
+                                    compute='_compute_loan_totals', store=True)
+    total_interest = fields.Monetary(string='Total Interest',
+                                     compute='_compute_loan_totals', store=True)
+
+    # Warranty
+    warranty_months = fields.Integer(string='Warranty (Months)', default=12, tracking=True)
+    warranty_expiry_date = fields.Date(string='Warranty Expiry Date',
+                                       compute='_compute_warranty_expiry_date',
+                                       store=True, tracking=True)
+    warranty_reminder_sent = fields.Boolean(string='Warranty Reminder Sent',
+                                            default=False, copy=False)
 
     # Trade-in
     has_trade_in = fields.Boolean(string='Has Trade-in', tracking=True)
@@ -119,6 +133,89 @@ class VehicleSale(models.Model):
     def _compute_commission(self):
         for record in self:
             record.commission_amount = record.final_price * (record.commission_rate / 100)
+
+    @api.depends('monthly_payment', 'loan_term', 'loan_amount')
+    def _compute_loan_totals(self):
+        for record in self:
+            if record.monthly_payment and record.loan_term:
+                record.total_payable = record.monthly_payment * record.loan_term
+                record.total_interest = record.total_payable - record.loan_amount
+            else:
+                record.total_payable = 0
+                record.total_interest = 0
+
+    @api.depends('delivery_date', 'sale_date', 'warranty_months')
+    def _compute_warranty_expiry_date(self):
+        for record in self:
+            start_date = record.delivery_date or record.sale_date
+            if start_date and record.warranty_months:
+                record.warranty_expiry_date = start_date + relativedelta(months=record.warranty_months)
+            else:
+                record.warranty_expiry_date = False
+
+    @api.onchange('payment_method', 'final_price', 'down_payment')
+    def _onchange_finance_loan_amount(self):
+        if self.payment_method == 'finance' and self.final_price:
+            self.loan_amount = self.final_price - (self.down_payment or 0)
+
+    @api.constrains('payment_method', 'loan_amount', 'loan_term', 'down_payment', 'final_price')
+    def _check_finance_details(self):
+        for record in self:
+            if record.payment_method == 'finance':
+                if record.down_payment and record.final_price and record.down_payment > record.final_price:
+                    raise ValidationError(_('Down payment cannot exceed the final price.'))
+                if record.loan_amount and record.loan_amount < 0:
+                    raise ValidationError(_('Loan amount cannot be negative.'))
+                if record.loan_term and record.loan_term < 0:
+                    raise ValidationError(_('Loan term cannot be negative.'))
+
+    def write(self, vals):
+        if 'delivery_date' in vals or 'warranty_months' in vals or 'sale_date' in vals:
+            vals.setdefault('warranty_reminder_sent', False)
+        return super().write(vals)
+
+    def action_view_amortization_schedule(self):
+        self.ensure_one()
+        if not (self.loan_amount and self.loan_term):
+            raise UserError(_('Please set the loan amount and loan term first.'))
+        return {
+            'name': _('Loan Amortization Schedule'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'vehicle.loan.amortization.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_sale_id': self.id},
+        }
+
+    @api.model
+    def _cron_warranty_expiry_reminder(self, days_ahead=30):
+        """Scheduled daily: flag delivered sales whose warranty is about to expire."""
+        today = fields.Date.today()
+        horizon = today + relativedelta(days=days_ahead)
+        sales = self.search([
+            ('state', '=', 'delivered'),
+            ('warranty_expiry_date', '>=', today),
+            ('warranty_expiry_date', '<=', horizon),
+            ('warranty_reminder_sent', '=', False),
+        ])
+        template = self.env.ref(
+            'vehicle_dealership.email_template_warranty_expiry', raise_if_not_found=False)
+        for sale in sales:
+            if sale.salesperson_id:
+                sale.activity_schedule(
+                    'mail.mail_activity_data_todo',
+                    summary=_('Warranty expiring soon: %s') % sale.vehicle_id.name,
+                    note=_('Warranty for %(vehicle)s (Customer: %(customer)s) expires on %(date)s.') % {
+                        'vehicle': sale.vehicle_id.name,
+                        'customer': sale.customer_id.name,
+                        'date': sale.warranty_expiry_date,
+                    },
+                    user_id=sale.salesperson_id.id,
+                    date_deadline=sale.warranty_expiry_date,
+                )
+            if template and sale.customer_id.email:
+                template.send_mail(sale.id, force_send=False)
+            sale.warranty_reminder_sent = True
 
     def action_confirm(self):
         self.write({'state': 'confirmed'})

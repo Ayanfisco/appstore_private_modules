@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_vehicle_history_list" model="ir.ui.view">
+        <field name="name">vehicle.history.list</field>
+        <field name="model">vehicle.history</field>
+        <field name="arch" type="xml">
+            <list string="Vehicle History" create="0" edit="0" delete="0" default_order="event_date desc">
+                <field name="event_date"/>
+                <field name="vehicle_id"/>
+                <field name="event_type" widget="badge"
+                       decoration-info="event_type == 'purchase'"
+                       decoration-success="event_type == 'sale'"
+                       decoration-warning="event_type == 'service'"
+                       decoration-muted="event_type == 'inspection'"/>
+                <field name="title"/>
+                <field name="description"/>
+                <field name="amount" widget="monetary"/>
+                <field name="state"/>
+                <field name="currency_id" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Timeline-style kanban: one card per event, newest first, color-coded by type -->
+    <record id="view_vehicle_history_kanban" model="ir.ui.view">
+        <field name="name">vehicle.history.kanban</field>
+        <field name="model">vehicle.history</field>
+        <field name="arch" type="xml">
+            <kanban create="0" class="o_kanban_mobile">
+                <field name="event_date"/>
+                <field name="event_type"/>
+                <field name="title"/>
+                <field name="description"/>
+                <field name="amount"/>
+                <field name="state"/>
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_global_click ps-2 border-start border-4
+                            #{record.event_type.raw_value == 'purchase' and 'border-info' or
+                              record.event_type.raw_value == 'sale' and 'border-success' or
+                              record.event_type.raw_value == 'service' and 'border-warning' or
+                              'border-secondary'}">
+                            <div class="d-flex justify-content-between">
+                                <strong><field name="title"/></strong>
+                                <field name="event_date"/>
+                            </div>
+                            <div class="text-muted">
+                                <field name="description"/>
+                            </div>
+                            <div>
+                                <field name="amount" widget="monetary"/>
+                                <span class="ms-2">
+                                    <field name="state"/>
+                                </span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_vehicle_history_search" model="ir.ui.view">
+        <field name="name">vehicle.history.search</field>
+        <field name="model">vehicle.history</field>
+        <field name="arch" type="xml">
+            <search string="Search Vehicle History">
+                <field name="vehicle_id"/>
+                <field name="description"/>
+                <filter string="Acquisition" name="type_purchase" domain="[('event_type', '=', 'purchase')]"/>
+                <filter string="Sale" name="type_sale" domain="[('event_type', '=', 'sale')]"/>
+                <filter string="Service" name="type_service" domain="[('event_type', '=', 'service')]"/>
+                <filter string="Inspection" name="type_inspection" domain="[('event_type', '=', 'inspection')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Vehicle" name="group_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                    <filter string="Event Type" name="group_type" context="{'group_by': 'event_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_vehicle_history" model="ir.actions.act_window">
+        <field name="name">Vehicle History</field>
+        <field name="res_model">vehicle.history</field>
+        <field name="view_mode">kanban,list</field>
+    </record>
+</odoo>

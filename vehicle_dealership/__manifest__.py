@@ -1,6 +1,6 @@
 {
     'name': 'Vehicle Dealership Management',
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.1.0',
     'category': 'Sales/Sales',
     'summary': 'Complete standalone vehicle dealership management - no additional modules required',
     'description': """
@@ -36,6 +36,8 @@
         'data/sequence.xml',
         'data/email_templates.xml',
         'views/actions.xml',
+        'views/vehicle_lot_views.xml',
+        'views/vehicle_history_views.xml',
         'views/menu_views.xml',
         'views/vehicle_brand_views.xml',
         'views/vehicle_model_views.xml',
@@ -48,6 +50,8 @@
         'report/vehicle_sale_report.xml',
         'report/vehicle_inspection_report.xml',
         'wizards/vehicle_mass_update_wizard.xml',
+        'wizards/vehicle_loan_amortization_wizard.xml',
+        'data/cron.xml',
     ],
     'demo': [],
     'images': ['static/description/banner.png'],

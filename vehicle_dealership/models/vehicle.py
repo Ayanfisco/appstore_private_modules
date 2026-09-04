@@ -1,4 +1,6 @@
-from odoo import models, fields, api
+from dateutil.relativedelta import relativedelta
+
+from odoo import models, fields, api, _
 
 
 class Vehicle(models.Model):
@@ -56,6 +58,14 @@ class Vehicle(models.Model):
                                   domain=[('supplier_rank', '>', 0)], tracking=True)
     location_id = fields.Many2one('stock.location', string='Location',
                                   domain=[('usage', '=', 'internal')])
+    lot_id = fields.Many2one('vehicle.lot', string='Lot/Showroom', tracking=True)
+
+    # Compliance
+    registration_expiry_date = fields.Date(string='Registration Expiry Date', tracking=True)
+    registration_reminder_sent = fields.Boolean(
+        string='Registration Reminder Sent', default=False, copy=False)
+    warranty_expiry_date = fields.Date(
+        related='sale_id.warranty_expiry_date', string='Warranty Expiry', store=True, readonly=True)
 
     # Images and Documents
     image_1920 = fields.Binary(string='Main Image', max_width=1920, max_height=1920)
@@ -77,6 +87,7 @@ class Vehicle(models.Model):
     # Computed fields
     service_count = fields.Integer(compute='_compute_service_count')
     inspection_count = fields.Integer(compute='_compute_inspection_count')
+    history_count = fields.Integer(compute='_compute_history_count')
     days_in_inventory = fields.Integer(
         compute='_compute_days_in_inventory',
         store=True,
@@ -108,6 +119,11 @@ class Vehicle(models.Model):
     def _compute_inspection_count(self):
         for record in self:
             record.inspection_count = len(record.inspection_ids)
+
+    def _compute_history_count(self):
+        for record in self:
+            record.history_count = self.env['vehicle.history'].search_count(
+                [('vehicle_id', '=', record.id)])
 
     @api.depends('arrival_date')
     def _compute_days_in_inventory(self):
@@ -152,6 +168,52 @@ class Vehicle(models.Model):
             'domain': [('vehicle_id', '=', self.id)],
             'context': {'default_vehicle_id': self.id}
         }
+
+    def action_view_history(self):
+        self.ensure_one()
+        return {
+            'name': 'Vehicle History',
+            'type': 'ir.actions.act_window',
+            'res_model': 'vehicle.history',
+            'view_mode': 'kanban,list',
+            'domain': [('vehicle_id', '=', self.id)],
+            'context': {'default_vehicle_id': self.id},
+        }
+
+    def write(self, vals):
+        # A newly-set or changed expiry date means the previous reminder,
+        # if any, no longer applies - let the cron re-evaluate it.
+        if 'registration_expiry_date' in vals:
+            vals.setdefault('registration_reminder_sent', False)
+        return super().write(vals)
+
+    @api.model
+    def _cron_registration_expiry_reminder(self, days_ahead=30):
+        """Scheduled daily: flag vehicles whose registration is about to expire."""
+        today = fields.Date.today()
+        horizon = today + relativedelta(days=days_ahead)
+        vehicles = self.search([
+            ('registration_expiry_date', '>=', today),
+            ('registration_expiry_date', '<=', horizon),
+            ('registration_reminder_sent', '=', False),
+        ])
+        template = self.env.ref(
+            'vehicle_dealership.email_template_registration_expiry', raise_if_not_found=False)
+        for vehicle in vehicles:
+            responsible = vehicle.sale_id.salesperson_id if vehicle.sale_id else False
+            if responsible:
+                vehicle.activity_schedule(
+                    'mail.mail_activity_data_todo',
+                    summary=_('Registration expiring soon: %s') % vehicle.name,
+                    note=_('Registration for %(vehicle)s expires on %(date)s.') % {
+                        'vehicle': vehicle.name, 'date': vehicle.registration_expiry_date},
+                    user_id=responsible.id,
+                    date_deadline=vehicle.registration_expiry_date,
+                )
+            customer = vehicle.sale_id.customer_id if vehicle.sale_id else False
+            if template and customer and customer.email:
+                template.send_mail(vehicle.id, force_send=False)
+            vehicle.registration_reminder_sent = True
 
     _sql_constraints = [
         ('vin_unique', 'unique(vin)', 'VIN Number must be unique!')

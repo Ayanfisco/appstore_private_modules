@@ -28,6 +28,12 @@
               action="action_vehicle_model"
               sequence="30"/>
 
+    <menuitem id="menu_vehicle_history"
+              name="Vehicle History"
+              parent="menu_vehicle_main"
+              action="action_vehicle_history"
+              sequence="40"/>
+
     <!-- Sales Menu -->
     <menuitem id="menu_vehicle_sales"
               name="Sales"
@@ -99,4 +105,10 @@
               parent="menu_vehicle_dealership_root"
               sequence="100"
               groups="group_vehicle_manager"/>
+
+    <menuitem id="menu_vehicle_lots"
+              name="Lots / Showrooms"
+              parent="menu_vehicle_configuration"
+              action="action_vehicle_lot"
+              sequence="10"/>
 </odoo>

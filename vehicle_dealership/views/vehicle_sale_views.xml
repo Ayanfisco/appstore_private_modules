@@ -36,6 +36,10 @@
                     <button name="action_create_invoice" type="object" string="Create Invoice"
                             invisible="state not in ['confirmed', 'delivered'] or invoice_id"
                             class="btn-primary"/>
+                    <button name="action_view_amortization_schedule" type="object"
+                            string="View Amortization Schedule"
+                            invisible="payment_method != 'finance' or not loan_amount or not loan_term"
+                            class="btn-secondary"/>
                     <button name="action_cancel" type="object" string="Cancel"
                             invisible="state not in ['draft', 'confirmed']" class="btn-secondary"/>
                     <field name="state" widget="statusbar"
@@ -77,6 +81,10 @@
                                    invisible="payment_method != 'finance'"/>
                             <field name="monthly_payment" widget="monetary"
                                    invisible="payment_method != 'finance'"/>
+                            <field name="total_interest" widget="monetary"
+                                   invisible="payment_method != 'finance'"/>
+                            <field name="total_payable" widget="monetary"
+                                   invisible="payment_method != 'finance'"/>
                             <field name="finance_company"
                                    invisible="payment_method != 'finance'"/>
                         </group>
@@ -97,6 +105,8 @@
                             <field name="contract_signed" widget="boolean_toggle"/>
                             <field name="registration_transferred" widget="boolean_toggle"/>
                             <field name="invoice_id" readonly="1"/>
+                            <field name="warranty_months"/>
+                            <field name="warranty_expiry_date" readonly="1"/>
                         </group>
                     </group>
                     <group>
