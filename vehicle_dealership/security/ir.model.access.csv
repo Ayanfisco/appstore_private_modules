@@ -17,9 +17,13 @@ access_vehicle_mass_update_wizard_user,vehicle.mass.update.wizard.user,model_veh
 access_vehicle_mass_update_wizard_manager,vehicle.mass.update.wizard.manager,model_vehicle_mass_update_wizard,group_vehicle_manager,1,1,1,1
 access_vehicle_lot_user,vehicle.lot.user,model_vehicle_lot,group_vehicle_user,1,1,1,0
 access_vehicle_lot_manager,vehicle.lot.manager,model_vehicle_lot,group_vehicle_manager,1,1,1,1
+access_vehicle_commission_rule_user,vehicle.commission.rule.user,model_vehicle_commission_rule,group_vehicle_user,1,0,0,0
+access_vehicle_commission_rule_manager,vehicle.commission.rule.manager,model_vehicle_commission_rule,group_vehicle_manager,1,1,1,1
 access_vehicle_history_user,vehicle.history.user,model_vehicle_history,group_vehicle_user,1,0,0,0
 access_vehicle_history_manager,vehicle.history.manager,model_vehicle_history,group_vehicle_manager,1,0,0,0
 access_vehicle_loan_amortization_wizard_user,vehicle.loan.amortization.wizard.user,model_vehicle_loan_amortization_wizard,group_vehicle_user,1,1,1,1
 access_vehicle_loan_amortization_wizard_manager,vehicle.loan.amortization.wizard.manager,model_vehicle_loan_amortization_wizard,group_vehicle_manager,1,1,1,1
 access_vehicle_loan_amortization_line_user,vehicle.loan.amortization.line.user,model_vehicle_loan_amortization_line,group_vehicle_user,1,1,1,1
 access_vehicle_loan_amortization_line_manager,vehicle.loan.amortization.line.manager,model_vehicle_loan_amortization_line,group_vehicle_manager,1,1,1,1
+access_vehicle_sale_portal,vehicle.sale.portal,model_vehicle_sale,base.group_portal,1,0,0,0
+access_vehicle_onboarding_wizard_manager,vehicle.onboarding.wizard.manager,model_vehicle_onboarding_wizard,group_vehicle_manager,1,1,1,1

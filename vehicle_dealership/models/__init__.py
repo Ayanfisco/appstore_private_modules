@@ -1,6 +1,7 @@
 from . import vehicle_brand
 from . import vehicle_model
 from . import vehicle_lot
+from . import vehicle_commission_rule
 from . import vehicle
 from . import vehicle_sale
 from . import vehicle_purchase

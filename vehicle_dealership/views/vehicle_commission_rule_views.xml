@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_vehicle_commission_rule_list" model="ir.ui.view">
+        <field name="name">vehicle.commission.rule.list</field>
+        <field name="model">vehicle.commission.rule</field>
+        <field name="arch" type="xml">
+            <list string="Commission Rules">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="salesperson_id" optional="show"/>
+                <field name="vehicle_condition" optional="show"/>
+                <field name="margin_from"/>
+                <field name="margin_to"/>
+                <field name="commission_rate"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vehicle_commission_rule_form" model="ir.ui.view">
+        <field name="name">vehicle.commission.rule.form</field>
+        <field name="model">vehicle.commission.rule</field>
+        <field name="arch" type="xml">
+            <form string="Commission Rule">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. High Margin - New Vehicles"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Applies To">
+                            <field name="salesperson_id"/>
+                            <field name="vehicle_condition"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Margin Range">
+                            <field name="margin_from"/>
+                            <field name="margin_to"/>
+                            <field name="commission_rate"/>
+                            <field name="sequence"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Optional notes about this rule..."/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_vehicle_commission_rule_search" model="ir.ui.view">
+        <field name="name">vehicle.commission.rule.search</field>
+        <field name="model">vehicle.commission.rule</field>
+        <field name="arch" type="xml">
+            <search string="Search Commission Rules">
+                <field name="name"/>
+                <field name="salesperson_id"/>
+                <filter string="Active" name="active" domain="[('active', '=', True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Salesperson" name="group_salesperson" context="{'group_by': 'salesperson_id'}"/>
+                    <filter string="Vehicle Condition" name="group_condition" context="{'group_by': 'vehicle_condition'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_vehicle_commission_rule" model="ir.actions.act_window">
+        <field name="name">Commission Rules</field>
+        <field name="res_model">vehicle.commission.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first commission rule
+            </p>
+            <p>
+                Set tiered commission rates based on profit margin, vehicle condition, or a specific salesperson.
+                The first matching rule (by sequence) is applied to a sale.
+            </p>
+        </field>
+    </record>
+</odoo>

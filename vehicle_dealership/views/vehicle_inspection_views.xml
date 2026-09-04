@@ -44,27 +44,26 @@
                             <field name="currency_id" invisible="1"/>
                         </group>
                     </group>
-                    <group string="Condition Assessment">
-                        <group>
-                            <field name="exterior_condition"/>
-                            <field name="interior_condition"/>
-                            <field name="engine_condition"/>
-                        </group>
-                        <group>
-                            <field name="transmission_condition"/>
-                            <field name="tire_condition"/>
-                            <field name="brake_condition"/>
-                        </group>
+                    <group string="Condition Assessment" col="1">
+                        <field name="exterior_condition" widget="radio" options="{'horizontal': true}"/>
+                        <field name="interior_condition" widget="radio" options="{'horizontal': true}"/>
+                        <field name="engine_condition" widget="radio" options="{'horizontal': true}"/>
+                        <field name="transmission_condition" widget="radio" options="{'horizontal': true}"/>
+                        <field name="tire_condition" widget="radio" options="{'horizontal': true}"/>
+                        <field name="brake_condition" widget="radio" options="{'horizontal': true}"/>
                     </group>
                     <notebook>
+                        <page string="Photos">
+                            <div class="text-muted mb-2">
+                                Tap "Upload" below to take a photo directly from a phone or tablet camera.
+                            </div>
+                            <field name="photo_ids" mode="kanban"/>
+                        </page>
                         <page string="Issues &amp; Recommendations">
                             <group>
                                 <field name="issues_found" placeholder="List all issues found during inspection..."/>
                                 <field name="recommendations" placeholder="Recommendations for repairs or maintenance..."/>
                             </group>
-                        </page>
-                        <page string="Photos">
-                            <field name="photo_ids" mode="kanban"/>
                         </page>
                         <page string="Report">
                             <group>

@@ -111,4 +111,16 @@
               parent="menu_vehicle_configuration"
               action="action_vehicle_lot"
               sequence="10"/>
+
+    <menuitem id="menu_vehicle_commission_rules"
+              name="Commission Rules"
+              parent="menu_vehicle_configuration"
+              action="action_vehicle_commission_rule"
+              sequence="20"/>
+
+    <menuitem id="menu_vehicle_onboarding_wizard"
+              name="Setup Wizard"
+              parent="menu_vehicle_configuration"
+              action="action_vehicle_onboarding_wizard"
+              sequence="5"/>
 </odoo>

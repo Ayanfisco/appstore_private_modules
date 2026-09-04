@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_vehicle_onboarding_wizard_form" model="ir.ui.view">
+        <field name="name">vehicle.onboarding.wizard.form</field>
+        <field name="model">vehicle.onboarding.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Vehicle Dealership Setup">
+                <field name="state" widget="statusbar" statusbar_visible="lot,brand,commission,done"
+                       readonly="1"/>
+                <sheet>
+                    <group invisible="state != 'lot'">
+                        <h2>Let's set up your first lot or showroom</h2>
+                        <p class="text-muted">
+                            This is where you'll track vehicles physically. You can add more later.
+                        </p>
+                        <field name="lot_name"/>
+                        <field name="lot_city"/>
+                        <field name="lot_capacity"/>
+                    </group>
+
+                    <group invisible="state != 'brand'">
+                        <h2>Add your first vehicle brand and model</h2>
+                        <p class="text-muted">
+                            You'll be able to add as many brands and models as you carry.
+                        </p>
+                        <field name="brand_name"/>
+                        <field name="model_name"/>
+                        <field name="model_body_type"/>
+                    </group>
+
+                    <group invisible="state != 'commission'">
+                        <h2>Set a starting commission rate</h2>
+                        <p class="text-muted">
+                            A simple flat rule to start with. You can add tiered rules by margin,
+                            condition, or salesperson later from Configuration &gt; Commission Rules.
+                        </p>
+                        <field name="create_commission_rule"/>
+                        <field name="commission_rate" invisible="not create_commission_rule"/>
+                    </group>
+
+                    <group invisible="state != 'done'">
+                        <h2>You're all set!</h2>
+                        <p class="text-muted">Here's what was created:</p>
+                        <field name="created_lot_id" readonly="1"/>
+                        <field name="created_brand_id" readonly="1"/>
+                        <field name="created_model_id" readonly="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_back" type="object" string="Back"
+                            invisible="state in ('lot', 'done')"/>
+                    <button name="action_next" type="object" string="Next"
+                            invisible="state == 'done'"
+                            class="btn-primary"/>
+                    <button name="action_go_to_vehicles" type="object" string="Go to Vehicles"
+                            invisible="state != 'done'"
+                            class="btn-primary"/>
+                    <button name="action_finish" type="object" string="Close"
+                            invisible="state != 'done'"
+                            special="cancel"/>
+                    <button string="Cancel" special="cancel"
+                            invisible="state == 'done'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vehicle_onboarding_wizard" model="ir.actions.act_window">
+        <field name="name">Setup Wizard</field>
+        <field name="res_model">vehicle.onboarding.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

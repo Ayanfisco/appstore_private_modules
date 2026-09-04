@@ -8,7 +8,7 @@ class VehicleSale(models.Model):
     _name = 'vehicle.sale'
     _description = 'Vehicle Sale'
     _order = 'id desc'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']
 
     name = fields.Char(string='Sale Reference', required=True, copy=False,
                        readonly=True, default='New', tracking=True)
@@ -80,6 +80,12 @@ class VehicleSale(models.Model):
     commission_rate = fields.Float(string='Commission Rate (%)', default=2.5)
     commission_amount = fields.Monetary(string='Commission',
                                         compute='_compute_commission', store=True)
+    margin_percent = fields.Float(string='Profit Margin (%)',
+                                  compute='_compute_margin_percent', store=True)
+    commission_rule_id = fields.Many2one('vehicle.commission.rule', string='Matched Commission Rule',
+                                         compute='_compute_commission_rule', store=True)
+    suggested_commission_rate = fields.Float(related='commission_rule_id.commission_rate',
+                                             string='Suggested Rate (%)', readonly=True)
 
     # Documents
     contract_signed = fields.Boolean(string='Contract Signed', tracking=True)
@@ -133,6 +139,35 @@ class VehicleSale(models.Model):
     def _compute_commission(self):
         for record in self:
             record.commission_amount = record.final_price * (record.commission_rate / 100)
+
+    @api.depends('final_price', 'vehicle_id.purchase_price')
+    def _compute_margin_percent(self):
+        for record in self:
+            cost = record.vehicle_id.purchase_price if record.vehicle_id else 0.0
+            if record.final_price:
+                record.margin_percent = ((record.final_price - cost) / record.final_price) * 100
+            else:
+                record.margin_percent = 0.0
+
+    @api.depends('margin_percent', 'salesperson_id', 'vehicle_id.condition')
+    def _compute_commission_rule(self):
+        Rule = self.env['vehicle.commission.rule']
+        for record in self:
+            record.commission_rule_id = Rule._find_matching_rule(
+                record.margin_percent,
+                salesperson=record.salesperson_id,
+                condition=record.vehicle_id.condition if record.vehicle_id else False,
+            )
+
+    def action_apply_commission_rule(self):
+        for record in self:
+            if record.commission_rule_id:
+                record.commission_rate = record.commission_rule_id.commission_rate
+
+    def _compute_access_url(self):
+        super()._compute_access_url()
+        for record in self:
+            record.access_url = '/my/vehicles/%s' % record.id
 
     @api.depends('monthly_payment', 'loan_term', 'loan_amount')
     def _compute_loan_totals(self):

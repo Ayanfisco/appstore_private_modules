@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Demo Partners (self-contained: never depend on other modules' demo data) -->
+        <record id="demo_partner_supplier_1" model="res.partner">
+            <field name="name">Global Motors Trading Co.</field>
+            <field name="is_company">True</field>
+            <field name="supplier_rank">1</field>
+            <field name="email">sales@globalmotorstrading.example.com</field>
+            <field name="phone">+1 555 010 2000</field>
+        </record>
+
+        <record id="demo_partner_supplier_2" model="res.partner">
+            <field name="name">Pacific Auto Importers</field>
+            <field name="is_company">True</field>
+            <field name="supplier_rank">1</field>
+            <field name="email">info@pacificautoimporters.example.com</field>
+            <field name="phone">+1 555 010 3000</field>
+        </record>
+
+        <record id="demo_partner_customer_1" model="res.partner">
+            <field name="name">Amara Okafor</field>
+            <field name="email">amara.okafor@example.com</field>
+            <field name="phone">+1 555 010 4000</field>
+        </record>
+
+        <!-- Lots / Showrooms -->
+        <record id="demo_lot_downtown" model="vehicle.lot">
+            <field name="name">Downtown Showroom</field>
+            <field name="code">LOT-DT</field>
+            <field name="city">Lagos</field>
+            <field name="capacity">40</field>
+        </record>
+
+        <record id="demo_lot_north" model="vehicle.lot">
+            <field name="name">North Lot</field>
+            <field name="code">LOT-N</field>
+            <field name="city">Lagos</field>
+            <field name="capacity">25</field>
+        </record>
+
+        <!-- Brands -->
+        <record id="demo_brand_toyota" model="vehicle.brand">
+            <field name="name">Toyota</field>
+            <field name="code">TOY</field>
+        </record>
+
+        <record id="demo_brand_honda" model="vehicle.brand">
+            <field name="name">Honda</field>
+            <field name="code">HON</field>
+        </record>
+
+        <!-- Models -->
+        <record id="demo_model_camry" model="vehicle.model">
+            <field name="name">Camry</field>
+            <field name="brand_id" ref="demo_brand_toyota"/>
+            <field name="body_type">sedan</field>
+            <field name="fuel_type">gasoline</field>
+            <field name="transmission">automatic</field>
+            <field name="engine_capacity">2.5</field>
+            <field name="horsepower">203</field>
+            <field name="seating_capacity">5</field>
+        </record>
+
+        <record id="demo_model_corolla" model="vehicle.model">
+            <field name="name">Corolla</field>
+            <field name="brand_id" ref="demo_brand_toyota"/>
+            <field name="body_type">sedan</field>
+            <field name="fuel_type">gasoline</field>
+            <field name="transmission">automatic</field>
+            <field name="engine_capacity">1.8</field>
+            <field name="horsepower">169</field>
+            <field name="seating_capacity">5</field>
+        </record>
+
+        <record id="demo_model_crv" model="vehicle.model">
+            <field name="name">CR-V</field>
+            <field name="brand_id" ref="demo_brand_honda"/>
+            <field name="body_type">suv</field>
+            <field name="fuel_type">gasoline</field>
+            <field name="transmission">automatic</field>
+            <field name="engine_capacity">1.5</field>
+            <field name="horsepower">190</field>
+            <field name="seating_capacity">5</field>
+        </record>
+
+        <!-- Commission Rules -->
+        <record id="demo_commission_rule_low_margin" model="vehicle.commission.rule">
+            <field name="name">Standard Margin</field>
+            <field name="sequence">10</field>
+            <field name="margin_from">0</field>
+            <field name="margin_to">10</field>
+            <field name="commission_rate">2.0</field>
+        </record>
+
+        <record id="demo_commission_rule_mid_margin" model="vehicle.commission.rule">
+            <field name="name">Good Margin</field>
+            <field name="sequence">20</field>
+            <field name="margin_from">10</field>
+            <field name="margin_to">20</field>
+            <field name="commission_rate">3.5</field>
+        </record>
+
+        <record id="demo_commission_rule_high_margin" model="vehicle.commission.rule">
+            <field name="name">High Margin - Bonus Rate</field>
+            <field name="sequence">30</field>
+            <field name="margin_from">20</field>
+            <field name="margin_to">100</field>
+            <field name="commission_rate">5.0</field>
+        </record>
+
+        <!-- Purchases: two received (become vehicles), one still in transit -->
+        <record id="demo_purchase_1" model="vehicle.purchase">
+            <field name="supplier_id" ref="demo_partner_supplier_1"/>
+            <field name="purchase_date" eval="(DateTime.today() - relativedelta(days=45)).strftime('%Y-%m-%d')"/>
+            <field name="expected_arrival" eval="(DateTime.today() - relativedelta(days=30)).strftime('%Y-%m-%d')"/>
+            <field name="actual_arrival" eval="(DateTime.today() - relativedelta(days=28)).strftime('%Y-%m-%d')"/>
+            <field name="brand_id" ref="demo_brand_toyota"/>
+            <field name="model_id" ref="demo_model_camry"/>
+            <field name="year">2024</field>
+            <field name="vin">4T1BF1FK5CU123456</field>
+            <field name="color">Pearl White</field>
+            <field name="mileage">0</field>
+            <field name="purchase_price">22000</field>
+            <field name="shipping_cost">1200</field>
+            <field name="import_duty">1800</field>
+            <field name="state">received</field>
+        </record>
+
+        <record id="demo_vehicle_1" model="vehicle.vehicle">
+            <field name="brand_id" ref="demo_brand_toyota"/>
+            <field name="model_id" ref="demo_model_camry"/>
+            <field name="year">2024</field>
+            <field name="vin">4T1BF1FK5CU123456</field>
+            <field name="color_exterior">Pearl White</field>
+            <field name="color_interior">Black</field>
+            <field name="mileage">0</field>
+            <field name="condition">new</field>
+            <field name="state">sold</field>
+            <field name="purchase_price">25000</field>
+            <field name="selling_price">28500</field>
+            <field name="purchase_date" eval="(DateTime.today() - relativedelta(days=45)).strftime('%Y-%m-%d')"/>
+            <field name="arrival_date" eval="(DateTime.today() - relativedelta(days=28)).strftime('%Y-%m-%d')"/>
+            <field name="registration_date" eval="(DateTime.today() - relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="registration_expiry_date" eval="(DateTime.today() + relativedelta(days=25)).strftime('%Y-%m-%d')"/>
+            <field name="supplier_id" ref="demo_partner_supplier_1"/>
+            <field name="lot_id" ref="demo_lot_downtown"/>
+            <field name="purchase_id" ref="demo_purchase_1"/>
+        </record>
+
+        <record id="demo_purchase_1" model="vehicle.purchase">
+            <field name="vehicle_id" ref="demo_vehicle_1"/>
+        </record>
+
+        <record id="demo_purchase_2" model="vehicle.purchase">
+            <field name="supplier_id" ref="demo_partner_supplier_2"/>
+            <field name="purchase_date" eval="(DateTime.today() - relativedelta(days=60)).strftime('%Y-%m-%d')"/>
+            <field name="expected_arrival" eval="(DateTime.today() - relativedelta(days=40)).strftime('%Y-%m-%d')"/>
+            <field name="actual_arrival" eval="(DateTime.today() - relativedelta(days=38)).strftime('%Y-%m-%d')"/>
+            <field name="brand_id" ref="demo_brand_honda"/>
+            <field name="model_id" ref="demo_model_crv"/>
+            <field name="year">2022</field>
+            <field name="vin">7FARW2H85NE654321</field>
+            <field name="color">Modern Steel</field>
+            <field name="mileage">28000</field>
+            <field name="purchase_price">17500</field>
+            <field name="shipping_cost">900</field>
+            <field name="import_duty">1400</field>
+            <field name="state">received</field>
+        </record>
+
+        <record id="demo_vehicle_2" model="vehicle.vehicle">
+            <field name="brand_id" ref="demo_brand_honda"/>
+            <field name="model_id" ref="demo_model_crv"/>
+            <field name="year">2022</field>
+            <field name="vin">7FARW2H85NE654321</field>
+            <field name="color_exterior">Modern Steel</field>
+            <field name="color_interior">Gray</field>
+            <field name="mileage">28000</field>
+            <field name="condition">used</field>
+            <field name="state">available</field>
+            <field name="purchase_price">19800</field>
+            <field name="selling_price">23500</field>
+            <field name="purchase_date" eval="(DateTime.today() - relativedelta(days=60)).strftime('%Y-%m-%d')"/>
+            <field name="arrival_date" eval="(DateTime.today() - relativedelta(days=38)).strftime('%Y-%m-%d')"/>
+            <field name="registration_date" eval="(DateTime.today() - relativedelta(days=35)).strftime('%Y-%m-%d')"/>
+            <field name="registration_expiry_date" eval="(DateTime.today() + relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="supplier_id" ref="demo_partner_supplier_2"/>
+            <field name="lot_id" ref="demo_lot_north"/>
+            <field name="purchase_id" ref="demo_purchase_2"/>
+        </record>
+
+        <record id="demo_purchase_2" model="vehicle.purchase">
+            <field name="vehicle_id" ref="demo_vehicle_2"/>
+        </record>
+
+        <record id="demo_vehicle_3" model="vehicle.vehicle">
+            <field name="brand_id" ref="demo_brand_toyota"/>
+            <field name="model_id" ref="demo_model_corolla"/>
+            <field name="year">2025</field>
+            <field name="vin">2T1BURHE0FC112233</field>
+            <field name="color_exterior">Midnight Black</field>
+            <field name="color_interior">Beige</field>
+            <field name="mileage">0</field>
+            <field name="condition">new</field>
+            <field name="state">available</field>
+            <field name="purchase_price">18500</field>
+            <field name="selling_price">21900</field>
+            <field name="purchase_date" eval="(DateTime.today() - relativedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="arrival_date" eval="(DateTime.today() - relativedelta(days=10)).strftime('%Y-%m-%d')"/>
+            <field name="lot_id" ref="demo_lot_downtown"/>
+        </record>
+
+        <record id="demo_purchase_3" model="vehicle.purchase">
+            <field name="supplier_id" ref="demo_partner_supplier_1"/>
+            <field name="purchase_date" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="expected_arrival" eval="(DateTime.today() + relativedelta(days=10)).strftime('%Y-%m-%d')"/>
+            <field name="brand_id" ref="demo_brand_honda"/>
+            <field name="model_id" ref="demo_model_crv"/>
+            <field name="year">2025</field>
+            <field name="vin">7FARW2H85RE998877</field>
+            <field name="color">Sonic Gray</field>
+            <field name="mileage">0</field>
+            <field name="purchase_price">21000</field>
+            <field name="shipping_cost">1300</field>
+            <field name="import_duty">2100</field>
+            <field name="state">in_transit</field>
+        </record>
+
+        <!-- Sale: vehicle 1, delivered -->
+        <record id="demo_sale_1" model="vehicle.sale">
+            <field name="vehicle_id" ref="demo_vehicle_1"/>
+            <field name="customer_id" ref="demo_partner_customer_1"/>
+            <field name="salesperson_id" ref="base.user_admin"/>
+            <field name="sale_date" eval="(DateTime.today() - relativedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="delivery_date" eval="(DateTime.today() - relativedelta(days=18)).strftime('%Y-%m-%d')"/>
+            <field name="list_price">28500</field>
+            <field name="payment_method">finance</field>
+            <field name="down_payment">5000</field>
+            <field name="loan_amount">23500</field>
+            <field name="loan_term">48</field>
+            <field name="interest_rate">6.5</field>
+            <field name="warranty_months">24</field>
+            <field name="state">delivered</field>
+            <field name="contract_signed">1</field>
+            <field name="registration_transferred">1</field>
+        </record>
+
+        <record id="demo_vehicle_1" model="vehicle.vehicle">
+            <field name="state">sold</field>
+        </record>
+
+        <!-- Service on vehicle 1 -->
+        <record id="demo_service_1" model="vehicle.service">
+            <field name="vehicle_id" ref="demo_vehicle_1"/>
+            <field name="service_date" eval="(DateTime.today() - relativedelta(days=3)).strftime('%Y-%m-%d')"/>
+            <field name="service_type">routine</field>
+            <field name="technician_id" ref="base.user_admin"/>
+            <field name="workshop">Tech Joe Service Bay 1</field>
+            <field name="current_mileage">1200</field>
+            <field name="description">First scheduled maintenance: oil change, filter replacement, multi-point inspection.</field>
+            <field name="labor_cost">45</field>
+            <field name="parts_cost">60</field>
+            <field name="state">completed</field>
+            <field name="warranty_covered">True</field>
+        </record>
+
+        <!-- Inspection on vehicle 2 (pre-sale, since it's used) -->
+        <record id="demo_inspection_1" model="vehicle.inspection">
+            <field name="vehicle_id" ref="demo_vehicle_2"/>
+            <field name="inspection_date" eval="(DateTime.today() - relativedelta(days=36)).strftime('%Y-%m-%d')"/>
+            <field name="inspector_id" ref="base.user_admin"/>
+            <field name="inspection_type">pre_sale</field>
+            <field name="exterior_condition">good</field>
+            <field name="interior_condition">excellent</field>
+            <field name="engine_condition">good</field>
+            <field name="transmission_condition">excellent</field>
+            <field name="tire_condition">fair</field>
+            <field name="brake_condition">good</field>
+            <field name="overall_rating">8</field>
+            <field name="passed">True</field>
+            <field name="recommendations">Tires should be replaced within the next 5,000 km.</field>
+        </record>
+
+    </data>
+</odoo>

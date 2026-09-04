@@ -100,6 +100,14 @@
                         <group string="Commission">
                             <field name="commission_rate"/>
                             <field name="commission_amount" widget="monetary"/>
+                            <field name="margin_percent" readonly="1"/>
+                            <field name="commission_rule_id" readonly="1"/>
+                            <field name="suggested_commission_rate" readonly="1"
+                                   invisible="not commission_rule_id"/>
+                            <button name="action_apply_commission_rule" type="object"
+                                    string="Apply Suggested Rate"
+                                    invisible="not commission_rule_id"
+                                    class="btn-link" icon="fa-magic"/>
                         </group>
                         <group string="Documents">
                             <field name="contract_signed" widget="boolean_toggle"/>
