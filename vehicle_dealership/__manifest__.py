@@ -55,6 +55,7 @@
     ],
     'demo': [],
     'images': ['static/description/banner.png'],
+    'live_test_url': 'https://youtu.be/_GYUFtzjQf4',
     'installable': True,
     'application': True,
     'auto_install': False,
