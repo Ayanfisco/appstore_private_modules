@@ -4,7 +4,7 @@
     'category': 'Sales/Sales',
     'summary': 'Complete standalone vehicle dealership management - no additional modules required',
     'description': """
-        Vehicle Dealership Management
+        Vehicle Dealership Management.
         ===============================
         Complete solution for managing vehicle dealerships including:
 
