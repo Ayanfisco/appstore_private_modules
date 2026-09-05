@@ -90,6 +90,17 @@ class HotelReservation(models.Model):
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
     user_id = fields.Many2one('res.users', string='Responsible', default=lambda self: self.env.user, tracking=True)
 
+    # Post-stay guest feedback
+    feedback_rating = fields.Selection([
+        ('1', '1 - Poor'),
+        ('2', '2 - Fair'),
+        ('3', '3 - Good'),
+        ('4', '4 - Very Good'),
+        ('5', '5 - Excellent'),
+    ], string='Guest Feedback Rating', copy=False)
+    feedback_comment = fields.Text(string='Guest Feedback Comment', copy=False)
+    feedback_submitted = fields.Boolean(string='Feedback Submitted', default=False, copy=False)
+
     _sql_constraints = [
         ('check_dates', 'CHECK(check_out > check_in)', 'Check-out date must be after check-in date!'),
         ('check_guests', 'CHECK(adults > 0)', 'Number of adults must be at least 1!'),
@@ -109,14 +120,39 @@ class HotelReservation(models.Model):
         for rec in self:
             rec.total_guests = rec.adults + rec.children
 
-    @api.depends('room_rate', 'nights', 'service_line_ids.price_subtotal')
+    @api.depends('room_rate', 'nights', 'room_type_id.tax_ids', 'room_type_id.product_id.taxes_id',
+                 'service_line_ids.price_subtotal', 'service_line_ids.quantity', 'service_line_ids.price_unit',
+                 'service_line_ids.service_id.tax_ids', 'service_line_ids.service_id.product_id.taxes_id',
+                 'currency_id')
     def _compute_amounts(self):
         for rec in self:
             rec.subtotal = rec.room_rate * rec.nights
             rec.service_total = sum(rec.service_line_ids.mapped('price_subtotal'))
-            total_before_tax = rec.subtotal + rec.service_total
-            rec.tax_amount = total_before_tax * 0.10  # 10% tax
-            rec.total_amount = total_before_tax + rec.tax_amount
+
+            currency = rec.currency_id or rec.company_id.currency_id
+            tax_total = 0.0
+
+            # Room charge tax: room type's own taxes, falling back to its linked product's taxes
+            room_taxes = rec.room_type_id.tax_ids or (
+                rec.room_type_id.product_id.taxes_id if rec.room_type_id.product_id else self.env['account.tax'])
+            if room_taxes and rec.nights:
+                res = room_taxes.compute_all(
+                    rec.room_rate, currency=currency, quantity=rec.nights,
+                    product=rec.room_type_id.product_id)
+                tax_total += res['total_included'] - res['total_excluded']
+
+            # Service charge tax, computed per line since services can have different taxes
+            for sl in rec.service_line_ids:
+                svc = sl.service_id
+                svc_taxes = svc.tax_ids or (
+                    svc.product_id.taxes_id if svc.product_id else self.env['account.tax'])
+                if svc_taxes and sl.quantity:
+                    res = svc_taxes.compute_all(
+                        sl.price_unit, currency=currency, quantity=sl.quantity, product=svc.product_id)
+                    tax_total += res['total_included'] - res['total_excluded']
+
+            rec.tax_amount = tax_total
+            rec.total_amount = rec.subtotal + rec.service_total + tax_total
 
     @api.depends('invoice_id', 'invoice_id.payment_state')
     def _compute_invoice_status(self):
@@ -131,13 +167,27 @@ class HotelReservation(models.Model):
     @api.onchange('room_type_id')
     def _onchange_room_type_id(self):
         if self.room_type_id:
-            self.room_rate = self.room_type_id.list_price
             self.room_id = False
+            self._update_room_rate()
 
     @api.onchange('property_id')
     def _onchange_property_id(self):
         self.room_type_id = False
         self.room_id = False
+
+    @api.onchange('check_in', 'check_out')
+    def _onchange_dates_pricing(self):
+        self._update_room_rate()
+
+    def _update_room_rate(self):
+        """Set room_rate to the blended average nightly rate for the current
+        stay, applying any seasonal rates that cover part of it. Kept as a
+        single editable Float field so staff can still override it manually."""
+        if self.room_type_id and self.check_in and self.check_out and self.check_out > self.check_in:
+            _total, avg_rate = self.room_type_id.get_total_price(self.check_in, self.check_out)
+            self.room_rate = avg_rate
+        elif self.room_type_id:
+            self.room_rate = self.room_type_id.list_price
 
     @api.model
     def create(self, vals):
@@ -161,6 +211,9 @@ class HotelReservation(models.Model):
                     raise ValidationError(_('Room %s is not available for the selected dates!') % rec.room_id.name)
 
     def action_confirm(self):
+        template = self.env.ref(
+            'complete_hotel_management_system.email_template_reservation_confirmation',
+            raise_if_not_found=False)
         for rec in self:
             if not rec.room_id:
                 available_room = self.env['hotel.room'].search([
@@ -175,6 +228,11 @@ class HotelReservation(models.Model):
             rec.room_id.write({'state': 'reserved'})
             rec.write({'state': 'confirmed'})
             rec.message_post(body=_('Reservation confirmed for room %s') % rec.room_id.name)
+
+            # Automatically queue the confirmation email (queued, not force-sent,
+            # so a missing/unconfigured outgoing mail server never blocks confirmation).
+            if template and rec.guest_email:
+                template.send_mail(rec.id, force_send=False)
 
     def action_check_in(self):
         self.ensure_one()
@@ -311,6 +369,17 @@ class HotelReservation(models.Model):
 
     def action_done(self):
         self.write({'state': 'done'})
+
+    def action_send_feedback_email(self):
+        """Queue the post-stay feedback request email. Called automatically
+        from the check-out wizard; safe to call manually too."""
+        template = self.env.ref(
+            'complete_hotel_management_system.email_template_guest_feedback',
+            raise_if_not_found=False)
+        for rec in self:
+            if template and rec.guest_email:
+                rec._portal_ensure_token()
+                template.send_mail(rec.id, force_send=False)
 
     def _compute_access_url(self):
         super()._compute_access_url()

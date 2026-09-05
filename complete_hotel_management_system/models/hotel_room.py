@@ -1,5 +1,6 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
+from datetime import timedelta
 
 
 class HotelRoomType(models.Model):
@@ -40,6 +41,7 @@ class HotelRoomType(models.Model):
     # Relations
     room_ids = fields.One2many('hotel.room', 'room_type_id', string='Rooms')
     room_count = fields.Integer(string='Number of Rooms', compute='_compute_room_count', store=True)
+    season_price_ids = fields.One2many('hotel.room.type.season', 'room_type_id', string='Seasonal Rates')
 
     active = fields.Boolean(string='Active', default=True)
 
@@ -52,6 +54,61 @@ class HotelRoomType(models.Model):
     def _compute_room_count(self):
         for rec in self:
             rec.room_count = len(rec.room_ids)
+
+    def get_price_for_date(self, date):
+        """Return the nightly rate for a single date, applying a matching seasonal
+        rate if one is configured, otherwise falling back to the base list price."""
+        self.ensure_one()
+        season = self.season_price_ids.filtered(
+            lambda s: s.date_from <= date <= s.date_to)
+        return season[0].price if season else self.list_price
+
+    def get_total_price(self, check_in, check_out):
+        """Return (total_price, avg_nightly_rate) for a stay, pricing each night
+        individually so seasonal rates that only cover part of the stay are
+        respected. Falls back to the flat list price when there are no seasonal
+        rates or the dates are invalid."""
+        self.ensure_one()
+        if not check_in or not check_out or check_out <= check_in:
+            return 0.0, self.list_price
+        nights = (check_out - check_in).days
+        total = 0.0
+        current = check_in
+        for _i in range(nights):
+            total += self.get_price_for_date(current)
+            current += timedelta(days=1)
+        avg_rate = total / nights if nights else self.list_price
+        return total, avg_rate
+
+
+class HotelRoomTypeSeason(models.Model):
+    _name = 'hotel.room.type.season'
+    _description = 'Hotel Room Type Seasonal Rate'
+    _order = 'date_from'
+
+    room_type_id = fields.Many2one('hotel.room.type', string='Room Type', required=True, ondelete='cascade')
+    name = fields.Char(string='Season Name', required=True)
+    date_from = fields.Date(string='From', required=True)
+    date_to = fields.Date(string='To', required=True)
+    price = fields.Float(string='Price per Night', required=True)
+
+    _sql_constraints = [
+        ('check_season_dates', 'CHECK(date_to >= date_from)', 'End date must be on or after the start date!'),
+    ]
+
+    @api.constrains('date_from', 'date_to', 'room_type_id')
+    def _check_overlap(self):
+        for rec in self:
+            overlapping = self.search([
+                ('room_type_id', '=', rec.room_type_id.id),
+                ('id', '!=', rec.id),
+                ('date_from', '<=', rec.date_to),
+                ('date_to', '>=', rec.date_from),
+            ])
+            if overlapping:
+                raise ValidationError(
+                    _('Seasonal rate periods cannot overlap for the same room type! '
+                      '"%s" overlaps with "%s".') % (rec.name, overlapping[0].name))
 
 
 class HotelRoom(models.Model):

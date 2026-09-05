@@ -33,5 +33,32 @@
                 </div>
             </field>
         </record>
+
+        <!-- Post-stay Feedback Request Email -->
+        <record id="email_template_guest_feedback" model="mail.template">
+            <field name="name">Hotel: Guest Feedback Request</field>
+            <field name="model_id" ref="model_hotel_reservation"/>
+            <field name="subject">How was your stay at {{ object.property_id.name }}?</field>
+            <field name="email_from">{{ (object.company_id.email or user.email) }}</field>
+            <field name="email_to">{{ object.guest_email }}</field>
+            <field name="body_html" type="html">
+                <div style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2>We'd love your feedback!</h2>
+                    <p>Dear {{ object.guest_id.name }},</p>
+                    <p>Thank you for staying with us at {{ object.property_id.name }}. We hope you enjoyed your visit!</p>
+                    <p>Please tap a rating to let us know how we did:</p>
+                    <p style="line-height: 2.2;">
+                        <a href="{{ object.get_base_url() }}/hotel/feedback/{{ object.id }}/{{ object.access_token }}/5">⭐⭐⭐⭐⭐ Excellent</a><br/>
+                        <a href="{{ object.get_base_url() }}/hotel/feedback/{{ object.id }}/{{ object.access_token }}/4">⭐⭐⭐⭐ Very Good</a><br/>
+                        <a href="{{ object.get_base_url() }}/hotel/feedback/{{ object.id }}/{{ object.access_token }}/3">⭐⭐⭐ Good</a><br/>
+                        <a href="{{ object.get_base_url() }}/hotel/feedback/{{ object.id }}/{{ object.access_token }}/2">⭐⭐ Fair</a><br/>
+                        <a href="{{ object.get_base_url() }}/hotel/feedback/{{ object.id }}/{{ object.access_token }}/1">⭐ Poor</a>
+                    </p>
+                    <p>We look forward to welcoming you again!</p>
+                    <p>Best regards,<br/>
+                    {{ object.property_id.name }}</p>
+                </div>
+            </field>
+        </record>
     </data>
 </odoo>

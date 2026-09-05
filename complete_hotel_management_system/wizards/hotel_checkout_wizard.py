@@ -115,6 +115,9 @@ class HotelCheckoutWizard(models.TransientModel):
             if credit_lines and debit_lines:
                 (credit_lines | debit_lines).reconcile()
 
+        # Queue the post-stay feedback request
+        self.reservation_id.action_send_feedback_email()
+
         # Chatter message
         checkout_message = _('Guest checked out at %s. Room condition: %s.') % (
             self.actual_checkout_date,

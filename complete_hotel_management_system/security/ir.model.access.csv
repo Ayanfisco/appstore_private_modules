@@ -3,6 +3,8 @@ access_hotel_property_user,hotel.property.user,model_hotel_property,group_hotel_
 access_hotel_property_manager,hotel.property.manager,model_hotel_property,group_hotel_manager,1,1,1,1
 access_hotel_room_type_user,hotel.room.type.user,model_hotel_room_type,group_hotel_user,1,1,1,0
 access_hotel_room_type_manager,hotel.room.type.manager,model_hotel_room_type,group_hotel_manager,1,1,1,1
+access_hotel_room_type_season_user,hotel.room.type.season.user,model_hotel_room_type_season,group_hotel_user,1,1,1,0
+access_hotel_room_type_season_manager,hotel.room.type.season.manager,model_hotel_room_type_season,group_hotel_manager,1,1,1,1
 access_hotel_room_user,hotel.room.user,model_hotel_room,group_hotel_user,1,1,1,0
 access_hotel_room_manager,hotel.room.manager,model_hotel_room,group_hotel_manager,1,1,1,1
 access_hotel_amenity_user,hotel.amenity.user,model_hotel_amenity,group_hotel_user,1,0,0,0

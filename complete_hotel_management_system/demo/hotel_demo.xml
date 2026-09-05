@@ -34,5 +34,118 @@
             <field name="list_price">200.00</field>
             <field name="size">45</field>
         </record>
+
+        <!-- Demo Seasonal Rate: Deluxe Suite costs more over the next 2 weeks -->
+        <record id="demo_season_deluxe_peak" model="hotel.room.type.season">
+            <field name="room_type_id" ref="demo_room_type_deluxe"/>
+            <field name="name">Peak Season</field>
+            <field name="date_from" eval="(DateTime.today()).strftime('%Y-%m-%d')"/>
+            <field name="date_to" eval="(DateTime.today() + relativedelta(days=14)).strftime('%Y-%m-%d')"/>
+            <field name="price">260.00</field>
+        </record>
+
+        <!-- Demo Rooms -->
+        <record id="demo_room_101" model="hotel.room">
+            <field name="property_id" ref="demo_property_grand_hotel"/>
+            <field name="room_type_id" ref="demo_room_type_standard"/>
+            <field name="room_number">101</field>
+            <field name="floor">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_room_102" model="hotel.room">
+            <field name="property_id" ref="demo_property_grand_hotel"/>
+            <field name="room_type_id" ref="demo_room_type_standard"/>
+            <field name="room_number">102</field>
+            <field name="floor">1</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="demo_room_201" model="hotel.room">
+            <field name="property_id" ref="demo_property_grand_hotel"/>
+            <field name="room_type_id" ref="demo_room_type_deluxe"/>
+            <field name="room_number">201</field>
+            <field name="floor">2</field>
+            <field name="state">occupied</field>
+        </record>
+
+        <record id="demo_room_202" model="hotel.room">
+            <field name="property_id" ref="demo_property_grand_hotel"/>
+            <field name="room_type_id" ref="demo_room_type_deluxe"/>
+            <field name="room_number">202</field>
+            <field name="floor">2</field>
+            <field name="state">cleaning</field>
+            <field name="housekeeping_status">dirty</field>
+        </record>
+
+        <!-- Demo Guests -->
+        <record id="demo_guest_john" model="hotel.guest">
+            <field name="name">John Smith</field>
+            <field name="title">mr</field>
+            <field name="gender">male</field>
+            <field name="email">john.smith@example.com</field>
+            <field name="phone">+1 555-2001</field>
+            <field name="id_type">passport</field>
+            <field name="id_number">P1234567</field>
+            <field name="vip">True</field>
+        </record>
+
+        <record id="demo_guest_sarah" model="hotel.guest">
+            <field name="name">Sarah Johnson</field>
+            <field name="title">mrs</field>
+            <field name="gender">female</field>
+            <field name="email">sarah.johnson@example.com</field>
+            <field name="phone">+1 555-2002</field>
+            <field name="id_type">national_id</field>
+            <field name="id_number">NID998877</field>
+        </record>
+
+        <!-- Demo Reservation: Confirmed, upcoming — ready to run the check-in wizard on -->
+        <record id="demo_reservation_confirmed" model="hotel.reservation">
+            <field name="guest_id" ref="demo_guest_sarah"/>
+            <field name="property_id" ref="demo_property_grand_hotel"/>
+            <field name="room_type_id" ref="demo_room_type_standard"/>
+            <field name="room_id" ref="demo_room_101"/>
+            <field name="check_in" eval="(DateTime.today()).strftime('%Y-%m-%d')"/>
+            <field name="check_out" eval="(DateTime.today() + relativedelta(days=2)).strftime('%Y-%m-%d')"/>
+            <field name="adults">2</field>
+            <field name="room_rate">100.00</field>
+            <field name="state">confirmed</field>
+            <field name="source">online</field>
+        </record>
+
+        <!-- Demo Reservation: Already checked in — ready to run the check-out wizard on -->
+        <record id="demo_reservation_checked_in" model="hotel.reservation">
+            <field name="guest_id" ref="demo_guest_john"/>
+            <field name="property_id" ref="demo_property_grand_hotel"/>
+            <field name="room_type_id" ref="demo_room_type_deluxe"/>
+            <field name="room_id" ref="demo_room_201"/>
+            <field name="check_in" eval="(DateTime.today() - relativedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="check_out" eval="(DateTime.today() + relativedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="checkin_datetime" eval="(DateTime.today() - relativedelta(days=1))"/>
+            <field name="adults">2</field>
+            <field name="room_rate">200.00</field>
+            <field name="state">checked_in</field>
+            <field name="source">direct</field>
+            <field name="deposit_amount">100.00</field>
+        </record>
+
+        <!-- Demo Service Line for the checked-in guest, so check-out shows a real bill -->
+        <record id="demo_service_line_breakfast" model="hotel.service.line">
+            <field name="reservation_id" ref="demo_reservation_checked_in"/>
+            <field name="service_id" ref="service_breakfast"/>
+            <field name="quantity">2</field>
+            <field name="price_unit">15.00</field>
+            <field name="state">delivered</field>
+        </record>
+
+        <!-- Demo Housekeeping Task for the dirty room -->
+        <record id="demo_housekeeping_202" model="hotel.housekeeping">
+            <field name="room_id" ref="demo_room_202"/>
+            <field name="task_type">cleaning</field>
+            <field name="priority">2</field>
+            <field name="state">pending</field>
+            <field name="notes">Post check-out cleaning required</field>
+        </record>
     </data>
 </odoo>

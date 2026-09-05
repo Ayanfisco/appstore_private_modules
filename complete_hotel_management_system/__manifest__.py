@@ -1,8 +1,8 @@
 {
     'name': 'Complete Hotel Management System',
-    'version': '18.0.2.0.0',
+    'version': '18.0.3.0.0',
     'category': 'Services/Hotel',
-    'summary': 'Complete Hotel Management - Rooms, Reservations, Guests, Housekeeping & PMS',
+    'summary': 'Complete Hotel Management - Rooms, Reservations, Guests, Housekeeping, Website Booking & PMS',
     'description': """
         Complete Hotel Management System
         =================================
@@ -18,10 +18,13 @@
         * Service Management (Room Service, Laundry, Spa, etc.)
         * Integrated Invoicing & Payment Processing
         * Comprehensive Reports & Analytics
-        * Automated Email & SMS Notifications
+        * Automated Reservation Confirmation Emails
         * Multi-property Support
 
         **Advanced Capabilities:**
+        * Website Self-Service Room Search & Booking Requests
+        * Seasonal / Date-Range Pricing per Room Type
+        * Automated Post-Stay Guest Feedback Emails
         * Real-time Room Availability Tracking
         * Guest History & Preferences
         * VIP Guest Management
@@ -46,6 +49,7 @@
         'sale_management',
         'account',
         'portal',
+        'website',
     ],
     'data': [
         # Security
@@ -68,6 +72,7 @@
         'views/hotel_service_line_views.xml',
         'views/hotel_housekeeping_views.xml',
         'views/hotel_report_views.xml',
+        'views/website_templates.xml',
 
         # Reports
         'reports/hotel_reports.xml',
@@ -84,9 +89,6 @@
     'images': [
         'static/description/banner.png',
         'static/description/icon.png',
-        'static/description/screenshot1.png',
-        'static/description/screenshot2.png',
-        'static/description/screenshot3.png',
     ],
     'installable': True,
     'application': True,

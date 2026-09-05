@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Room search + results page: /hotel/rooms -->
+    <template id="hotel_rooms_search_page" name="Hotel Room Search">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container mt-4 mb-5">
+                    <h1>Find a Room</h1>
+
+                    <form method="get" action="/hotel/rooms" class="row g-3 align-items-end mb-4">
+                        <div class="col-md-3">
+                            <label class="form-label">Property</label>
+                            <select name="property_id" class="form-select">
+                                <option value="">Any Property</option>
+                                <t t-foreach="properties" t-as="prop">
+                                    <option t-att-value="prop.id"
+                                            t-att-selected="property_id and int(property_id) == prop.id">
+                                        <t t-esc="prop.name"/>
+                                    </option>
+                                </t>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Check-in</label>
+                            <input type="date" name="check_in" class="form-control" t-att-value="check_in"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Check-out</label>
+                            <input type="date" name="check_out" class="form-control" t-att-value="check_out"/>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label">Adults</label>
+                            <input type="number" name="adults" min="1" class="form-control" t-att-value="adults"/>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary w-100">Search Rooms</button>
+                        </div>
+                    </form>
+
+                    <div class="row">
+                        <t t-foreach="results" t-as="res">
+                            <div class="col-md-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><t t-esc="res['room_type'].name"/></h5>
+                                        <p class="card-text text-muted">
+                                            <t t-esc="res['room_type'].property_id.name"/>
+                                            · Sleeps <t t-esc="res['room_type'].max_capacity"/>
+                                        </p>
+                                        <t t-if="searched">
+                                            <p class="fw-bold">
+                                                <t t-esc="'%.2f' % res['total_price']"/>
+                                                total (<t t-esc="'%.2f' % res['avg_rate']"/>/night avg)
+                                            </p>
+                                            <t t-if="res['available']">
+                                                <a t-attf-href="/hotel/book/#{res['room_type'].id}?check_in=#{check_in}&amp;check_out=#{check_out}&amp;adults=#{adults}"
+                                                   class="btn btn-success">Book Now</a>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="badge bg-secondary">Not available for these dates</span>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <p class="fw-bold">
+                                                From <t t-esc="'%.2f' % res['room_type'].list_price"/> / night
+                                            </p>
+                                            <p class="text-muted small">Pick your dates above to check availability and price.</p>
+                                        </t>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="not results">
+                            <p>No room types are configured yet.</p>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Booking form: /hotel/book/<room_type_id> -->
+    <template id="hotel_booking_form_page" name="Hotel Booking Form">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container mt-4 mb-5" style="max-width: 640px;">
+                    <h1>Book: <t t-esc="room_type.name"/></h1>
+                    <p class="text-muted"><t t-esc="room_type.property_id.name"/></p>
+
+                    <t t-if="error == 'dates'">
+                        <div class="alert alert-danger">Please select a valid check-in and check-out date.</div>
+                    </t>
+                    <t t-if="error == 'missing'">
+                        <div class="alert alert-danger">Please fill in your name and email.</div>
+                    </t>
+                    <t t-if="error == 'unavailable'">
+                        <div class="alert alert-danger">Sorry, no rooms of this type are available for those dates. Please try different dates.</div>
+                    </t>
+
+                    <t t-if="total_price">
+                        <div class="alert alert-info">
+                            Estimated total: <t t-esc="'%.2f' % total_price"/> for the selected dates.
+                        </div>
+                    </t>
+
+                    <form method="post" action="/hotel/book/submit">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="room_type_id" t-att-value="room_type.id"/>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Check-in</label>
+                                <input type="date" name="check_in" class="form-control" t-att-value="check_in" required="required"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Check-out</label>
+                                <input type="date" name="check_out" class="form-control" t-att-value="check_out" required="required"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Adults</label>
+                                <input type="number" name="adults" min="1" class="form-control" t-att-value="adults"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Children</label>
+                                <input type="number" name="children" min="0" class="form-control" value="0"/>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" name="name" class="form-control" required="required"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control" required="required"/>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Phone</label>
+                                <input type="text" name="phone" class="form-control"/>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label">Special Requests</label>
+                                <textarea name="special_requests" class="form-control" rows="3"></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">Request Booking</button>
+                            </div>
+                            <div class="col-md-12">
+                                <small class="text-muted">
+                                    Submitting this form sends a booking request to the property.
+                                    Your reservation is confirmed once the hotel reviews and approves it.
+                                </small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Thank-you / confirmation page -->
+    <template id="hotel_booking_thankyou_page" name="Hotel Booking Requested">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container mt-5 mb-5 text-center" style="max-width: 640px;">
+                    <h1>Thank you, <t t-esc="reservation.guest_id.name"/>!</h1>
+                    <p class="lead">Your booking request has been received.</p>
+                    <div class="card mt-4 text-start">
+                        <div class="card-body">
+                            <p><strong>Reference:</strong> <t t-esc="reservation.name"/></p>
+                            <p><strong>Property:</strong> <t t-esc="reservation.property_id.name"/></p>
+                            <p><strong>Room Type:</strong> <t t-esc="reservation.room_type_id.name"/></p>
+                            <p><strong>Check-in:</strong> <t t-esc="reservation.check_in"/></p>
+                            <p><strong>Check-out:</strong> <t t-esc="reservation.check_out"/></p>
+                            <p><strong>Status:</strong> Pending confirmation by the property</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-muted">
+                        You'll receive an email confirmation once the property confirms your reservation.
+                    </p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Feedback thank-you page -->
+    <template id="hotel_feedback_thankyou_page" name="Hotel Feedback Thank You">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container mt-5 mb-5 text-center" style="max-width: 640px;">
+                    <h1>Thank you for your feedback!</h1>
+                    <p class="lead">You rated your stay <t t-esc="rating"/>/5.</p>
+                    <p class="text-muted">We appreciate you letting us know how we did.</p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Invalid / expired feedback link -->
+    <template id="hotel_feedback_invalid_page" name="Hotel Feedback Invalid">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container mt-5 mb-5 text-center" style="max-width: 640px;">
+                    <h1>This link is no longer valid</h1>
+                    <p class="text-muted">Please contact the property directly if you'd like to share feedback.</p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+</odoo>
