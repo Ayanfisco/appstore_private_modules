@@ -29,6 +29,7 @@ Key Features
     """,
     'author': 'Tech Joe',
     'license': 'OPL-1',
+    'website': 'https://techjoe.shop/',
     'price': 149.99,
     'currency': 'USD',
     'depends': [

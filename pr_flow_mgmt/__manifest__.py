@@ -43,7 +43,7 @@ Security:
 This module is designed for Odoo 18 with modern syntax and best practices.
     """,
     'author': 'Tech Joe',
-    'website': 'ayanfiscoss@gmail.com',
+    'website': 'https://techjoe.shop/',
     'license': 'LGPL-3',
     'depends': [
         'base',

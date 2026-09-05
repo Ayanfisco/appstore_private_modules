@@ -30,6 +30,7 @@
     """,
     'author': 'Tech Joe',
     'license': 'OPL-1',
+    'website': 'https://techjoe.shop/',
     'price': 150.00,
     'currency': 'USD',
     'depends': ['base', 'mail', 'portal', 'sale_management', 'purchase', 'stock', 'account'],

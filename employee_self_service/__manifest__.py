@@ -49,7 +49,7 @@ on your subscription terms; we recommend confirming with Odoo or your Odoo
 partner for deployments with a large number of employees.
     """,
     'author': 'Tech Joe',
-    'website': '',
+    'website': 'https://techjoe.shop/',
     'license': 'OPL-1',
     'depends': [
         'hr',

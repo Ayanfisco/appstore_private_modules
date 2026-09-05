@@ -38,7 +38,7 @@
         Seamlessly integrates with Odoo Accounting, Sales, and CRM modules.
     """,
     'author': 'Tech Joe',
-    'website': '',
+    'website': 'https://techjoe.shop/',
     'license': 'LGPL-3',
     'depends': [
         'base',

@@ -10,6 +10,7 @@ Sales, Purchase, Invoices, Bills, and Payments.
     """,
     'author': 'Tech Joe',
     'category': 'Sales/CRM',
+    'website': 'https://techjoe.shop/',
     'depends': [
         'base',
         'contacts',

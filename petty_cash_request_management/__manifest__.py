@@ -4,6 +4,7 @@
     'category': 'Accounting',
     'summary': 'Manage petty cash requests with multi-level approval',
     'author': 'Tech Joe',
+    'website': 'https://techjoe.shop/',
     'depends': ['account', 'analytic', 'mail', 'base_automation'],
     'data': [
         'security/petty_cash_security.xml',
