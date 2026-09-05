@@ -30,6 +30,7 @@
     'price': 150.00,
     'currency': 'USD',
     'depends': ['base', 'mail', 'sale_management', 'purchase', 'stock', 'account'],
+    'website': 'https://techjoe.shop/',
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',

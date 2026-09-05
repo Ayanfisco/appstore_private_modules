@@ -15,7 +15,7 @@
         * Dashboard and analytics
     """,
     'author': 'Tech Joe',
-    'website': 'ayanfiscoss@gmail.com',
+    'website': 'https://techjoe.shop/',
     'license': 'LGPL-3',
     'depends': ['hr', 'mail'],
     'data': [

@@ -37,7 +37,7 @@ Technical features
 * Responsive frontend implementation utilising core Bootstrap components
     """,
     'author': 'Tech Joe',
-    'website': '',
+    'website': 'https://techjoe.shop/',
     'license': 'OPL-1',
     'depends': [
         'hr',
